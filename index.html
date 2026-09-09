@@ -432,6 +432,7 @@ if (!window.storage) {
 }
 
 /* ============================= CONSTANTS ============================= */
+var APP_BUILD = '2026-09-09-e';
 var TIER_ORDER = ['S','A','B','C','D'];
 var INTERVALS_DAYS = [1,3,7,14,30,60,120];
 var DEFAULT_SETTINGS = {
@@ -1404,7 +1405,7 @@ function renderG2ECard(){
 
   if (s.mode==='test'){
     h += '<div class="g2e-input-wrap"><input type="text" class="g2e-input" id="g2e-field" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Type the English word\u2026" value="'+escapeHtml(s.g2eInput)+'"></div>';
-    h += '<div style="margin-top:18px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;"><button class="btn ink" id="g2e-test-next-btn">Next</button><button class="btn ghost" id="g2e-test-skip-btn">Wei\u00df ich nicht</button></div>';
+    h += '<div style="margin-top:18px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;"><button class="btn ink" id="g2e-test-next-btn">Next</button><button class="btn ghost" id="g2e-test-skip-btn">I don\u2019t know</button></div>';
     h += '<div style="font-size:12.5px;color:var(--ink-faint);margin-top:16px;">You won\u2019t see if you\u2019re right until the end \u2014 that\u2019s the test.</div>';
     h += '</div></div>';
     h += '<div class="kbd-hint"><kbd>Enter</kbd> next word</div>';
@@ -1413,7 +1414,7 @@ function renderG2ECard(){
 
   if (s.g2eStage==='input'){
     h += '<div class="g2e-input-wrap"><input type="text" class="g2e-input" id="g2e-field" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Type the English word\u2026" value="'+escapeHtml(s.g2eInput)+'"></div>';
-    h += '<div style="margin-top:18px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;"><button class="btn ink" id="g2e-check-btn">Check</button><button class="btn ghost" id="g2e-dontknow-btn">Wei\u00df ich nicht</button></div>';
+    h += '<div style="margin-top:18px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;"><button class="btn ink" id="g2e-check-btn">Check</button><button class="btn ghost" id="g2e-dontknow-btn">I don\u2019t know</button></div>';
   } else if (s.g2eStage==='result'){
     var ok = s.lastCheck.correct;
     h += '<div class="g2e-input-wrap"><input type="text" class="g2e-input '+(ok?'correct':'wrong')+'" disabled placeholder="'+(s.lastCheck.skipped?'Skipped':'')+'" value="'+escapeHtml(s.lastCheck.userAnswer)+'"></div>';
@@ -1446,7 +1447,7 @@ function renderG2ECard(){
       h += '<div class="row" style="margin-top:12px;">Correct</div><div class="word correct-row">'+rdiff.correctHtml+'</div>';
       h += '</div>';
     }
-    h += '<div style="margin-top:18px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;"><button class="btn ink" id="g2e-retype-btn">Confirm</button><button class="btn ghost" id="g2e-retype-skip-btn">Wei\u00df ich nicht</button></div>';
+    h += '<div style="margin-top:18px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;"><button class="btn ink" id="g2e-retype-btn">Confirm</button><button class="btn ghost" id="g2e-retype-skip-btn">I don\u2019t know</button></div>';
   }
   h += '</div></div>';
   h += '<div class="kbd-hint"><kbd>Enter</kbd> check / continue</div>';
@@ -1710,6 +1711,7 @@ function renderSettings(){
   h += '<button class="btn danger sm" id="reset-progress-btn">Reset all progress</button>';
   h += '<button class="btn danger sm" id="reset-all-btn">Clear all data</button>';
   h += '</div></div>';
+  h += '<div style="text-align:center;margin-top:26px;font-size:11px;color:var(--ink-faint);">Build '+APP_BUILD+'</div>';
   h += '</div></div>';
   return h;
 }
