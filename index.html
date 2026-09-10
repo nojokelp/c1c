@@ -663,7 +663,7 @@ var C1_STORAGE = (function(){
 })();
 
 /* ============================= CONSTANTS ============================= */
-var APP_BUILD = '2026-09-09-safari-1';
+var APP_BUILD = '2026-09-09-journey-fixed-1';
 var TIER_ORDER = ['S','A','B','C','D'];
 var INTERVALS_DAYS = [1,3,7,14,30,60,120];
 var DEFAULT_SETTINGS = {
@@ -1656,6 +1656,16 @@ function renderDashboard(){
     h += '<div class="section"><div class="card"><div class="empty-state" style="padding:24px 16px;"><div class="em-title serif">Nice fresh start</div>Your journey is ready. Finish a few levels and your review area will fill itself automatically.</div></div></div>';
   }
   return h;
+}
+
+function statBox(n,l,iconName){
+  var s = String(n);
+  var ic = iconName ? '<div class="stat-icon">'+icon(iconName,15)+'</div>' : '';
+  var m = s.match(/^(-?\d+)(.*)$/);
+  if (m) {
+    return '<div class="stat-box">'+ic+'<div class="n serif"><span class="countup" data-countup="'+m[1]+'">0</span>'+escapeHtml(m[2])+'</div><div class="l">'+escapeHtml(l)+'</div></div>';
+  }
+  return '<div class="stat-box">'+ic+'<div class="n serif">'+escapeHtml(s)+'</div><div class="l">'+escapeHtml(l)+'</div></div>';
 }
 
 /* ============================= RENDER: SESSION ============================= */
