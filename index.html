@@ -557,9 +557,145 @@
     stroke-dasharray:2.6 3.4;
     filter:drop-shadow(0 2px 2px rgba(3,105,161,.18));
   }
+  #c1app .journey-sea-decor {
+    position:absolute;
+    inset:0;
+    z-index:0;
+    pointer-events:none;
+    overflow:hidden;
+  }
+  #c1app .journey-sea-decor .water-glow {
+    position:absolute;
+    inset:auto 0 0 0;
+    height:56%;
+    background: linear-gradient(180deg, rgba(6,182,212,0) 0%, rgba(6,182,212,.10) 36%, rgba(14,116,144,.18) 100%);
+  }
+  #c1app .journey-sea-decor .bubble-cluster {
+    position:absolute;
+    width:90px;
+    height:180px;
+    opacity:.5;
+    background:
+      radial-gradient(circle, rgba(255,255,255,.62) 0 4px, transparent 5px) 12px 146px/18px 18px no-repeat,
+      radial-gradient(circle, rgba(255,255,255,.48) 0 3px, transparent 4px) 42px 118px/14px 14px no-repeat,
+      radial-gradient(circle, rgba(255,255,255,.54) 0 4px, transparent 5px) 58px 84px/16px 16px no-repeat,
+      radial-gradient(circle, rgba(255,255,255,.38) 0 3px, transparent 4px) 24px 54px/13px 13px no-repeat,
+      radial-gradient(circle, rgba(255,255,255,.44) 0 2.5px, transparent 3.5px) 50px 24px/11px 11px no-repeat;
+  }
+  #c1app .journey-sea-decor .bubble-cluster.left { left:6%; bottom:52px; }
+  #c1app .journey-sea-decor .bubble-cluster.right { right:8%; top:58px; transform:scale(.92); }
+  #c1app .journey-sea-decor .coral {
+    position:absolute;
+    bottom:0;
+    width:92px;
+    height:118px;
+    filter:drop-shadow(0 8px 14px rgba(14,116,144,.18));
+  }
+  #c1app .journey-sea-decor .coral::before,
+  #c1app .journey-sea-decor .coral::after {
+    content:'';
+    position:absolute;
+    bottom:0;
+    border-radius:40px 40px 8px 8px;
+  }
+  #c1app .journey-sea-decor .coral.pink::before {
+    left:12px; width:20px; height:92px;
+    background:linear-gradient(180deg, #FDA4AF 0%, #FB7185 100%);
+    box-shadow:18px -24px 0 0 #FB7185, 34px -6px 0 0 #F43F5E, 42px -42px 0 0 #FDA4AF, 6px -36px 0 0 #F472B6;
+  }
+  #c1app .journey-sea-decor .coral.pink::after {
+    left:46px; width:18px; height:72px;
+    background:linear-gradient(180deg, #FDBA74 0%, #FB7185 100%);
+    box-shadow:-18px -18px 0 0 #FB7185;
+  }
+  #c1app .journey-sea-decor .coral.orange::before {
+    left:18px; width:18px; height:84px;
+    background:linear-gradient(180deg, #FDBA74 0%, #F97316 100%);
+    box-shadow:14px -18px 0 0 #FB923C, 28px -2px 0 0 #F59E0B, 32px -30px 0 0 #FB923C, -8px -22px 0 0 #FDBA74;
+  }
+  #c1app .journey-sea-decor .coral.orange::after {
+    left:44px; width:14px; height:62px;
+    background:linear-gradient(180deg, #FED7AA 0%, #F97316 100%);
+    box-shadow:-16px -14px 0 0 #FB923C;
+  }
+  #c1app .journey-sea-decor .seaweed {
+    position:absolute;
+    bottom:0;
+    width:68px;
+    height:126px;
+  }
+  #c1app .journey-sea-decor .seaweed::before,
+  #c1app .journey-sea-decor .seaweed::after {
+    content:'';
+    position:absolute;
+    bottom:0;
+    width:14px;
+    height:122px;
+    border-radius:999px 999px 0 0;
+    background:linear-gradient(180deg, #86EFAC 0%, #16A34A 100%);
+    transform-origin:bottom center;
+  }
+  #c1app .journey-sea-decor .seaweed::before { left:20px; transform:rotate(-10deg); box-shadow:14px -8px 0 0 #22C55E, -14px -2px 0 0 #4ADE80; }
+  #c1app .journey-sea-decor .seaweed::after { left:32px; height:104px; transform:rotate(9deg); box-shadow:-16px -18px 0 0 #22C55E; }
+  #c1app .journey-sea-decor .fish,
+  #c1app .journey-sea-decor .fish::before,
+  #c1app .journey-sea-decor .fish::after {
+    position:absolute;
+    display:block;
+  }
+  #c1app .journey-sea-decor .fish {
+    width:42px;
+    height:24px;
+    border-radius:50% 56% 50% 44%;
+    background:linear-gradient(180deg, #FDE68A 0%, #F59E0B 100%);
+    box-shadow:inset -6px -4px 0 rgba(251,191,36,.45);
+    opacity:.88;
+  }
+  #c1app .journey-sea-decor .fish::before {
+    content:'';
+    right:-10px; top:5px;
+    width:16px; height:14px;
+    background:inherit;
+    clip-path:polygon(0 50%, 100% 0, 100% 100%);
+  }
+  #c1app .journey-sea-decor .fish::after {
+    content:'';
+    left:8px; top:8px;
+    width:4px; height:4px;
+    border-radius:50%;
+    background:#0F172A;
+  }
+  #c1app .journey-sea-decor .fish.fish-a { left:10%; top:18%; transform:scale(.95) rotate(-4deg); }
+  #c1app .journey-sea-decor .fish.fish-b { right:16%; top:42%; transform:scale(1.08) rotate(8deg); background:linear-gradient(180deg, #A7F3D0 0%, #14B8A6 100%); }
+  #c1app .journey-sea-decor .fish.fish-c { left:24%; bottom:16%; transform:scale(.8) rotate(3deg); background:linear-gradient(180deg, #F9A8D4 0%, #EC4899 100%); opacity:.78; }
+  #c1app .journey-sea-decor .starfish {
+    position:absolute;
+    width:28px; height:28px;
+    bottom:12px; right:28%;
+    background:#FB7185;
+    opacity:.82;
+    clip-path:polygon(50% 0%, 61% 34%, 98% 35%, 69% 56%, 79% 91%, 50% 69%, 21% 91%, 31% 56%, 2% 35%, 39% 34%);
+    transform:rotate(10deg);
+  }
+  #c1app .journey-sea-decor .shell {
+    position:absolute;
+    left:18%; bottom:10px;
+    width:34px; height:22px;
+    border-radius:50% 50% 10px 10px;
+    background:linear-gradient(180deg, #FDE68A 0%, #FCA5A5 100%);
+    opacity:.85;
+  }
+  #c1app .journey-sea-decor .shell::before {
+    content:'';
+    position:absolute;
+    inset:4px 4px 0;
+    border-radius:inherit;
+    background:repeating-linear-gradient(90deg, rgba(255,255,255,.55) 0 2px, rgba(255,255,255,0) 2px 6px);
+    opacity:.7;
+  }
   #c1app .journey-row {
     position:relative;
-    z-index:2;
+    z-index:3;
     height:132px;
   }
   #c1app .journey-stone {
@@ -1006,7 +1142,7 @@ var C1_STORAGE = (function(){
 })();
 
 /* ============================= CONSTANTS ============================= */
-var APP_BUILD = '2026-09-10-journey-fixed-1';
+var APP_BUILD = '2026-09-09-n';
 var TIER_ORDER = ['S','A','B','C','D'];
 var INTERVALS_DAYS = [1,3,7,14,30,60,120];
 var DEFAULT_SETTINGS = {
@@ -2149,6 +2285,20 @@ function renderJourneyPath(journey){
 
   var h='<div class="section"><h2>'+icon('flag',17,'icon-inline')+'Level path</h2><div class="card journey-path-card">';
   h+='<div class="journey-path" style="min-height:'+(visibleCount*132+44)+'px;">';
+  h+='<div class="journey-sea-decor">';
+  h+='<div class="water-glow"></div>';
+  h+='<div class="bubble-cluster left"></div>';
+  h+='<div class="bubble-cluster right"></div>';
+  h+='<div class="seaweed" style="left:2%;"></div>';
+  h+='<div class="seaweed" style="right:4%;transform:scale(.9);"></div>';
+  h+='<div class="coral pink" style="left:8%;"></div>';
+  h+='<div class="coral orange" style="right:10%;transform:scale(.92);"></div>';
+  h+='<div class="fish fish-a"></div>';
+  h+='<div class="fish fish-b"></div>';
+  h+='<div class="fish fish-c"></div>';
+  h+='<div class="starfish"></div>';
+  h+='<div class="shell"></div>';
+  h+='</div>';
   h+='<svg class="journey-route-svg" viewBox="0 0 100 '+svgH+'" preserveAspectRatio="none" aria-hidden="true"><polyline points="'+pts.join(' ')+'"></polyline></svg>';
   for (var i=start;i<end;i++){
     var lvl=journey.levels[i];
