@@ -435,25 +435,47 @@
 
   /* ============================= JOURNEY / LEVEL SYSTEM ============================= */
   #c1app .journey-hero {
-    background: linear-gradient(180deg, #0B1220 0%, #0F172A 100%);
+    background:
+      linear-gradient(180deg, rgba(191,219,254,.16) 0%, rgba(191,219,254,0) 28%),
+      linear-gradient(180deg, #082F49 0%, #0C4A6E 42%, #0369A1 100%);
     color: #F8FAFC;
     border-radius: 18px;
     padding: 24px 22px;
     margin-bottom: 22px;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 18px 42px rgba(15,23,42,.22);
+    box-shadow: 0 18px 42px rgba(8,47,73,.24);
   }
   #c1app .journey-hero::before {
     content:'';
     position:absolute;
-    inset:auto -60px -80px auto;
-    width:220px;
-    height:220px;
-    border-radius:50%;
-    background: radial-gradient(circle, rgba(167,139,250,.30) 0%, rgba(167,139,250,0) 70%);
+    inset:0;
+    background:
+      radial-gradient(circle at 16% 100%, rgba(255,255,255,.24) 0 6px, transparent 7px),
+      radial-gradient(circle at 30% 96%, rgba(255,255,255,.18) 0 4px, transparent 5px),
+      radial-gradient(circle at 48% 102%, rgba(255,255,255,.2) 0 7px, transparent 8px),
+      radial-gradient(circle at 66% 98%, rgba(255,255,255,.17) 0 5px, transparent 6px),
+      radial-gradient(circle at 82% 100%, rgba(255,255,255,.22) 0 6px, transparent 7px),
+      radial-gradient(circle at 93% 94%, rgba(255,255,255,.15) 0 4px, transparent 5px),
+      radial-gradient(circle at 24% 82%, rgba(255,255,255,.12) 0 3px, transparent 4px),
+      radial-gradient(circle at 74% 84%, rgba(255,255,255,.14) 0 3px, transparent 4px);
+    background-repeat: no-repeat;
+    background-size: 100% 200%;
+    animation: heroBubbleRise 14s linear infinite;
+    opacity: .95;
     pointer-events:none;
   }
+  #c1app .journey-hero::after {
+    content:'';
+    position:absolute;
+    inset:0;
+    background:
+      radial-gradient(circle at 18% 18%, rgba(255,255,255,.13) 0%, rgba(255,255,255,0) 24%),
+      radial-gradient(circle at 84% 10%, rgba(255,255,255,.15) 0%, rgba(255,255,255,0) 20%),
+      linear-gradient(180deg, rgba(255,255,255,.07) 0%, rgba(255,255,255,0) 48%);
+    pointer-events:none;
+  }
+  #c1app .journey-hero > * { position: relative; z-index: 1; }
   #c1app .journey-eyebrow { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: #C4B5FD; margin-bottom: 8px; font-weight:700; }
   #c1app .journey-title { font-family:'Plus Jakarta Sans',sans-serif; font-size: 30px; font-weight:800; line-height:1.08; margin-bottom: 8px; letter-spacing:-0.02em; }
   #c1app .journey-subtitle { font-size: 14px; color: #CBD5E1; max-width: 520px; }
@@ -654,6 +676,10 @@
   @keyframes dolphinPerchBob {
     0%, 100% { transform: translateX(-50%) translateY(0); }
     50% { transform: translateX(-50%) translateY(-6px); }
+  }
+  @keyframes heroBubbleRise {
+    0% { background-position: 0 120%; }
+    100% { background-position: 0 -80%; }
   }
   @keyframes orbPulse {
     0%,100% { box-shadow: 0 0 0 0 rgba(139,92,246,.28), 0 12px 28px rgba(15,23,42,.22); }
@@ -2078,8 +2104,8 @@ function renderDashboard(){
 
   var h = '';
   h += renderJourneyHero(journey);
-  h += renderJourneyStageCard(currentLevel);
   h += renderJourneyPath(journey);
+  h += renderJourneyStageCard(currentLevel);
 
   h += '<div class="section"><h2>'+icon('cycle',17,'icon-inline')+'Review practiced words</h2><div class="card">';
   h += '<p style="color:var(--ink-soft);font-size:13.5px;margin:0 0 14px;">Drill every word you\'ve already practiced at least once — German → English only. Hardest first: words you never knew, then full spelling mistakes, then small typos.</p>';
