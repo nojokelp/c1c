@@ -482,28 +482,37 @@
   #c1app .journey-path-card { background: linear-gradient(180deg, #F8FAFC 0%, #EEF2FF 100%); overflow:hidden; }
   #c1app .journey-path-meta { display:flex; justify-content:space-between; gap:12px; align-items:center; margin-bottom:14px; flex-wrap:wrap; }
   #c1app .journey-path-meta .hint { font-size:12.5px; color:var(--ink-soft); }
-  #c1app .journey-path { position:relative; padding: 8px 0 10px; }
+  #c1app .journey-path {
+    position:relative;
+    padding: 18px 0 16px;
+    background:
+      radial-gradient(circle at 12% 18%, rgba(255,255,255,.9) 0%, rgba(255,255,255,0) 22%),
+      radial-gradient(circle at 88% 12%, rgba(191,219,254,.55) 0%, rgba(191,219,254,0) 24%),
+      linear-gradient(180deg, #DBEAFE 0%, #E0F2FE 42%, #F8FAFC 100%);
+    border-radius: 20px;
+    overflow:hidden;
+  }
   #c1app .journey-path::before {
     content:'';
     position:absolute;
     left:50%;
     transform:translateX(-50%);
-    top:8px;
-    bottom:8px;
-    width:6px;
-    border-radius:6px;
-    background: linear-gradient(180deg, #CBD5E1 0%, #E2E8F0 100%);
+    top:26px;
+    bottom:24px;
+    width:7px;
+    border-radius:999px;
+    background: linear-gradient(180deg, rgba(125,211,252,.05) 0%, rgba(59,130,246,.22) 100%);
   }
-  #c1app .journey-row { position:relative; display:flex; align-items:center; margin: 0 0 18px; }
+  #c1app .journey-row { position:relative; display:flex; align-items:center; margin: 0 0 22px; min-height: 130px; }
   #c1app .journey-row.left { justify-content:flex-start; }
   #c1app .journey-row.right { justify-content:flex-end; }
   #c1app .journey-row.center { justify-content:center; }
-  #c1app .journey-node-wrap { width: calc(50% - 46px); }
+  #c1app .journey-node-wrap { width: calc(50% - 58px); }
   #c1app .journey-node-card {
-    background:#fff;
-    border:1px solid var(--border);
-    border-radius: 16px;
-    padding: 14px 14px 12px;
+    background: rgba(255,255,255,.96);
+    border:1px solid rgba(148,163,184,.24);
+    border-radius: 18px;
+    padding: 15px 15px 13px;
     box-shadow: 0 10px 22px rgba(79,70,229,.06);
   }
   #c1app .journey-node-card .eyebrow { font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:6px; }
@@ -511,7 +520,7 @@
   #c1app .journey-node-card .sub { font-size:12.5px; color:var(--ink-soft); }
   #c1app .journey-node-card.done { border-color:#A7F3D0; background: linear-gradient(180deg, #FFFFFF 0%, #ECFDF5 100%); }
   #c1app .journey-node-card.current { border-color:#C4B5FD; background: linear-gradient(180deg, #FFFFFF 0%, #F5F3FF 100%); }
-  #c1app .journey-node-card.locked { opacity:.75; }
+  #c1app .journey-node-card.locked { opacity:.78; }
   #c1app .journey-node-actions { margin-top:10px; display:flex; gap:8px; flex-wrap:wrap; }
   #c1app .journey-mini-btn {
     background: var(--paper-alt);
@@ -523,25 +532,61 @@
     color: var(--ink);
   }
   #c1app .journey-mini-btn:hover { border-color: var(--indigo); color: var(--indigo); }
-  #c1app .journey-orb {
+  #c1app .journey-stone {
     position:absolute;
     left:50%;
     top:50%;
     transform: translate(-50%, -50%);
-    width:74px;
-    height:74px;
-    border-radius:50%;
+    width: 120px;
+    height: 78px;
+    z-index: 2;
+    pointer-events:none;
+  }
+  #c1app .journey-stone-base {
+    position:absolute;
+    inset:0;
+    border-radius: 52% 48% 48% 52% / 56% 55% 45% 44%;
+    background: linear-gradient(180deg, #E2E8F0 0%, #94A3B8 88%);
+    border: 3px solid rgba(255,255,255,.72);
+    box-shadow: inset 0 8px 16px rgba(255,255,255,.42), inset 0 -12px 20px rgba(71,85,105,.16), 0 18px 26px rgba(15,23,42,.18);
+  }
+  #c1app .journey-stone.done .journey-stone-base {
+    background: linear-gradient(180deg, #BBF7D0 0%, #34D399 90%);
+    box-shadow: inset 0 8px 16px rgba(255,255,255,.42), inset 0 -12px 20px rgba(5,150,105,.2), 0 18px 26px rgba(16,185,129,.18);
+  }
+  #c1app .journey-stone.current .journey-stone-base {
+    background: linear-gradient(180deg, #DDD6FE 0%, #A78BFA 92%);
+    box-shadow: inset 0 8px 16px rgba(255,255,255,.48), inset 0 -12px 20px rgba(109,40,217,.18), 0 0 0 10px rgba(167,139,250,.18), 0 18px 26px rgba(91,33,182,.18);
+    animation: orbPulse 1.8s ease-in-out infinite;
+  }
+  #c1app .journey-stone.locked .journey-stone-base {
+    background: linear-gradient(180deg, #E5E7EB 0%, #CBD5E1 88%);
+  }
+  #c1app .journey-stone-mark {
+    position:absolute;
+    inset:0;
     display:flex;
     align-items:center;
     justify-content:center;
-    color:#fff;
-    border: 6px solid rgba(255,255,255,.82);
-    box-shadow: 0 12px 28px rgba(15,23,42,.22);
-    z-index:2;
+    color:#0F172A;
+    font-weight:800;
+    font-size: 24px;
+    text-shadow: 0 1px 0 rgba(255,255,255,.52);
   }
-  #c1app .journey-orb.done { background: linear-gradient(180deg, #34D399 0%, #10B981 100%); }
-  #c1app .journey-orb.current { background: linear-gradient(180deg, #A78BFA 0%, #8B5CF6 100%); animation: orbPulse 1.7s ease-in-out infinite; }
-  #c1app .journey-orb.locked { background: linear-gradient(180deg, #CBD5E1 0%, #94A3B8 100%); }
+  #c1app .journey-stone.done .journey-stone-mark { color: #065F46; }
+  #c1app .journey-stone.current .journey-stone-mark { color: #4C1D95; }
+  #c1app .journey-stone.locked .journey-stone-mark { color: #64748B; }
+  #c1app .journey-dolphin-perch {
+    position:absolute;
+    left:50%;
+    top:-26px;
+    transform: translateX(-50%);
+    width: 74px;
+    z-index: 4;
+    filter: drop-shadow(0 10px 14px rgba(15,23,42,.18));
+  }
+  #c1app .journey-stone.current .journey-dolphin-perch { animation: dolphinPerchBob 2.2s ease-in-out infinite; }
+  #c1app .journey-stone.done .journey-dolphin-perch { width: 62px; opacity: .86; }
   #c1app .journey-session-banner {
     margin: 0 0 16px;
     border-radius: 16px;
@@ -576,16 +621,22 @@
   }
   #c1app .journey-summary-banner .title { font-size:17px; font-weight:800; margin-bottom:4px; }
   #c1app .journey-summary-banner .sub { font-size:13px; color:var(--ink-soft); }
+  @keyframes dolphinPerchBob {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(-6px); }
+  }
   @keyframes orbPulse {
     0%,100% { box-shadow: 0 0 0 0 rgba(139,92,246,.28), 0 12px 28px rgba(15,23,42,.22); }
     70% { box-shadow: 0 0 0 15px rgba(139,92,246,0), 0 12px 28px rgba(15,23,42,.22); }
   }
   @media (max-width: 740px) {
     #c1app .journey-stats, #c1app .journey-stage-flow, #c1app .journey-session-stages { grid-template-columns: 1fr; }
-    #c1app .journey-path::before { left: 34px; transform:none; }
-    #c1app .journey-row, #c1app .journey-row.left, #c1app .journey-row.right, #c1app .journey-row.center { justify-content:flex-start; padding-left: 84px; }
+    #c1app .journey-path::before { left: 56px; transform:none; }
+    #c1app .journey-row, #c1app .journey-row.left, #c1app .journey-row.right, #c1app .journey-row.center { justify-content:flex-start; padding-left: 130px; min-height: 122px; }
     #c1app .journey-node-wrap { width: 100%; }
-    #c1app .journey-orb { left: 34px; width: 64px; height:64px; border-width:5px; }
+    #c1app .journey-stone { left: 56px; width: 98px; height: 66px; }
+    #c1app .journey-dolphin-perch { width: 64px; top: -20px; }
+    #c1app .journey-stone.done .journey-dolphin-perch { width: 56px; }
   }
 
 
@@ -879,7 +930,7 @@ function defaultState(){
     progress: {},
     settings: JSON.parse(JSON.stringify(DEFAULT_SETTINGS)),
     dailyStats: {},
-    meta: { streakDays: 0, lastActiveDate: null, nextId: TEST_DATA.length + 1, vocabVersion: VOCAB_VERSION, currentJourneyLevel: 0, pendingHomeFireworks: false }
+    meta: { streakDays: 0, lastActiveDate: null, nextId: TEST_DATA.length + 1, vocabVersion: VOCAB_VERSION, currentJourneyLevel: 0, pendingHomeFireworks: false, pendingLevelAdvanceSwim: false }
   };
 }
 
@@ -924,6 +975,7 @@ function migrateState(s){
   if (!s.meta) s.meta = d.meta;
   if (typeof s.meta.currentJourneyLevel !== 'number') s.meta.currentJourneyLevel = 0;
   if (typeof s.meta.pendingHomeFireworks !== 'boolean') s.meta.pendingHomeFireworks = false;
+  if (typeof s.meta.pendingLevelAdvanceSwim !== 'boolean') s.meta.pendingLevelAdvanceSwim = false;
   if (typeof s.meta.nextId !== 'number') {
     var maxId = 0;
     s.items.forEach(function(it){ if (it.id > maxId) maxId = it.id; });
@@ -941,6 +993,7 @@ function migrateState(s){
     s.meta.vocabVersion = VOCAB_VERSION;
     s.meta.currentJourneyLevel = 0;
     s.meta.pendingHomeFireworks = false;
+    s.meta.pendingLevelAdvanceSwim = false;
   }
   return s;
 }
@@ -1337,6 +1390,7 @@ function finishSession(){
       UI.session.nextJourneyLevel = (UI.session.journeyLevelIndex + 1 < journey.levels.length) ? (UI.session.journeyLevelIndex + 1) : null;
       UI.session.journeyFinished = true;
       STATE.meta.pendingHomeFireworks = true;
+      STATE.meta.pendingLevelAdvanceSwim = true;
     }
     UI.session.pendingConfetti = {count:44};
   }
@@ -1793,6 +1847,58 @@ function fireDolphinIntro(){
   setTimeout(function(){ if (layer.parentNode) layer.parentNode.removeChild(layer); }, 5800);
 }
 
+function fireDolphinAdvanceSwim(){
+  var host = document.getElementById('c1app');
+  if (!host) return;
+  var layer = document.createElement('div');
+  layer.className = 'dolphin-intro-layer';
+  var dolphin = document.createElement('img');
+  dolphin.className = 'dolphin-swimmer';
+  dolphin.src = DOLPHIN_INTRO_SRC;
+  dolphin.alt = 'Dolphin mascot';
+  dolphin.style.width = 'min(260px, 32vw)';
+  dolphin.style.top = '50%';
+  dolphin.style.animationDuration = '4.6s';
+  layer.appendChild(dolphin);
+
+  var label = document.createElement('div');
+  label.style.position = 'absolute';
+  label.style.left = '50%';
+  label.style.top = '14%';
+  label.style.transform = 'translateX(-50%)';
+  label.style.padding = '10px 16px';
+  label.style.borderRadius = '999px';
+  label.style.background = 'rgba(255,255,255,.88)';
+  label.style.border = '1px solid rgba(196,181,253,.75)';
+  label.style.boxShadow = '0 10px 25px rgba(15,23,42,.12)';
+  label.style.color = '#4C1D95';
+  label.style.fontWeight = '800';
+  label.style.fontSize = '14px';
+  label.textContent = 'Dolphin swims to the next level';
+  layer.appendChild(label);
+  host.appendChild(layer);
+
+  var bubbleTimer = setInterval(function(){
+    if (!dolphin.isConnected || !layer.isConnected) return;
+    var rect = dolphin.getBoundingClientRect();
+    var b = document.createElement('span');
+    b.className = 'dolphin-bubble';
+    var bx = rect.left + rect.width * (0.14 + Math.random()*0.08);
+    var by = rect.top + rect.height * (0.56 + Math.random()*0.18);
+    b.style.left = bx + 'px';
+    b.style.top = by + 'px';
+    b.style.setProperty('--dx', (-18 - Math.random()*54).toFixed(0) + 'px');
+    b.style.setProperty('--dy', (-44 - Math.random()*74).toFixed(0) + 'px');
+    b.style.width = (7 + Math.random()*10).toFixed(0) + 'px';
+    b.style.height = b.style.width;
+    layer.appendChild(b);
+    setTimeout(function(){ if (b.parentNode) b.parentNode.removeChild(b); }, 1800);
+  }, 140);
+
+  setTimeout(function(){ clearInterval(bubbleTimer); }, 3400);
+  setTimeout(function(){ if (layer.parentNode) layer.parentNode.removeChild(layer); }, 4700);
+}
+
 function render(){
   var root = document.getElementById('c1app');
   if (UI.screen==='loading'){ root.innerHTML = '<div class="loading-wrap">Loading your vocabulary…</div>'; return; }
@@ -1822,10 +1928,15 @@ function render(){
     UI.introDolphinPlayed = true;
     setTimeout(function(){ fireDolphinIntro(); }, 220);
   }
+  if (UI.screen==='dashboard' && STATE && STATE.meta && STATE.meta.pendingLevelAdvanceSwim){
+    STATE.meta.pendingLevelAdvanceSwim = false;
+    scheduleSave();
+    setTimeout(function(){ fireDolphinAdvanceSwim(); }, 80);
+  }
   if (UI.screen==='dashboard' && STATE && STATE.meta && STATE.meta.pendingHomeFireworks){
     STATE.meta.pendingHomeFireworks = false;
     scheduleSave();
-    setTimeout(function(){ fireHomeFireworks(); }, 120);
+    setTimeout(function(){ fireHomeFireworks(); }, 520);
   }
 }
 function renderConfirmModal(){
@@ -1892,7 +2003,7 @@ function renderJourneyPath(journey){
   var end = Math.min(journey.levels.length, start + 8);
   if (end - start < 6 && start>0) start = Math.max(0, end - 8);
   var h = '<div class="section"><h2>'+icon('flag',17,'icon-inline')+'Level path</h2><div class="card journey-path-card">';
-  h += '<div class="journey-path-meta"><div class="hint">A focused journey view around your current level.</div><div class="badge score">Showing levels '+(start+1)+'–'+end+' of '+journey.levels.length+'</div></div>';
+  h += '<div class="journey-path-meta"><div class="hint">Stone by stone: your dolphin always stands on the path and moves on when a level is finished.</div><div class="badge score">Showing levels '+(start+1)+'–'+end+' of '+journey.levels.length+'</div></div>';
   h += '<div class="journey-path">';
   for (var i=start; i<end; i++){
     var lvl = journey.levels[i];
@@ -1903,12 +2014,18 @@ function renderJourneyPath(journey){
     h += '<div class="journey-node-wrap"><div class="journey-node-card '+status+'">';
     h += '<div class="eyebrow">Level '+(lvl.index+1)+'</div>';
     h += '<div class="title">'+lvl.items.length+' vocabulary words</div>';
-    h += '<div class="sub">Words '+lvl.startWord+'–'+lvl.endWord+' · '+(status==='done' ? 'Completed' : status==='current' ? 'Ready to learn now' : 'Unlock by finishing the previous level')+'</div>';
+    h += '<div class="sub">Words '+lvl.startWord+'–'+lvl.endWord+' · '+(status==='done' ? 'Completed — the dolphin already passed this stone' : status==='current' ? 'This is your current stone' : 'Finish the previous stone to unlock this one')+'</div>';
     if (status!=='locked'){
       h += '<div class="journey-node-actions"><button class="journey-mini-btn" data-start-level="'+lvl.index+'">'+(status==='done' ? 'Replay level' : 'Start level')+'</button></div>';
     }
     h += '</div></div>';
-    h += '<div class="journey-orb '+status+'">'+(status==='done' ? icon('check',26) : status==='current' ? icon('flag',26) : icon('lock',26))+'</div>';
+    h += '<div class="journey-stone '+status+'">';
+    h += '<div class="journey-stone-base"></div>';
+    h += '<div class="journey-stone-mark">'+(status==='done' ? icon('check',24,'icon-inline') : (lvl.index+1))+'</div>';
+    if (status==='current' || (status==='done' && i===journey.completedCount-1 && journey.currentIndex===null)){
+      h += '<img class="journey-dolphin-perch" src="'+DOLPHIN_INTRO_SRC+'" alt="Dolphin mascot">';
+    }
+    h += '</div>';
     h += '</div>';
   }
   h += '</div></div></div>';
@@ -2657,7 +2774,7 @@ function bindEvents(){
   var resetProgressBtn = document.getElementById('reset-progress-btn');
   if (resetProgressBtn) resetProgressBtn.addEventListener('click', function(){
     askConfirm('Reset all learning progress? Your vocabulary list stays, but every word becomes New again.', function(){
-      STATE.progress = {}; STATE.dailyStats = {}; STATE.meta.streakDays=0; STATE.meta.lastActiveDate=null; STATE.meta.currentJourneyLevel=0; STATE.meta.pendingHomeFireworks=false;
+      STATE.progress = {}; STATE.dailyStats = {}; STATE.meta.streakDays=0; STATE.meta.lastActiveDate=null; STATE.meta.currentJourneyLevel=0; STATE.meta.pendingHomeFireworks=false; STATE.meta.pendingLevelAdvanceSwim=false;
       scheduleSave();
     });
   });
