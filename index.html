@@ -501,22 +501,26 @@
   #c1app .journey-stage-box .step { font-size:11px; text-transform:uppercase; letter-spacing:.08em; color: var(--ink-faint); font-weight:700; margin-bottom:6px; }
   #c1app .journey-stage-box .name { font-size:15px; font-weight:700; margin-bottom:4px; }
   #c1app .journey-stage-box .copy { font-size:12.5px; color:var(--ink-soft); }
-  #c1app .journey-path-card { background: linear-gradient(180deg, #F8FAFC 0%, #EEF2FF 100%); overflow:hidden; }
-  #c1app .journey-path-meta { display:flex; justify-content:space-between; gap:12px; align-items:center; margin-bottom:14px; flex-wrap:wrap; }
-  #c1app .journey-path-meta .hint { font-size:12.5px; color:var(--ink-soft); }
+  #c1app .journey-path-card {
+    background: transparent;
+    border: none;
+    padding: 0;
+    overflow: visible;
+  }
   #c1app .journey-path {
-    position:relative;
-    padding: 18px 0 16px;
+    position: relative;
+    min-height: 720px;
+    padding: 22px 8px 18px;
+    border-radius: 24px;
+    overflow: hidden;
     background:
-      radial-gradient(ellipse at 18% 10%, rgba(255,255,255,.46) 0 7%, transparent 18%),
-      radial-gradient(ellipse at 78% 20%, rgba(255,255,255,.28) 0 6%, transparent 17%),
-      radial-gradient(ellipse at 36% 55%, rgba(125,211,252,.30) 0 8%, transparent 22%),
-      radial-gradient(ellipse at 88% 68%, rgba(186,230,253,.32) 0 7%, transparent 22%),
-      linear-gradient(180deg, #38BDF8 0%, #0EA5E9 32%, #0284C7 68%, #0369A1 100%);
+      radial-gradient(ellipse at 15% 8%, rgba(255,255,255,.42) 0 7%, transparent 19%),
+      radial-gradient(ellipse at 82% 16%, rgba(255,255,255,.26) 0 6%, transparent 17%),
+      radial-gradient(ellipse at 30% 58%, rgba(125,211,252,.32) 0 9%, transparent 24%),
+      radial-gradient(ellipse at 88% 72%, rgba(186,230,253,.30) 0 8%, transparent 24%),
+      linear-gradient(180deg, #38BDF8 0%, #0EA5E9 30%, #0284C7 66%, #075985 100%);
     background-size: 145% 145%, 165% 165%, 155% 155%, 170% 170%, 100% 100%;
-    border-radius: 20px;
-    overflow:hidden;
-    box-shadow: inset 0 12px 30px rgba(255,255,255,.14), inset 0 -26px 40px rgba(3,105,161,.18);
+    box-shadow: inset 0 14px 34px rgba(255,255,255,.16), inset 0 -34px 52px rgba(3,105,161,.26), 0 16px 34px rgba(2,132,199,.15);
     animation: waterDrift 12s ease-in-out infinite alternate;
   }
   #c1app .journey-path::after {
@@ -525,94 +529,114 @@
     inset:0;
     pointer-events:none;
     background:
-      radial-gradient(circle at 14% 24%, rgba(255,255,255,.32) 0 3px, transparent 4px),
-      radial-gradient(circle at 83% 18%, rgba(255,255,255,.25) 0 5px, transparent 6px),
-      radial-gradient(circle at 24% 76%, rgba(255,255,255,.23) 0 4px, transparent 5px),
-      radial-gradient(circle at 72% 62%, rgba(255,255,255,.20) 0 3px, transparent 4px),
-      repeating-radial-gradient(ellipse at 50% 0%, rgba(255,255,255,.12) 0 2px, transparent 3px 24px);
-    opacity:.72;
-    mix-blend-mode: screen;
-    animation: waterShimmer 7s linear infinite;
+      radial-gradient(circle at 14% 24%, rgba(255,255,255,.30) 0 3px, transparent 4px),
+      radial-gradient(circle at 83% 18%, rgba(255,255,255,.24) 0 5px, transparent 6px),
+      radial-gradient(circle at 24% 76%, rgba(255,255,255,.22) 0 4px, transparent 5px),
+      radial-gradient(circle at 72% 62%, rgba(255,255,255,.18) 0 3px, transparent 4px),
+      repeating-radial-gradient(ellipse at 50% 0%, rgba(255,255,255,.10) 0 2px, transparent 3px 26px);
+    opacity:.70;
+    mix-blend-mode:screen;
+    animation:waterShimmer 7s linear infinite;
     z-index:0;
   }
-  @keyframes waterDrift {
-    0% { background-position: 0% 0%, 100% 4%, 0% 100%, 100% 90%, 0 0; }
-    100% { background-position: 10% 8%, 88% 12%, 8% 88%, 92% 78%, 0 0; }
-  }
-  @keyframes waterShimmer {
-    0% { transform: translate3d(0,0,0) scale(1); opacity:.58; }
-    50% { transform: translate3d(-10px,8px,0) scale(1.02); opacity:.82; }
-    100% { transform: translate3d(8px,-6px,0) scale(1.01); opacity:.58; }
-  }
-  #c1app .journey-path::before {
-    content:'';
+  #c1app .journey-route-svg {
     position:absolute;
-    left:50%;
-    transform:translateX(-50%);
-    top:26px;
-    bottom:24px;
-    width:7px;
-    border-radius:999px;
-    background: linear-gradient(180deg, rgba(125,211,252,.05) 0%, rgba(59,130,246,.22) 100%);
-  }
-  #c1app .journey-row { position:relative; z-index:1; display:flex; align-items:center; margin: 0 0 22px; min-height: 130px; }
-  #c1app .journey-row.left { justify-content:flex-start; }
-  #c1app .journey-row.right { justify-content:flex-end; }
-  #c1app .journey-row.center { justify-content:center; }
-  #c1app .journey-node-wrap { width: calc(50% - 58px); }
-  #c1app .journey-node-card {
-    background: rgba(255,255,255,.96);
-    border:1px solid rgba(148,163,184,.24);
-    border-radius: 18px;
-    padding: 15px 15px 13px;
-    box-shadow: 0 10px 22px rgba(79,70,229,.06);
-  }
-  #c1app .journey-node-card .eyebrow { font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:6px; }
-  #c1app .journey-node-card .title { font-size:17px; font-weight:800; margin-bottom:4px; }
-  #c1app .journey-node-card .sub { font-size:12.5px; color:var(--ink-soft); }
-  #c1app .journey-node-card.done { border-color:#A7F3D0; background: linear-gradient(180deg, #FFFFFF 0%, #ECFDF5 100%); }
-  #c1app .journey-node-card.current { border-color:#C4B5FD; background: linear-gradient(180deg, #FFFFFF 0%, #F5F3FF 100%); }
-  #c1app .journey-node-card.locked { opacity:.78; }
-  #c1app .journey-node-actions { margin-top:10px; display:flex; gap:8px; flex-wrap:wrap; }
-  #c1app .journey-mini-btn {
-    background: var(--paper-alt);
-    border:1px solid var(--border);
-    border-radius: 999px;
-    padding: 6px 10px;
-    font-size: 12px;
-    font-weight:600;
-    color: var(--ink);
-  }
-  #c1app .journey-mini-btn:hover { border-color: var(--indigo); color: var(--indigo); }
-  #c1app .journey-stone {
-    position:absolute;
-    left:50%;
-    top:50%;
-    transform: translate(-50%, -50%);
-    width: 120px;
-    height: 78px;
-    z-index: 2;
+    inset: 24px 0 24px;
+    width:100%;
+    height:calc(100% - 48px);
+    z-index:1;
     pointer-events:none;
+    overflow:visible;
   }
+  #c1app .journey-route-svg polyline {
+    fill:none;
+    stroke:rgba(224,242,254,.74);
+    stroke-width:1.1;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+    stroke-dasharray:2.6 3.4;
+    filter:drop-shadow(0 2px 2px rgba(3,105,161,.18));
+  }
+  #c1app .journey-row {
+    position:relative;
+    z-index:2;
+    height:132px;
+  }
+  #c1app .journey-stone {
+    appearance:none;
+    -webkit-appearance:none;
+    position:absolute;
+    top:50%;
+    width:132px;
+    height:86px;
+    transform:translate(-50%,-50%);
+    padding:0;
+    margin:0;
+    border:0;
+    background:transparent;
+    color:inherit;
+    z-index:3;
+    cursor:pointer;
+    touch-action:manipulation;
+  }
+  #c1app .journey-stone.p-left { left:29%; }
+  #c1app .journey-stone.p-center { left:50%; }
+  #c1app .journey-stone.p-right { left:71%; }
+  #c1app .journey-stone:disabled { cursor:default; }
   #c1app .journey-stone-base {
     position:absolute;
-    inset:0;
-    border-radius: 52% 48% 48% 52% / 56% 55% 45% 44%;
-    background: linear-gradient(180deg, #E2E8F0 0%, #94A3B8 88%);
-    border: 3px solid rgba(255,255,255,.72);
-    box-shadow: inset 0 8px 16px rgba(255,255,255,.42), inset 0 -12px 20px rgba(71,85,105,.16), 0 18px 26px rgba(15,23,42,.18);
+    inset:7px 5px 2px;
+    border-radius: 49% 51% 45% 55% / 60% 58% 42% 40%;
+    background:
+      radial-gradient(circle at 24% 28%, rgba(255,255,255,.72) 0 4%, transparent 5%),
+      radial-gradient(circle at 70% 68%, rgba(71,85,105,.22) 0 5%, transparent 6%),
+      linear-gradient(165deg, #F1F5F9 0%, #CBD5E1 38%, #94A3B8 72%, #64748B 100%);
+    border:2px solid rgba(255,255,255,.68);
+    box-shadow:
+      inset 0 10px 12px rgba(255,255,255,.32),
+      inset 0 -14px 18px rgba(51,65,85,.24),
+      0 8px 0 rgba(51,65,85,.18),
+      0 18px 24px rgba(3,105,161,.24);
+    transition:transform .18s ease, filter .18s ease, box-shadow .18s ease;
   }
+  #c1app .journey-stone-base::before {
+    content:'';
+    position:absolute;
+    left:17%; right:15%; top:13%; height:24%;
+    border-radius:50%;
+    background:linear-gradient(180deg,rgba(255,255,255,.52),rgba(255,255,255,0));
+    transform:rotate(-5deg);
+  }
+  #c1app .journey-stone-base::after {
+    content:'';
+    position:absolute;
+    inset:0;
+    border-radius:inherit;
+    background:
+      linear-gradient(115deg, transparent 0 47%, rgba(71,85,105,.16) 48% 49%, transparent 50% 100%),
+      linear-gradient(25deg, transparent 0 61%, rgba(71,85,105,.13) 62% 63%, transparent 64% 100%);
+    opacity:.72;
+  }
+  #c1app .journey-row:nth-of-type(3n+1) .journey-stone-base { transform:rotate(-3deg); }
+  #c1app .journey-row:nth-of-type(3n+2) .journey-stone-base { transform:rotate(2deg); }
+  #c1app .journey-row:nth-of-type(3n) .journey-stone-base { transform:rotate(-1deg); }
+  #c1app .journey-stone:not(:disabled):hover .journey-stone-base { transform:translateY(-4px) rotate(0deg); filter:brightness(1.04); }
   #c1app .journey-stone.done .journey-stone-base {
-    background: linear-gradient(180deg, #BBF7D0 0%, #34D399 90%);
-    box-shadow: inset 0 8px 16px rgba(255,255,255,.42), inset 0 -12px 20px rgba(5,150,105,.2), 0 18px 26px rgba(16,185,129,.18);
+    background:
+      radial-gradient(circle at 24% 28%, rgba(255,255,255,.70) 0 4%, transparent 5%),
+      linear-gradient(165deg, #D1FAE5 0%, #86EFAC 40%, #34D399 72%, #059669 100%);
+    box-shadow:inset 0 10px 12px rgba(255,255,255,.30), inset 0 -14px 18px rgba(5,150,105,.22), 0 8px 0 rgba(5,150,105,.18), 0 18px 24px rgba(5,150,105,.18);
   }
   #c1app .journey-stone.current .journey-stone-base {
-    background: linear-gradient(180deg, #DDD6FE 0%, #A78BFA 92%);
-    box-shadow: inset 0 8px 16px rgba(255,255,255,.48), inset 0 -12px 20px rgba(109,40,217,.18), 0 0 0 10px rgba(167,139,250,.18), 0 18px 26px rgba(91,33,182,.18);
-    animation: orbPulse 1.8s ease-in-out infinite;
+    background:
+      radial-gradient(circle at 24% 28%, rgba(255,255,255,.74) 0 4%, transparent 5%),
+      linear-gradient(165deg, #EDE9FE 0%, #C4B5FD 38%, #A78BFA 70%, #7C3AED 100%);
+    box-shadow:inset 0 10px 12px rgba(255,255,255,.34), inset 0 -14px 18px rgba(109,40,217,.22), 0 8px 0 rgba(109,40,217,.18), 0 0 0 10px rgba(196,181,253,.18), 0 18px 28px rgba(91,33,182,.25);
+    animation:orbPulse 1.8s ease-in-out infinite;
   }
   #c1app .journey-stone.locked .journey-stone-base {
-    background: linear-gradient(180deg, #E5E7EB 0%, #CBD5E1 88%);
+    filter:saturate(.3) brightness(.95);
+    opacity:.80;
   }
   #c1app .journey-stone-mark {
     position:absolute;
@@ -620,25 +644,62 @@
     display:flex;
     align-items:center;
     justify-content:center;
-    color:#0F172A;
+    padding-top:2px;
+    font-size:23px;
+    line-height:1;
     font-weight:800;
-    font-size: 24px;
-    text-shadow: 0 1px 0 rgba(255,255,255,.52);
+    color:#334155;
+    text-shadow:0 1px 0 rgba(255,255,255,.55);
+    z-index:2;
   }
-  #c1app .journey-stone.done .journey-stone-mark { color: #065F46; }
-  #c1app .journey-stone.current .journey-stone-mark { color: #4C1D95; }
-  #c1app .journey-stone.locked .journey-stone-mark { color: #64748B; }
+  #c1app .journey-stone.done .journey-stone-mark { color:#065F46; }
+  #c1app .journey-stone.current .journey-stone-mark { color:#4C1D95; }
+  #c1app .journey-stone.locked .journey-stone-mark { color:#64748B; }
+  #c1app .journey-stone-check {
+    position:absolute;
+    right:8px;
+    top:3px;
+    width:24px;
+    height:24px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#fff;
+    background:#10B981;
+    border:2px solid rgba(255,255,255,.88);
+    box-shadow:0 5px 10px rgba(5,150,105,.24);
+    z-index:5;
+  }
   #c1app .journey-dolphin-perch {
     position:absolute;
     left:50%;
-    top:-26px;
-    transform: translateX(-50%);
-    width: 74px;
-    z-index: 4;
-    filter: drop-shadow(0 10px 14px rgba(15,23,42,.18));
+    top:-38px;
+    transform:translateX(-50%);
+    width:82px;
+    z-index:6;
+    pointer-events:none;
+    filter:drop-shadow(0 10px 14px rgba(15,23,42,.22));
   }
-  #c1app .journey-stone.current .journey-dolphin-perch { animation: dolphinPerchBob 2.2s ease-in-out infinite; }
-  #c1app .journey-stone.done .journey-dolphin-perch { width: 62px; opacity: .86; }
+  #c1app .journey-stone.current .journey-dolphin-perch { animation:dolphinPerchBob 2.2s ease-in-out infinite; }
+  @media (max-width:640px){
+    #c1app .journey-row { height:118px; }
+    #c1app .journey-stone { width:112px; height:76px; }
+    #c1app .journey-stone.p-left { left:24%; }
+    #c1app .journey-stone.p-center { left:50%; }
+    #c1app .journey-stone.p-right { left:76%; }
+    #c1app .journey-dolphin-perch { width:70px; top:-31px; }
+    #c1app .journey-stone-mark { font-size:20px; }
+  }
+  @keyframes waterDrift {
+    0% { background-position:0% 0%,100% 4%,0% 100%,100% 90%,0 0; }
+    100% { background-position:10% 8%,88% 12%,8% 88%,92% 78%,0 0; }
+  }
+  @keyframes waterShimmer {
+    0% { transform:translate3d(0,0,0) scale(1); opacity:.58; }
+    50% { transform:translate3d(-10px,8px,0) scale(1.02); opacity:.82; }
+    100% { transform:translate3d(8px,-6px,0) scale(1.01); opacity:.58; }
+  }
   #c1app .journey-session-banner {
     margin: 0 0 16px;
     border-radius: 16px;
@@ -651,15 +712,14 @@
   #c1app .journey-session-banner .title { font-size: 16px; font-weight:800; color: var(--ink); }
   #c1app .journey-session-stages { display:grid; grid-template-columns: repeat(3,1fr); gap:8px; }
   #c1app .journey-stage-chip {
-    border-radius: 12px;
-    padding: 10px 10px;
-    border:1px solid #D8D4FE;
-    background: rgba(255,255,255,.66);
-    font-size: 12px;
-    color: var(--ink-soft);
-    text-align:center;
-    font-weight:600;
+    appearance:none; -webkit-appearance:none; width:100%; cursor:pointer;
+    border-radius: 12px; padding: 10px 10px; border:1px solid #D8D4FE;
+    background: rgba(255,255,255,.66); font-size:12px; color:var(--ink-soft); text-align:center; font-weight:700;
+    transition:transform .14s ease, background .14s ease, color .14s ease, border-color .14s ease;
   }
+  #c1app .journey-stage-chip:hover { transform:translateY(-1px); border-color:#A78BFA; color:var(--indigo-dark); }
+  #c1app .journey-stage-chip:active { transform:scale(.97); }
+  #c1app .journey-stage-chip.visited:not(.active) { background:#F5F3FF; color:#6D28D9; border-color:#DDD6FE; }
   #c1app .journey-stage-chip.done { background: #DBEAFE; color: var(--indigo-dark); border-color:#BFDBFE; }
   #c1app .journey-stage-chip.active { background: var(--indigo); color: #fff; border-color: var(--indigo); }
   #c1app .journey-summary-banner {
@@ -687,12 +747,6 @@
   }
   @media (max-width: 740px) {
     #c1app .journey-stats, #c1app .journey-stage-flow, #c1app .journey-session-stages { grid-template-columns: 1fr; }
-    #c1app .journey-path::before { left: 56px; transform:none; }
-    #c1app .journey-row, #c1app .journey-row.left, #c1app .journey-row.right, #c1app .journey-row.center { justify-content:flex-start; padding-left: 130px; min-height: 122px; }
-    #c1app .journey-node-wrap { width: 100%; }
-    #c1app .journey-stone { left: 56px; width: 98px; height: 66px; }
-    #c1app .journey-dolphin-perch { width: 64px; top: -20px; }
-    #c1app .journey-stone.done .journey-dolphin-perch { width: 56px; }
   }
 
 
@@ -1373,7 +1427,8 @@ function startSession(customIds, opts){
     testGrade: null,
     startTime: Date.now(),
     journeyLevelIndex: (typeof opts.levelIndex==='number' ? opts.levelIndex : null),
-    journeyTotalLevels: opts.totalLevels || null
+    journeyTotalLevels: opts.totalLevels || null,
+    journeyVisited: { learn: phase==='learn', e2g: phase==='e2g', g2e: phase==='g2e' }
   };
   if (UI.session.phase==='e2g') UI.session.currentId = UI.session.queueE2G[0];
   else if (UI.session.phase==='g2e') UI.session.currentId = UI.session.queueG2E[0];
@@ -1400,12 +1455,53 @@ function gradeForPct(pct){
   return {num:5, label:'Nicht gen\u00fcgend'};
 }
 
+function switchJourneyPhase(target){
+  var s = UI.session;
+  if (!s || s.mode!=='journey' || s.phase==='summary') return;
+  if (target!=='learn' && target!=='e2g' && target!=='g2e') return;
+  if (!s.journeyVisited) s.journeyVisited = {learn:false,e2g:false,g2e:false};
+
+  if (target==='learn'){
+    s.journeyVisited.learn = true;
+    if (!s.newWords.length) s.newWords = s.allWordIds.slice();
+    if (s.learnIndex<0 || s.learnIndex>=s.newWords.length) s.learnIndex = 0;
+    s.phase='learn';
+    s.currentId=s.newWords[s.learnIndex] || s.allWordIds[0] || null;
+    s.cardRevealed=false;
+  } else if (target==='e2g'){
+    if (!s.journeyVisited.e2g){
+      s.queueE2G=s.allWordIds.slice();
+      s.journeyVisited.e2g=true;
+    }
+    if (!s.queueE2G.length) s.queueE2G=s.allWordIds.slice();
+    s.phase='e2g';
+    s.currentId=s.queueE2G[0] || null;
+    s.cardRevealed=false;
+  } else {
+    if (!s.journeyVisited.g2e){
+      s.queueG2E=s.allWordIds.slice();
+      s.journeyVisited.g2e=true;
+    }
+    if (!s.queueG2E.length) s.queueG2E=s.allWordIds.slice();
+    s.phase='g2e';
+    s.currentId=s.queueG2E[0] || null;
+    s.g2eStage='input'; s.g2eInput=''; s.lastCheck=null; s.retypeError=null;
+  }
+  render();
+}
+
 function e2gDequeue(){
   var s = UI.session;
   if (s.queueE2G.length===0){
     if (s.mode==='flashcards'){ finishSession(); return; }
     s.phase = 'g2e';
-    s.queueG2E = s.allWordIds.slice();
+    if (s.mode==='journey'){
+      if (!s.journeyVisited) s.journeyVisited={learn:true,e2g:true,g2e:false};
+      if (!s.journeyVisited.g2e){ s.queueG2E=s.allWordIds.slice(); s.journeyVisited.g2e=true; }
+      else if (!s.queueG2E.length) s.queueG2E=s.allWordIds.slice();
+    } else {
+      s.queueG2E = s.allWordIds.slice();
+    }
     s.currentId = s.queueG2E.length ? s.queueG2E[0] : null;
     s.g2eStage = 'input'; s.g2eInput=''; s.lastCheck=null; s.retypeError=null;
     if (!s.currentId) finishSession();
@@ -2039,49 +2135,48 @@ function renderJourneyStageCard(current){
 function renderJourneyPath(journey){
   var current = journey.currentIndex;
   var start = 0;
-  if (current!==null) start = Math.max(0, current - 2);
-  else start = Math.max(0, journey.levels.length - 6);
-  var end = Math.min(journey.levels.length, start + 8);
-  if (end - start < 6 && start>0) start = Math.max(0, end - 8);
-  var h = '<div class="section"><h2>'+icon('flag',17,'icon-inline')+'Level path</h2><div class="card journey-path-card">';
-  h += '<div class="journey-path-meta"><div class="hint">Stone by stone: your dolphin always stands on the path and moves on when a level is finished.</div><div class="badge score">Showing levels '+(start+1)+'–'+end+' of '+journey.levels.length+'</div></div>';
-  h += '<div class="journey-path">';
-  for (var i=start; i<end; i++){
-    var lvl = journey.levels[i];
-    var status = i < journey.completedCount ? 'done' : (journey.currentIndex===i ? 'current' : 'locked');
-    var side = (i%2===0 ? 'left' : 'right');
-    if (window.innerWidth && window.innerWidth < 740) side = 'center';
-    h += '<div class="journey-row '+side+'">';
-    h += '<div class="journey-node-wrap"><div class="journey-node-card '+status+'">';
-    h += '<div class="eyebrow">Level '+(lvl.index+1)+'</div>';
-    h += '<div class="title">'+lvl.items.length+' vocabulary words</div>';
-    h += '<div class="sub">Words '+lvl.startWord+'–'+lvl.endWord+' · '+(status==='done' ? 'Completed — the dolphin already passed this stone' : status==='current' ? 'This is your current stone' : 'Finish the previous stone to unlock this one')+'</div>';
-    if (status!=='locked'){
-      h += '<div class="journey-node-actions"><button class="journey-mini-btn" data-start-level="'+lvl.index+'">'+(status==='done' ? 'Replay level' : 'Start level')+'</button></div>';
-    }
-    h += '</div></div>';
-    h += '<div class="journey-stone '+status+'">';
-    h += '<div class="journey-stone-base"></div>';
-    h += '<div class="journey-stone-mark">'+(status==='done' ? icon('check',24,'icon-inline') : (lvl.index+1))+'</div>';
-    if (status==='current' || (status==='done' && i===journey.completedCount-1 && journey.currentIndex===null)){
-      h += '<img class="journey-dolphin-perch" src="'+DOLPHIN_INTRO_SRC+'" alt="Dolphin mascot">';
-    }
-    h += '</div>';
-    h += '</div>';
+  if (current!==null) start = Math.max(0,current-2);
+  else start = Math.max(0,journey.levels.length-6);
+  var end = Math.min(journey.levels.length,start+8);
+  if (end-start<6 && start>0) start=Math.max(0,end-8);
+  var visibleCount=end-start;
+  var xs=[];
+  var patternX=[29,50,71,50];
+  for (var p=0;p<visibleCount;p++) xs.push(patternX[p%patternX.length]);
+  var svgH=Math.max(1,visibleCount*132);
+  var pts=[];
+  for (var q=0;q<visibleCount;q++) pts.push(xs[q]+','+(66+q*132));
+
+  var h='<div class="section"><h2>'+icon('flag',17,'icon-inline')+'Level path</h2><div class="card journey-path-card">';
+  h+='<div class="journey-path" style="min-height:'+(visibleCount*132+44)+'px;">';
+  h+='<svg class="journey-route-svg" viewBox="0 0 100 '+svgH+'" preserveAspectRatio="none" aria-hidden="true"><polyline points="'+pts.join(' ')+'"></polyline></svg>';
+  for (var i=start;i<end;i++){
+    var lvl=journey.levels[i];
+    var local=i-start;
+    var status=i<journey.completedCount?'done':(journey.currentIndex===i?'current':'locked');
+    var posClass=xs[local]<40?'p-left':(xs[local]>60?'p-right':'p-center');
+    var attrs=status==='locked'?' disabled aria-label="Level '+(lvl.index+1)+' locked"':' data-start-level="'+lvl.index+'" aria-label="'+(status==='done'?'Replay':'Start')+' level '+(lvl.index+1)+'"';
+    h+='<div class="journey-row">';
+    h+='<button class="journey-stone '+status+' '+posClass+'"'+attrs+'>';
+    h+='<span class="journey-stone-base"></span>';
+    h+='<span class="journey-stone-mark">'+(lvl.index+1)+'</span>';
+    if(status==='done') h+='<span class="journey-stone-check">'+icon('check',14)+'</span>';
+    if(status==='current' || (status==='done' && i===journey.completedCount-1 && journey.currentIndex===null)) h+='<img class="journey-dolphin-perch" src="'+DOLPHIN_INTRO_SRC+'" alt="">';
+    h+='</button></div>';
   }
-  h += '</div></div></div>';
+  h+='</div></div></div>';
   return h;
 }
 function journeyStageMarkup(s){
-  var currentStep = s.phase==='learn' ? 1 : s.phase==='e2g' ? 2 : s.phase==='g2e' ? 3 : 4;
-  var h = '<div class="journey-session-banner"><div class="top"><div><div class="eyebrow">Journey lesson</div><div class="title">Level '+((s.journeyLevelIndex||0)+1)+' of '+(s.journeyTotalLevels||'')+'</div></div><div class="badge tierA">10 words</div></div>';
-  h += '<div class="journey-session-stages">';
-  var stages = [['Learn',1],['Flashcards',2],['Writing',3]];
+  var h='<div class="journey-session-banner"><div class="top"><div><div class="eyebrow">Journey lesson</div><div class="title">Level '+((s.journeyLevelIndex||0)+1)+' of '+(s.journeyTotalLevels||'')+'</div></div><div class="badge tierA">10 words</div></div>';
+  h+='<div class="journey-session-stages">';
+  var stages=[['Learn','learn'],['Flashcards','e2g'],['Writing','g2e']];
+  var visited=s.journeyVisited||{};
   stages.forEach(function(pair){
-    var cls = currentStep>pair[1] ? 'done' : currentStep===pair[1] ? 'active' : '';
-    h += '<div class="journey-stage-chip '+cls+'">'+pair[0]+'</div>';
+    var cls=(s.phase===pair[1]?'active ':'')+(visited[pair[1]]?'visited':'');
+    h+='<button type="button" class="journey-stage-chip '+cls+'" data-journey-phase="'+pair[1]+'">'+pair[0]+'</button>';
   });
-  h += '</div></div>';
+  h+='</div><div style="margin-top:9px;font-size:11.5px;color:var(--ink-soft);text-align:center;">You can switch sections anytime. The level is completed only after Writing is finished.</div></div>';
   return h;
 }
 
@@ -2225,6 +2320,7 @@ function leaveLearnForPractice(){
   UI.learnAnimating = true;
   function commit(){
     s.phase = 'e2g';
+    if (s.mode==='journey' && s.journeyVisited) s.journeyVisited.e2g=true;
     s.currentId = s.queueE2G[0];
     UI.learnAnimating = false;
     render();
@@ -2659,6 +2755,10 @@ function bindEvents(){
       var idx = parseInt(el.getAttribute('data-start-level'), 10);
       if (!isNaN(idx) && startJourneyLevel(idx)) render();
     });
+  });
+
+  root.querySelectorAll('[data-journey-phase]').forEach(function(el){
+    el.addEventListener('click', function(){ switchJourneyPhase(el.getAttribute('data-journey-phase')); });
   });
 
   root.querySelectorAll('[data-session-mode]').forEach(function(el){
