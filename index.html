@@ -418,9 +418,11 @@
     position: relative;
     cursor: pointer; min-height: 430px;
     transform-style: preserve-3d;
+    transform: rotateY(0deg);
+    transition: transform .62s cubic-bezier(.45,.15,.15,1.05);
+    will-change: transform;
   }
-  @keyframes flipToBack { from { transform: rotateY(0deg); } to { transform: rotateY(180deg); } }
-  #c1app .flip-card.flipped { transform: rotateY(180deg); animation: flipToBack .6s cubic-bezier(.45,.15,.15,1.05) both; }
+  #c1app .flip-card.flipped { transform: rotateY(180deg); }
   #c1app .flip-face {
     position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden;
     display: flex; align-items: center; justify-content: center; overflow-y: auto;
@@ -546,11 +548,19 @@
     border-radius: 24px;
     overflow: hidden;
     background:
-      radial-gradient(ellipse at 15% 8%, rgba(255,255,255,.42) 0 7%, transparent 19%),
-      radial-gradient(ellipse at 82% 16%, rgba(255,255,255,.26) 0 6%, transparent 17%),
-      radial-gradient(ellipse at 30% 58%, rgba(125,211,252,.32) 0 9%, transparent 24%),
-      radial-gradient(ellipse at 88% 72%, rgba(186,230,253,.30) 0 8%, transparent 24%),
-      linear-gradient(180deg, #38BDF8 0%, #0EA5E9 30%, #0284C7 66%, #075985 100%);
+      radial-gradient(ellipse at 15% 6%, rgba(255,255,255,.46) 0 7%, transparent 18%),
+      radial-gradient(ellipse at 82% 14%, rgba(255,255,255,.28) 0 6%, transparent 17%),
+      radial-gradient(ellipse at 30% 36%, rgba(125,211,252,.22) 0 8%, transparent 23%),
+      radial-gradient(ellipse at 88% 62%, rgba(96,165,250,.16) 0 8%, transparent 24%),
+      linear-gradient(180deg,
+        #38BDF8 0%,
+        #0EA5E9 15%,
+        #0284C7 32%,
+        #075985 50%,
+        #0C4A6E 66%,
+        #172554 82%,
+        #0B1633 94%,
+        #050B1B 100%);
     background-size: 145% 145%, 165% 165%, 155% 155%, 170% 170%, 100% 100%;
     box-shadow: inset 0 14px 34px rgba(255,255,255,.16), inset 0 -34px 52px rgba(3,105,161,.26), 0 16px 34px rgba(2,132,199,.15);
     animation: waterDrift 12s ease-in-out infinite alternate;
@@ -756,6 +766,85 @@
     background:repeating-linear-gradient(90deg, rgba(255,255,255,.55) 0 2px, rgba(255,255,255,0) 2px 6px);
     opacity:.7;
   }
+  #c1app .journey-sea-decor .coral.teal::before {
+    left:13px; width:18px; height:90px;
+    background:linear-gradient(180deg,#99F6E4 0%,#14B8A6 100%);
+    box-shadow:17px -20px 0 0 #2DD4BF, 34px -5px 0 0 #06B6D4, 40px -36px 0 0 #5EEAD4, 5px -32px 0 0 #A7F3D0;
+  }
+  #c1app .journey-sea-decor .coral.teal::after {
+    left:47px; width:15px; height:67px;
+    background:linear-gradient(180deg,#67E8F9 0%,#0D9488 100%);
+    box-shadow:-16px -17px 0 0 #2DD4BF;
+  }
+  #c1app .journey-sea-decor .coral.purple::before {
+    left:14px; width:19px; height:88px;
+    background:linear-gradient(180deg,#DDD6FE 0%,#8B5CF6 100%);
+    box-shadow:17px -28px 0 0 #A78BFA, 33px -9px 0 0 #7C3AED, 42px -38px 0 0 #C4B5FD, 4px -35px 0 0 #E879F9;
+  }
+  #c1app .journey-sea-decor .coral.purple::after {
+    left:48px; width:14px; height:65px;
+    background:linear-gradient(180deg,#F0ABFC 0%,#7C3AED 100%);
+    box-shadow:-16px -15px 0 0 #A78BFA;
+  }
+  #c1app .journey-sea-decor .coral.deep::before {
+    left:17px; width:17px; height:76px;
+    background:linear-gradient(180deg,#60A5FA 0%,#1E3A8A 100%);
+    box-shadow:16px -16px 0 0 #2563EB, 31px -3px 0 0 #1D4ED8, 36px -28px 0 0 #6366F1, 2px -24px 0 0 #3B82F6;
+  }
+  #c1app .journey-sea-decor .coral.deep::after {
+    left:45px; width:13px; height:57px;
+    background:linear-gradient(180deg,#818CF8 0%,#1E40AF 100%);
+    box-shadow:-14px -13px 0 0 #2563EB;
+  }
+  #c1app .journey-sea-decor .seaweed.mid::before,
+  #c1app .journey-sea-decor .seaweed.mid::after { background:linear-gradient(180deg,#5EEAD4 0%,#0F766E 100%); }
+  #c1app .journey-sea-decor .seaweed.mid::before { box-shadow:14px -8px 0 0 #14B8A6,-14px -2px 0 0 #2DD4BF; }
+  #c1app .journey-sea-decor .seaweed.mid::after { box-shadow:-16px -18px 0 0 #0D9488; }
+  #c1app .journey-sea-decor .seaweed.deep::before,
+  #c1app .journey-sea-decor .seaweed.deep::after { background:linear-gradient(180deg,#60A5FA 0%,#1E3A8A 100%); opacity:.78; }
+  #c1app .journey-sea-decor .seaweed.deep::before { box-shadow:14px -8px 0 0 #2563EB,-14px -2px 0 0 #4338CA; }
+  #c1app .journey-sea-decor .seaweed.deep::after { box-shadow:-16px -18px 0 0 #312E81; }
+
+  /* Fish gradually change with depth. */
+  #c1app .journey-sea-decor .fish.sun-yellow { background:linear-gradient(180deg,#FEF08A 0%,#F59E0B 100%); }
+  #c1app .journey-sea-decor .fish.sun-blue { background:linear-gradient(180deg,#A5F3FC 0%,#0284C7 100%); box-shadow:inset -6px -4px 0 rgba(3,105,161,.35); }
+  #c1app .journey-sea-decor .fish.clown { background:repeating-linear-gradient(90deg,#FB923C 0 11px,#FFF7ED 11px 16px,#F97316 16px 29px); box-shadow:inset -6px -4px 0 rgba(194,65,12,.25); }
+  #c1app .journey-sea-decor .fish.reef-pink { background:linear-gradient(180deg,#F9A8D4 0%,#DB2777 100%); }
+  #c1app .journey-sea-decor .fish.reef-teal { background:linear-gradient(180deg,#A7F3D0 0%,#0F766E 100%); }
+  #c1app .journey-sea-decor .fish.reef-purple { background:linear-gradient(180deg,#DDD6FE 0%,#7C3AED 100%); }
+  #c1app .journey-sea-decor .fish.deep-silver { background:linear-gradient(180deg,#E2E8F0 0%,#64748B 100%); opacity:.72; box-shadow:inset -6px -4px 0 rgba(30,41,59,.30); }
+  #c1app .journey-sea-decor .fish.deep-blue { background:linear-gradient(180deg,#93C5FD 0%,#1E40AF 100%); opacity:.76; }
+  #c1app .journey-sea-decor .fish.deep-violet { background:linear-gradient(180deg,#C4B5FD 0%,#4338CA 100%); opacity:.72; }
+  #c1app .journey-sea-decor .fish.abyss { background:linear-gradient(180deg,#334155 0%,#0F172A 100%); opacity:.86; box-shadow:0 0 14px rgba(56,189,248,.12), inset -6px -4px 0 rgba(2,6,23,.42); }
+  #c1app .journey-sea-decor .fish.angler { background:linear-gradient(180deg,#312E81 0%,#0F172A 100%); opacity:.95; box-shadow:0 0 16px rgba(129,140,248,.16), inset -6px -4px 0 rgba(2,6,23,.5); }
+  #c1app .journey-sea-decor .fish.angler::after { background:#FDE68A; box-shadow:15px -13px 0 1px #67E8F9, 15px -13px 8px 3px rgba(103,232,249,.45); }
+
+  #c1app .journey-sea-decor .jellyfish,
+  #c1app .journey-sea-decor .ray,
+  #c1app .journey-sea-decor .squid,
+  #c1app .journey-sea-decor .sponge,
+  #c1app .journey-sea-decor .rock-life { position:absolute; pointer-events:none; }
+  #c1app .journey-sea-decor .jellyfish { width:50px; height:72px; opacity:.66; }
+  #c1app .journey-sea-decor .jellyfish::before {
+    content:''; position:absolute; left:5px; top:0; width:40px; height:30px;
+    border-radius:50% 50% 36% 36%;
+    background:linear-gradient(180deg,rgba(196,181,253,.86),rgba(139,92,246,.48));
+    box-shadow:0 0 18px rgba(196,181,253,.24),inset 0 7px 10px rgba(255,255,255,.18);
+  }
+  #c1app .journey-sea-decor .jellyfish::after {
+    content:''; position:absolute; left:10px; top:27px; width:30px; height:42px;
+    background:repeating-linear-gradient(90deg,rgba(216,180,254,.72) 0 3px,transparent 3px 9px);
+    clip-path:polygon(0 0,100% 0,88% 100%,69% 70%,54% 100%,38% 67%,20% 100%);
+  }
+  #c1app .journey-sea-decor .jellyfish.glow::before { background:linear-gradient(180deg,rgba(165,243,252,.88),rgba(34,211,238,.34)); box-shadow:0 0 20px rgba(34,211,238,.38); }
+  #c1app .journey-sea-decor .jellyfish.glow::after { background:repeating-linear-gradient(90deg,rgba(103,232,249,.78) 0 3px,transparent 3px 9px); }
+  #c1app .journey-sea-decor .ray { width:72px; height:42px; background:linear-gradient(180deg,#94A3B8,#475569); opacity:.56; clip-path:polygon(50% 38%,12% 5%,0 42%,28% 63%,45% 55%,50% 100%,55% 55%,72% 63%,100% 42%,88% 5%); filter:drop-shadow(0 8px 9px rgba(15,23,42,.18)); }
+  #c1app .journey-sea-decor .squid { width:45px; height:76px; opacity:.72; }
+  #c1app .journey-sea-decor .squid::before { content:''; position:absolute; left:7px; top:0; width:31px; height:43px; border-radius:55% 55% 38% 38%; background:linear-gradient(180deg,#818CF8,#312E81); clip-path:polygon(50% 0,100% 30%,88% 100%,12% 100%,0 30%); box-shadow:0 0 16px rgba(129,140,248,.18); }
+  #c1app .journey-sea-decor .squid::after { content:''; position:absolute; left:8px; top:39px; width:29px; height:35px; background:repeating-linear-gradient(90deg,#6366F1 0 3px,transparent 3px 7px); clip-path:polygon(0 0,100% 0,92% 100%,70% 55%,56% 100%,42% 56%,22% 100%); }
+  #c1app .journey-sea-decor .sponge { width:58px; height:50px; border-radius:43% 57% 30% 35%; background:radial-gradient(circle at 24% 35%,#FDE68A 0 3px,transparent 4px),radial-gradient(circle at 68% 58%,#FDE68A 0 4px,transparent 5px),linear-gradient(180deg,#FB923C,#C2410C); opacity:.78; filter:drop-shadow(0 7px 9px rgba(124,45,18,.16)); }
+  #c1app .journey-sea-decor .rock-life { width:86px; height:38px; border-radius:50% 44% 20% 28%; background:linear-gradient(180deg,#475569,#1E293B); opacity:.58; box-shadow:28px 8px 0 -8px #334155,-22px 10px 0 -10px #0F172A; }
+  #c1app .journey-sea-decor .glow-orb { position:absolute; width:8px; height:8px; border-radius:50%; background:#67E8F9; box-shadow:0 0 12px 4px rgba(103,232,249,.34); opacity:.72; }
   #c1app .journey-row {
     position:relative;
     z-index:3;
@@ -1330,7 +1419,7 @@ var C1_STORAGE = (function(){
 })();
 
 /* ============================= CONSTANTS ============================= */
-var APP_BUILD = '2026-09-17-account-sync';
+var APP_BUILD = '2026-09-17-flip-depth-ocean';
 
 /* ============================= ACCOUNT + CLOUD SYNC (SUPABASE) ============================= */
 /* Publishable keys are designed for browser clients. User data is protected by Supabase Auth + RLS. */
@@ -2945,62 +3034,105 @@ function renderJourneyPath(journey){
     nodes.push({ type:'level', level: journey.levels[li] });
     if ((li+1)%5===0) nodes.push({ type:'checkpoint', checkpointIndex:(li+1)/5, levelCount: li+1 });
   }
-  var patternX = [29, 50, 71, 50];
+  var patternX = [29,50,71,50];
   var goalY = 66 + nodes.length * 132 + 16;
   var svgH = Math.max(1, goalY + 40);
   var pts = [];
-  for (var i=0; i<nodes.length; i++) pts.push(patternX[i % patternX.length] + ',' + (66 + i * 132));
-  pts.push('50,' + goalY);
+  for (var i=0;i<nodes.length;i++) pts.push(patternX[i%patternX.length]+','+(66+i*132));
+  pts.push('50,'+goalY);
 
   var h='<div class="section"><h2>'+icon('flag',17,'icon-inline')+'Level path</h2><div class="card journey-path-card">';
   h+='<div class="journey-path" style="min-height:'+(goalY+112)+'px;">';
   h+='<div class="journey-sea-decor">';
   h+='<div class="water-glow"></div>';
   h+='<div class="seabed"></div>';
-  for (var b=0; b<Math.max(6, Math.floor(nodes.length/4)); b++){
-    var bubbleTop = 110 + b * 230;
-    var bubbleLeft = (b%2===0 ? 6 : 78);
-    h+='<div class="bubble-cluster '+(b%2===0?'left':'right')+'" style="top:'+bubbleTop+'px; bottom:auto; '+(b%2===0?'left:'+bubbleLeft+'%; right:auto;':'right:'+Math.max(4,100-bubbleLeft-10)+'%; left:auto;')+'"></div>';
+
+  /* Bubbles continue through the complete 90-level journey. */
+  for (var b=0;b<nodes.length;b+=3){
+    var bubbleTop=76+b*132;
+    var bubbleLeft=(Math.floor(b/3)%2===0?5:80);
+    var deepBubble=(b/nodes.length)>.58?' style="top:'+bubbleTop+'px;bottom:auto;'+(bubbleLeft<40?'left:'+bubbleLeft+'%;right:auto;':'right:7%;left:auto;')+';opacity:.30;"':' style="top:'+bubbleTop+'px;bottom:auto;'+(bubbleLeft<40?'left:'+bubbleLeft+'%;right:auto;':'right:7%;left:auto;')+';"';
+    h+='<div class="bubble-cluster"'+deepBubble+'></div>';
   }
-  for (var d=0; d<Math.max(8, Math.floor(nodes.length/3)); d++){
-    var decoTop = 90 + d * 170;
-    var leftSide = d % 2 === 0;
-    var coralClass = d % 3 === 0 ? 'pink' : (d % 3 === 1 ? 'orange' : 'teal');
-    h+='<div class="coral '+coralClass+'" style="top:'+(decoTop+52)+'px; bottom:auto; '+(leftSide?'left:4%;':'right:5%;')+' transform:scale('+(0.78 + (d%4)*0.08)+');"></div>';
-    h+='<div class="seaweed" style="top:'+(decoTop+70)+'px; bottom:auto; '+(leftSide?'left:16%;':'right:17%;')+' transform:scale('+(0.74 + (d%3)*0.08)+');"></div>';
-    var fishClass = d % 5 === 0 ? 'fish-e' : d % 4 === 0 ? 'fish-d' : d % 3 === 0 ? 'fish-c' : d % 2 === 0 ? 'fish-b' : 'fish-a';
-    h+='<div class="fish '+fishClass+'" style="top:'+(decoTop + (d%3)*18)+'px; bottom:auto; '+(leftSide?'left:62%; right:auto;':'left:18%; right:auto;')+' transform:scale('+(0.82 + (d%4)*0.07)+') rotate('+(leftSide ? (-8 + (d%5)*3) : (6 - (d%5)*2))+'deg);"></div>';
+
+  /* The ecosystem changes gradually with depth instead of repeating one pattern. */
+  for (var d=0;d<nodes.length;d+=2){
+    var top=92+d*132;
+    var depth=nodes.length>1 ? d/(nodes.length-1) : 0;
+    var slot=Math.floor(d/2);
+    var leftSide=slot%2===0;
+    var edge=leftSide?'left':'right';
+    var edgePct=3+(slot%4)*2;
+    var fishX=leftSide?(64+(slot%3)*5):(13+(slot%3)*5);
+    var scale=(0.78+(slot%5)*0.065).toFixed(2);
+
+    if (depth < .24){
+      var coral1=['pink','orange','teal'][slot%3];
+      var fish1=['sun-yellow','clown','sun-blue'][slot%3];
+      h+='<div class="coral '+coral1+'" style="top:'+(top+48)+'px;bottom:auto;'+edge+':'+edgePct+'%;transform:scale('+scale+');"></div>';
+      h+='<div class="seaweed" style="top:'+(top+68)+'px;bottom:auto;'+edge+':'+(edgePct+10)+'%;transform:scale('+(0.72+(slot%4)*0.07).toFixed(2)+');"></div>';
+      h+='<div class="fish '+fish1+'" style="top:'+top+'px;bottom:auto;left:'+fishX+'%;right:auto;transform:scale('+scale+') rotate('+(leftSide?-5:6)+'deg);"></div>';
+      if(slot%4===1) h+='<div class="sponge" style="top:'+(top+78)+'px;'+(leftSide?'right:7%;':'left:7%;')+'transform:scale(.78);"></div>';
+    } else if (depth < .50){
+      var coral2=['teal','purple','pink'][slot%3];
+      var fish2=['reef-teal','reef-pink','reef-purple'][slot%3];
+      h+='<div class="coral '+coral2+'" style="top:'+(top+50)+'px;bottom:auto;'+edge+':'+edgePct+'%;transform:scale('+(0.72+(slot%4)*0.06).toFixed(2)+');opacity:.90;"></div>';
+      h+='<div class="seaweed mid" style="top:'+(top+66)+'px;bottom:auto;'+edge+':'+(edgePct+11)+'%;transform:scale('+(0.68+(slot%3)*0.07).toFixed(2)+');"></div>';
+      h+='<div class="fish '+fish2+'" style="top:'+top+'px;bottom:auto;left:'+fishX+'%;right:auto;transform:scale('+scale+') rotate('+(leftSide?-7:5)+'deg);"></div>';
+      if(slot%4===0) h+='<div class="ray" style="top:'+(top+34)+'px;'+(leftSide?'right:10%;':'left:9%;')+'transform:scale(.82) rotate('+(leftSide?'8':'-8')+'deg);"></div>';
+      if(slot%5===2) h+='<div class="jellyfish" style="top:'+(top+22)+'px;'+(leftSide?'right:22%;':'left:22%;')+'transform:scale(.72);"></div>';
+    } else if (depth < .76){
+      var fish3=['deep-silver','deep-blue','deep-violet'][slot%3];
+      if(slot%3!==1) h+='<div class="coral deep" style="top:'+(top+58)+'px;bottom:auto;'+edge+':'+edgePct+'%;transform:scale('+(0.62+(slot%3)*0.06).toFixed(2)+');opacity:.62;"></div>';
+      if(slot%2===0) h+='<div class="seaweed deep" style="top:'+(top+72)+'px;bottom:auto;'+edge+':'+(edgePct+10)+'%;transform:scale(.62);"></div>';
+      h+='<div class="fish '+fish3+'" style="top:'+top+'px;bottom:auto;left:'+fishX+'%;right:auto;transform:scale('+(0.72+(slot%4)*0.06).toFixed(2)+') rotate('+(leftSide?-4:4)+'deg);"></div>';
+      if(slot%3===0) h+='<div class="jellyfish" style="top:'+(top+28)+'px;'+(leftSide?'right:13%;':'left:13%;')+'transform:scale('+(0.72+(slot%3)*.08).toFixed(2)+');"></div>';
+      if(slot%5===1) h+='<div class="ray" style="top:'+(top+42)+'px;'+(leftSide?'right:25%;':'left:25%;')+'transform:scale(.68);"></div>';
+    } else {
+      /* Abyss: fewer corals, darker creatures and bioluminescent life. */
+      h+='<div class="rock-life" style="top:'+(top+80)+'px;'+edge+':'+edgePct+'%;transform:scale('+(0.7+(slot%3)*0.08).toFixed(2)+');"></div>';
+      if(slot%2===0){
+        h+='<div class="fish angler" style="top:'+top+'px;bottom:auto;left:'+fishX+'%;right:auto;transform:scale('+(0.74+(slot%4)*0.05).toFixed(2)+') rotate('+(leftSide?-3:3)+'deg);"></div>';
+      } else {
+        h+='<div class="fish abyss" style="top:'+top+'px;bottom:auto;left:'+fishX+'%;right:auto;transform:scale('+(0.70+(slot%4)*0.05).toFixed(2)+');"></div>';
+      }
+      if(slot%3===0) h+='<div class="jellyfish glow" style="top:'+(top+20)+'px;'+(leftSide?'right:15%;':'left:15%;')+'transform:scale('+(0.76+(slot%3)*.08).toFixed(2)+');"></div>';
+      if(slot%4===1) h+='<div class="squid" style="top:'+(top+18)+'px;'+(leftSide?'right:25%;':'left:25%;')+'transform:scale(.78) rotate('+(leftSide?'5':'-5')+'deg);"></div>';
+      h+='<div class="glow-orb" style="top:'+(top+24)+'px;'+(leftSide?'left:22%;':'right:22%;')+'"></div>';
+      if(slot%3===2) h+='<div class="glow-orb" style="top:'+(top+82)+'px;'+(leftSide?'right:31%;':'left:31%;')+';transform:scale(.7);"></div>';
+    }
   }
+
   h+='<div class="starfish"></div>';
   h+='<div class="shell"></div>';
   h+='</div>';
   h+='<svg class="journey-route-svg" viewBox="0 0 100 '+svgH+'" preserveAspectRatio="none" aria-hidden="true"><polyline points="'+pts.join(' ')+'"></polyline></svg>';
 
-  for (var n=0; n<nodes.length; n++){
-    var node = nodes[n];
-    var x = patternX[n % patternX.length];
-    var posClass = x < 40 ? 'p-left' : (x > 60 ? 'p-right' : 'p-center');
+  for (var n=0;n<nodes.length;n++){
+    var node=nodes[n];
+    var x=patternX[n%patternX.length];
+    var posClass=x<40?'p-left':(x>60?'p-right':'p-center');
     h+='<div class="journey-row">';
-    if (node.type==='level'){
-      var lvl = node.level;
-      var status = lvl.index < journey.completedCount ? 'done' : (journey.currentIndex===lvl.index ? 'current' : 'locked');
-      var attrs = status==='locked' ? ' disabled aria-label="Level '+(lvl.index+1)+' locked"' : ' data-start-level="'+lvl.index+'" aria-label="'+(status==='done'?'Replay':'Start')+' level '+(lvl.index+1)+'"';
+    if(node.type==='level'){
+      var lvl=node.level;
+      var status=lvl.index<journey.completedCount?'done':(journey.currentIndex===lvl.index?'current':'locked');
+      var attrs=status==='locked'?' disabled aria-label="Level '+(lvl.index+1)+' locked"':' data-start-level="'+lvl.index+'" aria-label="'+(status==='done'?'Replay':'Start')+' level '+(lvl.index+1)+'"';
       h+='<button class="journey-stone '+status+' '+posClass+'"'+attrs+'>';
       h+='<span class="journey-stone-base"></span>';
       h+='<span class="journey-stone-mark">'+(lvl.index+1)+'</span>';
-      if (status==='done') h+='<span class="journey-stone-check">'+icon('check',14)+'</span>';
-      if (status==='current' || (status==='done' && lvl.index===journey.completedCount-1 && journey.currentIndex===null)) h+='<img class="journey-dolphin-perch" src="'+DOLPHIN_INTRO_SRC+'" alt="">';
+      if(status==='done') h+='<span class="journey-stone-check">'+icon('check',14)+'</span>';
+      if(status==='current'||(status==='done'&&lvl.index===journey.completedCount-1&&journey.currentIndex===null)) h+='<img class="journey-dolphin-perch" src="'+DOLPHIN_INTRO_SRC+'" alt="">';
       h+='</button>';
     } else {
-      var unlocked = journey.completedCount >= node.levelCount;
-      var passed = !!checkpointDone[String(node.checkpointIndex)];
-      var tStatus = passed ? 'done' : (unlocked ? 'current' : 'locked');
-      var tAttrs = unlocked ? ' data-start-checkpoint="'+node.checkpointIndex+'" aria-label="Start checkpoint test '+node.checkpointIndex+'"' : ' disabled aria-label="Checkpoint test '+node.checkpointIndex+' locked"';
+      var unlocked=journey.completedCount>=node.levelCount;
+      var passed=!!checkpointDone[String(node.checkpointIndex)];
+      var tStatus=passed?'done':(unlocked?'current':'locked');
+      var tAttrs=unlocked?' data-start-checkpoint="'+node.checkpointIndex+'" aria-label="Start checkpoint test '+node.checkpointIndex+'"':' disabled aria-label="Checkpoint test '+node.checkpointIndex+' locked"';
       h+='<button class="journey-stone checkpoint '+tStatus+' '+posClass+'"'+tAttrs+'>';
       h+='<span class="journey-stone-base"></span>';
       h+='<span class="journey-test-badge">'+icon('clipboard',14)+'</span>';
       h+='<span class="journey-stone-mark">Test<strong>'+node.checkpointIndex+'</strong></span>';
-      if (passed) h+='<span class="journey-stone-check">'+icon('check',14)+'</span>';
+      if(passed) h+='<span class="journey-stone-check">'+icon('check',14)+'</span>';
       h+='</button>';
     }
     h+='</div>';
@@ -3245,6 +3377,17 @@ function renderLearnCard(){
   return h;
 }
 
+function setFlashCardRevealed(revealed){
+  if (!UI.session || UI.session.phase!=='e2g') return;
+  UI.session.cardRevealed = !!revealed;
+  var card = document.querySelector('#c1app [data-flash-card]');
+  if (card) card.classList.toggle('flipped', UI.session.cardRevealed);
+  var hint = document.getElementById('flash-kbd-hint');
+  if (hint) hint.innerHTML = UI.session.cardRevealed
+    ? 'Click card to flip back &nbsp; · &nbsp; <kbd>1</kbd> didn’t know &nbsp; <kbd>2</kbd> knew it'
+    : 'Click card or <kbd>Space</kbd> to show answer';
+}
+
 function renderE2GCard(){
   var s = UI.session;
   var id = s.currentId;
@@ -3284,7 +3427,7 @@ function renderE2GCard(){
   h += '</div></div></div>';
 
   h += '</div></div></div>';
-  h += '<div class="kbd-hint">'+(s.cardRevealed ? 'Click card to flip back &nbsp; · &nbsp; <kbd>1</kbd> didn’t know &nbsp; <kbd>2</kbd> knew it' : 'Click card or <kbd>Space</kbd> to show answer')+'</div>';
+  h += '<div class="kbd-hint" id="flash-kbd-hint">'+(s.cardRevealed ? 'Click card to flip back &nbsp; · &nbsp; <kbd>1</kbd> didn’t know &nbsp; <kbd>2</kbd> knew it' : 'Click card or <kbd>Space</kbd> to show answer')+'</div>';
   return h;
 }
 
@@ -3724,12 +3867,11 @@ function bindEvents(){
 
   // Session: e2g
   var revealBtn = document.getElementById('reveal-answer-btn');
-  if (revealBtn) revealBtn.addEventListener('click', function(){ UI.session.cardRevealed = true; render(); });
+  if (revealBtn) revealBtn.addEventListener('click', function(){ setFlashCardRevealed(true); });
   var flashCard = root.querySelector('[data-flash-card]');
   if (flashCard) flashCard.addEventListener('click', function(ev){
     if (ev.target && ev.target.closest && ev.target.closest('button')) return;
-    UI.session.cardRevealed = !UI.session.cardRevealed;
-    render();
+    setFlashCardRevealed(!UI.session.cardRevealed);
   });
   root.querySelectorAll('[data-rate]').forEach(function(el){
     el.addEventListener('click', function(){ rateE2G(el.getAttribute('data-rate')); });
@@ -3926,7 +4068,7 @@ document.addEventListener('keydown', function(ev){
       moveLearnCard(-1);
     }
   } else if (s.phase==='e2g'){
-    if (ev.key===' '){ ev.preventDefault(); s.cardRevealed=!s.cardRevealed; render(); }
+    if (ev.key===' '){ ev.preventDefault(); setFlashCardRevealed(!s.cardRevealed); }
     else if (s.cardRevealed){
       if (ev.key==='1'){ rateE2G('no'); }
       else if (ev.key==='2'){ rateE2G('yes'); }
