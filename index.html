@@ -192,6 +192,34 @@
   #c1app .detail-block .dl b { color: var(--ink); font-weight:600; }
   #c1app .example-box { background: var(--paper-alt); border-left: 3px solid var(--indigo); padding: 10px 14px; border-radius: 3px; margin-top: 16px; font-size: 14px; color: var(--ink); font-style: italic; }
   #c1app .example-label { display:block; font-style:normal; font-size:10.5px; line-height:1; text-transform:uppercase; letter-spacing:.09em; font-weight:800; color:var(--indigo); margin-bottom:7px; }
+  #c1app .writing-german-example {
+    max-width: 520px;
+    margin: 10px auto 18px;
+    padding: 9px 12px;
+    border-radius: 10px;
+    background: rgba(238,242,255,.72);
+    border: 1px solid rgba(199,210,254,.72);
+    color: var(--ink-soft);
+    font-size: 12.5px;
+    line-height: 1.55;
+    text-align: center;
+  }
+  #c1app .writing-german-example .lbl {
+    display:block;
+    margin-bottom:4px;
+    font-size:10px;
+    font-weight:800;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--indigo);
+  }
+  #c1app .writing-german-example mark {
+    padding: 1px 4px;
+    border-radius: 5px;
+    background: #DDD6FE;
+    color: #4C1D95;
+    font-weight:800;
+  }
   #c1app .flash-direction-wrap { display:flex; justify-content:center; margin:0 0 14px; }
   #c1app .flash-direction-toggle { display:inline-grid; grid-template-columns:1fr 1fr; gap:4px; padding:4px; border:1px solid var(--border); border-radius:12px; background:#F8FAFC; }
   #c1app .flash-direction-btn { appearance:none; border:0; background:transparent; color:var(--ink-soft); font:inherit; font-size:12.5px; font-weight:700; padding:8px 12px; border-radius:9px; cursor:pointer; transition:.18s ease; white-space:nowrap; }
@@ -1214,6 +1242,11 @@
   #c1app .card.sessioncard.learn-top-card::after {
     display: none;
   }
+  #c1app .card.sessioncard.learn-top-card.learn-cycle-to-back {
+    pointer-events: none;
+    transform-origin: 50% 55%;
+    animation: learnTopToBack .58s cubic-bezier(.22,.72,.25,1) both;
+  }
   #c1app .card.sessioncard.learn-top-card.learn-swipe-out-left {
     pointer-events: none;
     animation: learnTopOutLeft .25s cubic-bezier(.42,0,.9,.6) both;
@@ -1221,6 +1254,37 @@
   #c1app .card.sessioncard.learn-top-card.learn-swipe-out-right {
     pointer-events: none;
     animation: learnTopOutRight .25s cubic-bezier(.42,0,.9,.6) both;
+  }
+  @keyframes learnTopToBack {
+    0% {
+      opacity:1;
+      z-index:3;
+      transform:translateX(0) translateY(0) rotate(0deg) scale(1);
+      box-shadow:0 22px 48px -28px rgba(15,23,42,.36);
+    }
+    38% {
+      opacity:1;
+      z-index:3;
+      transform:translateX(64%) translateY(-16px) rotate(7deg) scale(.995);
+      box-shadow:0 28px 44px -24px rgba(15,23,42,.32);
+    }
+    50% {
+      opacity:.95;
+      z-index:0;
+      transform:translateX(54%) translateY(3px) rotate(4deg) scale(.988);
+    }
+    78% {
+      opacity:.84;
+      z-index:0;
+      transform:translateX(5%) translateY(calc(var(--stack-depth, 0px) + 12px)) rotate(-.8deg) scale(.978);
+      box-shadow:0 9px 22px -15px rgba(15,23,42,.22);
+    }
+    100% {
+      opacity:.68;
+      z-index:0;
+      transform:translateX(0) translateY(calc(var(--stack-depth, 0px) + 16px)) rotate(-.25deg) scale(.974);
+      box-shadow:0 7px 18px -15px rgba(15,23,42,.18);
+    }
   }
   @keyframes learnTopOutLeft {
     0% { opacity:1; transform:translateX(0) translateY(0) rotate(0deg); }
@@ -1231,6 +1295,7 @@
     100% { opacity:0; transform:translateX(118%) translateY(-8px) rotate(7deg); }
   }
   @media (prefers-reduced-motion: reduce) {
+    #c1app .card.sessioncard.learn-top-card.learn-cycle-to-back,
     #c1app .card.sessioncard.learn-top-card.learn-swipe-out-left,
     #c1app .card.sessioncard.learn-top-card.learn-swipe-out-right { animation-duration: .01ms !important; }
   }
@@ -1419,7 +1484,7 @@ var C1_STORAGE = (function(){
 })();
 
 /* ============================= CONSTANTS ============================= */
-var APP_BUILD = '2026-09-17-account-sync-v2';
+var APP_BUILD = '2026-09-17-german-writing-context-random-repeats';
 
 /* ============================= ACCOUNT + CLOUD SYNC (SUPABASE) ============================= */
 /* Publishable keys are designed for browser clients. User data is protected by Supabase Auth + RLS. */
@@ -2064,6 +2129,113 @@ function renderExampleBox(it){
   var ex = displayExample(it);
   if (!ex) return '';
   return '<div class="example-box"><span class="example-label">Example sentence</span>“'+escapeHtml(ex)+'”</div>';
+}
+
+var GERMAN_WRITING_CONTEXT = {
+  1:  ['Mehrere Faktoren können den starken Preisanstieg ', 'erklären', '.'],
+  2:  ['Wir müssen bei der Entscheidung alle Kosten ', 'berücksichtigen', '.'],
+  3:  ['Du solltest die kurze Frist immer ', 'im Hinterkopf behalten', '.'],
+  4:  ['Das Team muss morgen eine wichtige Untersuchung ', 'durchführen', '.'],
+  5:  ['Zu wenig Planung kann ', 'zu unnötigen Verzögerungen führen', '.'],
+  6:  ['Viele Probleme können ', 'aus schlechter Kommunikation resultieren', '.'],
+  7:  ['Regelmäßiges Training kann ', 'zum Erfolg beitragen', '.'],
+  8:  ['Diese Entscheidung könnte ', 'zu großen Problemen führen', '.'],
+  9:  ['Die neue Regel kann deutliche Veränderungen ', 'bewirken', '.'],
+  10: ['Sie möchte in der Besprechung einen neuen Vorschlag ', 'vorbringen', '.'],
+  11: ['Nach der Untersuchung konnte der Arzt eine schwere Krankheit ', 'ausschließen', '.'],
+  12: ['Bei der Recherche kann man ', 'auf einen interessanten Artikel stoßen', '.'],
+  13: ['Das Team muss ', 'sich eine kreative Lösung einfallen lassen', '.'],
+  14: ['Ich kann gut ', 'mit Werkzeug umgehen', '.'],
+  15: ['In schwierigen Situationen kann ich ', 'mich auf meine Freunde verlassen', '.'],
+  16: ['Der Regen kann uns ', 'daran hindern, das Haus zu verlassen', '.'],
+  17: ['Sie kann ', 'für das neue Projekt verantwortlich sein', '.'],
+  18: ['Dieses Programm kann ', 'zu komplexen Berechnungen fähig sein', '.'],
+  19: ['Hoher Stress kann ', 'mit schlechtem Schlaf verbunden sein', '.'],
+  20: ['Wir gingen ', 'trotz des schlechten Wetters', ' spazieren.'],
+  21: ['Wir machten ', 'trotz der Kritik', ' weiter.'],
+  22: ['Die Aufgabe ist ', 'keineswegs', ' einfach.'],
+  23: ['Ich stimme dir ', 'bis zu einem gewissen Grad', ' zu.'],
+  24: ['Das neue Modell ist ', 'im Vergleich zum alten Modell', ' effizienter.'],
+  25: ['Die Entscheidung wurde ', 'angesichts der neuen Informationen', ' geändert.'],
+  26: ['Ich habe eine Frage ', 'hinsichtlich des neuen Projekts', '.'],
+  27: ['Der erste Plan ist günstiger, ', 'wohingegen', ' der zweite flexibler ist.'],
+  28: ['Die Situation war schwierig; ', 'dennoch', ' machten wir weiter.'],
+  29: ['Das Unternehmen reagierte zu spät; ', 'infolgedessen', ' verlor es Kunden.'],
+  30: ['', 'Zugegebenermaßen', ' ist der Plan teuer, aber er hat Vorteile.'],
+  31: ['Die Kampagne soll das Bewusstsein für psychische Gesundheit ', 'schärfen', '.'],
+  32: ['Der Klimawandel kann für Küstenregionen eine ernste Gefahr ', 'darstellen', '.'],
+  33: ['Bewerber müssen bestimmte Voraussetzungen ', 'erfüllen', '.'],
+  34: ['Nach langer Diskussion konnten wir zu einem Ergebnis ', 'kommen', '.'],
+  35: ['Aus so wenigen Daten kann man kaum eine sichere Schlussfolgerung ', 'ziehen', '.'],
+  36: ['Sie möchte sich bei der Vorbereitung besonders ', 'bemühen', '.'],
+  37: ['Die Regierung muss schnell ', 'Maßnahmen ergreifen', '.'],
+  38: ['Das Unternehmen hat zusätzliche Sicherheitsmaßnahmen ', 'getroffen', '.'],
+  39: ['Technologie kann im Unterricht eine wichtige Rolle ', 'spielen', '.'],
+  40: ['Die neue Regel könnte große Auswirkungen auf kleine Firmen ', 'haben', '.']
+};
+
+function germanWritingContextParts(it){
+  if (!it) return ['','', ''];
+  if (GERMAN_WRITING_CONTEXT[it.id]) return GERMAN_WRITING_CONTEXT[it.id];
+
+  var raw = (it.german && it.german.length ? String(it.german[0]) : '').trim();
+  if (!raw) return ['','',''];
+
+  var phrase = raw
+    .replace(/etwas\/jemanden/gi, 'ein Problem oder eine Person')
+    .replace(/jemanden\/etwas/gi, 'eine Person oder ein Problem')
+    .replace(/\bjemandem\b/gi, 'einem Kollegen')
+    .replace(/\bjemanden\b/gi, 'einen Kollegen')
+    .replace(/\bjemand\b/gi, 'eine Person')
+    .replace(/\betwas\b/gi, 'das Problem')
+    .replace(/\bjdm\.?\b/gi, 'einem Kollegen')
+    .replace(/\bjdn\.?\b/gi, 'einen Kollegen')
+    .replace(/\betw\.?\b/gi, 'das Problem')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+  var type = String(it.type || '').toLowerCase();
+  var lower = phrase.toLowerCase();
+
+  if (type.indexOf('adjective') !== -1){
+    return ['Das Ergebnis kann ', phrase, ' sein.'];
+  }
+  if (type.indexOf('noun') !== -1){
+    return ['Der Begriff ', phrase, ' spielt in diesem Zusammenhang eine wichtige Rolle.'];
+  }
+  if (type.indexOf('linking') !== -1 || type.indexOf('connector') !== -1){
+    var specialConnectors = {
+      'dennoch':['Die Aufgabe war schwierig; ','dennoch',' machten wir weiter.'],
+      'jedoch':['Der Plan ist teuer; ','jedoch',' könnte er langfristig helfen.'],
+      'allerdings':['Die Idee ist gut; ','allerdings',' ist sie teuer.'],
+      'infolgedessen':['Es regnete stark; ','infolgedessen',' wurde das Spiel abgesagt.'],
+      'wohingegen':['Der erste Plan ist günstig, ','wohingegen',' der zweite flexibler ist.'],
+      'während':['Der eine arbeitet, ','während',' der andere eine Pause macht.'],
+      'es sei denn':['Wir gehen spazieren, ','es sei denn',' es regnet.']
+    };
+    return specialConnectors[lower] || ['Im Satz wird das Verbindungswort ', phrase, ' verwendet.'];
+  }
+  if (type.indexOf('adverb') !== -1){
+    if (lower === 'selten') return ['Ich gehe ', 'selten', ' so spät schlafen.'];
+    return ['In diesem Zusammenhang wird ', phrase, ' verwendet.'];
+  }
+
+  if (/^mit\b/i.test(phrase)) return ['Ich kann gut ', phrase, '.'];
+  if (/^(zu|aus|von|durch|wegen|trotz|angesichts|hinsichtlich|bezüglich)\b/i.test(phrase)) return ['Das kann ', phrase, '.'];
+  if (/^sich\b/i.test(phrase)) return ['Man kann ', phrase, '.'];
+  if (/\bsein$/i.test(phrase)) return ['Er kann ', phrase, '.'];
+  if (/\b(haben|werden)$/i.test(phrase)) return ['Das kann ', phrase, '.'];
+  if (/\.\.\./.test(phrase)) return ['Ein mögliches Beispiel für diesen Ausdruck ist ', phrase, '.'];
+
+  return ['Man kann ', phrase, '.'];
+}
+
+function renderGermanWritingExample(it){
+  var p = germanWritingContextParts(it);
+  if (!p || !p[1]) return '';
+  return '<div class="writing-german-example"><span class="lbl">Deutscher Beispielsatz</span>'
+    + escapeHtml(p[0]) + '<mark>' + escapeHtml(p[1]) + '</mark>' + escapeHtml(p[2])
+    + '</div>';
 }
 function normalizeAnswer(s){ return String(s||'').trim().toLowerCase().replace(/\s+/g,' '); }
 function normalizePlaceholderNotation(s){
@@ -2721,10 +2893,34 @@ function rateE2G(rating){
   render();
 }
 
+function insertWritingOccurrenceRandom(id, minGap){
+  var s=UI.session;
+  if(!s || !s.queueG2E) return;
+  minGap = (typeof minGap==='number') ? minGap : 1;
+
+  var minIndex = Math.min(s.queueG2E.length, Math.max(1, minGap + 1));
+  var candidates = [];
+  for(var pos=minIndex; pos<=s.queueG2E.length; pos++){
+    var prev = pos>0 ? s.queueG2E[pos-1] : null;
+    var next = pos<s.queueG2E.length ? s.queueG2E[pos] : null;
+    if(prev!==id && next!==id) candidates.push(pos);
+  }
+
+  // If the queue is too short to keep duplicates apart, use any later slot.
+  if(!candidates.length){
+    for(var pos2=minIndex; pos2<=s.queueG2E.length; pos2++) candidates.push(pos2);
+  }
+  if(!candidates.length) candidates.push(s.queueG2E.length);
+
+  var pick = candidates[Math.floor(Math.random()*candidates.length)];
+  s.queueG2E.splice(pick, 0, id);
+}
 function queueWritingRepeat(id){
   var s=UI.session;
   if(!s || s.mode==='test') return;
-  s.queueG2E.push(id);
+  // Keep at least one other word between the current occurrence and its repeat
+  // whenever enough words remain, then distribute it randomly in the queue.
+  insertWritingOccurrenceRandom(id, 1);
 }
 function removeOneQueuedRepeat(id){
   var s=UI.session;
@@ -2858,7 +3054,7 @@ function skipRetype(){
   var id = s.currentId;
   s.retypeError = null;
   s.queueG2E.shift();
-  s.queueG2E.splice(Math.min(3, s.queueG2E.length), 0, id);
+  insertWritingOccurrenceRandom(id, 1);
   g2eDequeue();
   render();
 }
@@ -3074,6 +3270,17 @@ function fireDolphinAdvanceSwim(){
   setTimeout(function(){ if (layer.parentNode) layer.parentNode.removeChild(layer); }, 4700);
 }
 
+function focusWritingInput(){
+  if (!UI.session || UI.screen!=='session' || UI.session.phase!=='g2e' || UI.session.g2eStage!=='input') return;
+  var field = document.getElementById('g2e-field');
+  if (!field || field.disabled) return;
+  try { field.focus({preventScroll:true}); } catch(e) { try { field.focus(); } catch(e2){} }
+  try {
+    var len = field.value.length;
+    field.setSelectionRange(len, len);
+  } catch(e3){}
+}
+
 function render(){
   var root = document.getElementById('c1app');
   if (UI.screen==='loading'){ root.innerHTML = '<div class="loading-wrap">Loading your vocabulary…</div>'; return; }
@@ -3094,6 +3301,7 @@ function render(){
   if (UI.confirmDialog) html += renderConfirmModal();
   root.innerHTML = html;
   bindEvents();
+  focusWritingInput();
   animateCountUps();
   if (UI.session && UI.session.pendingConfetti){
     var pc = UI.session.pendingConfetti;
@@ -3458,8 +3666,13 @@ function moveLearnCard(delta){
   }
 
   if (!card){ commit(); return; }
-  card.classList.add(goingForward ? 'learn-swipe-out-left' : 'learn-swipe-out-right');
-  setTimeout(commit, 205);
+  if (goingForward){
+    card.classList.add('learn-cycle-to-back');
+    setTimeout(commit, 545);
+  } else {
+    card.classList.add('learn-swipe-out-right');
+    setTimeout(commit, 205);
+  }
 }
 function leaveLearnForPractice(){
   var s = UI.session;
@@ -3582,6 +3795,7 @@ function renderG2ECard(){
   var h = '<div class="card sessioncard"><div class="bigword-wrap">';
   h += '<div class="bigmeaning serif">'+escapeHtml((it.german||[]).join('; '))+'</div>';
   if (it.type) h += '<div class="wordtype">'+escapeHtml(it.type)+'</div>';
+  if (s.mode!=='test') h += renderGermanWritingExample(it);
 
   if (s.mode==='test'){
     h += '<div class="g2e-input-wrap"><input type="text" class="g2e-input" id="g2e-field" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Type the English word\u2026" value="'+escapeHtml(s.g2eInput)+'"></div>';
