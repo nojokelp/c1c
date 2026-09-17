@@ -1419,7 +1419,7 @@ var C1_STORAGE = (function(){
 })();
 
 /* ============================= CONSTANTS ============================= */
-var APP_BUILD = '2026-09-17-flip-depth-ocean';
+var APP_BUILD = '2026-09-17-account-sync-v2';
 
 /* ============================= ACCOUNT + CLOUD SYNC (SUPABASE) ============================= */
 /* Publishable keys are designed for browser clients. User data is protected by Supabase Auth + RLS. */
@@ -1427,13 +1427,16 @@ var SUPABASE_URL = 'https://cgebeadveekxlbdubjkq.supabase.co';
 var SUPABASE_KEY = 'sb_publishable_9bAyiT9-wXIGg_ddT_j-Uw_QEQmLD4Q';
 var AUTH_SESSION_KEY = 'c1-vocab-auth-session-v1';
 var AUTH_OWNER_KEY = 'c1-vocab-local-owner-v1';
-var REMOTE_SYNC_SCHEMA = 2;
+var REMOTE_SYNC_SCHEMA = 3;
 var REMOTE_SYNC_TIMEOUT_MS = 7000;
+var REMOTE_PULL_INTERVAL_MS = 10000;
 var SYNC_UI = { status:'idle', message:'', lastSyncedAt:null };
 var AUTH_UI = { session:null, user:null, busy:false, message:'', error:false };
 var remoteSaveTimer = null;
 var remoteSaveInFlight = false;
 var remoteSaveQueued = false;
+var remotePullTimer = null;
+var remotePullInFlight = false;
 
 function safeLocalGet(key){ try { return window.localStorage.getItem(key); } catch(e){ return null; } }
 function safeLocalSet(key,val){ try { window.localStorage.setItem(key,val); } catch(e){} }
@@ -1467,14 +1470,21 @@ function setAuthMessage(message, isError){
     el.style.display = AUTH_UI.message ? 'block' : 'none';
   }
 }
+function cloneJson(value){
+  try { return JSON.parse(JSON.stringify(value)); } catch(e){ return value; }
+}
 function remotePayloadFromState(){
+  var meta = cloneJson(STATE.meta || {});
+  /* One-device-only celebration flags must never be copied to another device. */
+  meta.pendingHomeFireworks = false;
+  meta.pendingLevelAdvanceSwim = false;
   return {
     schemaVersion: REMOTE_SYNC_SCHEMA,
     vocabVersion: VOCAB_VERSION,
-    progress: STATE.progress || {},
-    settings: STATE.settings || {},
-    dailyStats: STATE.dailyStats || {},
-    meta: STATE.meta || {}
+    progress: cloneJson(STATE.progress || {}),
+    settings: cloneJson(STATE.settings || {}),
+    dailyStats: cloneJson(STATE.dailyStats || {}),
+    meta: meta
   };
 }
 function progressStrength(payload){
@@ -1489,19 +1499,113 @@ function progressStrength(payload){
   });
   return score;
 }
+function newerIso(a,b){
+  var ta = Date.parse(a||'') || 0, tb = Date.parse(b||'') || 0;
+  return ta >= tb ? (a||b||null) : (b||a||null);
+}
+function laterDateKey(a,b){
+  if (!a) return b || null;
+  if (!b) return a || null;
+  return String(a) >= String(b) ? a : b;
+}
+function mergeNumberMax(a,b){ return Math.max(Number(a)||0, Number(b)||0); }
+function mergeProgressRecord(localRec, remoteRec){
+  if (!localRec) return cloneJson(remoteRec || {});
+  if (!remoteRec) return cloneJson(localRec || {});
+  var localTime = Date.parse(localRec.lastReviewAt||'') || 0;
+  var remoteTime = Date.parse(remoteRec.lastReviewAt||'') || 0;
+  var newest = localTime >= remoteTime ? localRec : remoteRec;
+  var out = Object.assign({}, cloneJson(newest));
+  ['timesSeen','e2gCorrect','e2gWrong','e2gAlmost','g2eCorrect','g2eWrong','g2eHardWrong','g2eTypoWrong','spellingMistakes','streak'].forEach(function(k){
+    out[k] = mergeNumberMax(localRec[k], remoteRec[k]);
+  });
+  out.level = Math.max(typeof localRec.level==='number'?localRec.level:-1, typeof remoteRec.level==='number'?remoteRec.level:-1);
+  out.lastReviewAt = newerIso(localRec.lastReviewAt, remoteRec.lastReviewAt);
+  /* The most recently reviewed record decides the next due date and recent-answer history. */
+  if (newest.nextReviewDate) out.nextReviewDate = newest.nextReviewDate;
+  else out.nextReviewDate = laterDateKey(localRec.nextReviewDate, remoteRec.nextReviewDate);
+  if (newest.lastAnswers) out.lastAnswers = cloneJson(newest.lastAnswers);
+  return out;
+}
+function mergeDailyStats(localStats, remoteStats){
+  var out = {};
+  var dates = {};
+  Object.keys(localStats||{}).forEach(function(k){ dates[k]=true; });
+  Object.keys(remoteStats||{}).forEach(function(k){ dates[k]=true; });
+  Object.keys(dates).forEach(function(day){
+    var a=(localStats||{})[day]||{}, b=(remoteStats||{})[day]||{};
+    var row={};
+    var keys={};
+    Object.keys(a).forEach(function(k){ keys[k]=true; });
+    Object.keys(b).forEach(function(k){ keys[k]=true; });
+    Object.keys(keys).forEach(function(k){
+      if (typeof a[k]==='number' || typeof b[k]==='number') row[k]=mergeNumberMax(a[k],b[k]);
+      else row[k] = (a[k]!==undefined ? a[k] : b[k]);
+    });
+    out[day]=row;
+  });
+  return out;
+}
+function mergePayloads(localPayload, remotePayload){
+  if (!remotePayload || typeof remotePayload!=='object') return cloneJson(localPayload);
+  if (!localPayload || typeof localPayload!=='object') return cloneJson(remotePayload);
+  if (remotePayload.vocabVersion && remotePayload.vocabVersion !== VOCAB_VERSION) return cloneJson(localPayload);
+
+  var localMeta=localPayload.meta||{}, remoteMeta=remotePayload.meta||{};
+  var localTs=Date.parse(localMeta.lastModifiedAt||'')||0;
+  var remoteTs=Date.parse(remoteMeta.lastModifiedAt||'')||0;
+  var newerPayload = localTs >= remoteTs ? localPayload : remotePayload;
+  var merged = {
+    schemaVersion: REMOTE_SYNC_SCHEMA,
+    vocabVersion: VOCAB_VERSION,
+    progress:{},
+    settings:Object.assign({}, DEFAULT_SETTINGS, cloneJson((newerPayload&&newerPayload.settings)||{})),
+    dailyStats:mergeDailyStats(localPayload.dailyStats||{}, remotePayload.dailyStats||{}),
+    meta:Object.assign({}, cloneJson(remoteMeta), cloneJson(localMeta))
+  };
+
+  var ids={};
+  Object.keys(localPayload.progress||{}).forEach(function(id){ids[id]=true;});
+  Object.keys(remotePayload.progress||{}).forEach(function(id){ids[id]=true;});
+  Object.keys(ids).forEach(function(id){
+    merged.progress[id]=mergeProgressRecord((localPayload.progress||{})[id], (remotePayload.progress||{})[id]);
+  });
+
+  merged.meta.currentJourneyLevel = Math.max(Number(localMeta.currentJourneyLevel)||0, Number(remoteMeta.currentJourneyLevel)||0);
+  merged.meta.streakDays = Math.max(Number(localMeta.streakDays)||0, Number(remoteMeta.streakDays)||0);
+  merged.meta.lastActiveDate = laterDateKey(localMeta.lastActiveDate, remoteMeta.lastActiveDate);
+  merged.meta.nextId = Math.max(Number(localMeta.nextId)||0, Number(remoteMeta.nextId)||0, TEST_DATA.length+1);
+  merged.meta.vocabVersion = VOCAB_VERSION;
+  merged.meta.lastModifiedAt = newerIso(localMeta.lastModifiedAt, remoteMeta.lastModifiedAt);
+  merged.meta.completedCheckpointTests = Object.assign({}, remoteMeta.completedCheckpointTests||{}, localMeta.completedCheckpointTests||{});
+  merged.meta.pendingHomeFireworks = false;
+  merged.meta.pendingLevelAdvanceSwim = false;
+  return merged;
+}
+function comparablePayload(payload){
+  var p=cloneJson(payload||{});
+  if (p.meta){
+    delete p.meta.lastModifiedAt;
+    delete p.meta.pendingHomeFireworks;
+    delete p.meta.pendingLevelAdvanceSwim;
+  }
+  return JSON.stringify(p);
+}
 function applyRemotePayload(payload){
   if (!payload || typeof payload !== 'object') return false;
   if (payload.vocabVersion && payload.vocabVersion !== VOCAB_VERSION) return false;
-  if (payload.progress && typeof payload.progress === 'object') STATE.progress = payload.progress;
+  if (payload.progress && typeof payload.progress === 'object') STATE.progress = cloneJson(payload.progress);
   if (payload.settings && typeof payload.settings === 'object') {
     var defaults = JSON.parse(JSON.stringify(DEFAULT_SETTINGS));
-    STATE.settings = Object.assign(defaults, payload.settings);
+    STATE.settings = Object.assign(defaults, cloneJson(payload.settings));
   }
-  if (payload.dailyStats && typeof payload.dailyStats === 'object') STATE.dailyStats = payload.dailyStats;
+  if (payload.dailyStats && typeof payload.dailyStats === 'object') STATE.dailyStats = cloneJson(payload.dailyStats);
   if (payload.meta && typeof payload.meta === 'object') {
     var keepNextId = STATE.meta && STATE.meta.nextId;
-    STATE.meta = Object.assign({}, STATE.meta || {}, payload.meta);
+    STATE.meta = Object.assign({}, STATE.meta || {}, cloneJson(payload.meta));
     STATE.meta.vocabVersion = VOCAB_VERSION;
+    STATE.meta.pendingHomeFireworks = false;
+    STATE.meta.pendingLevelAdvanceSwim = false;
     if (keepNextId && !STATE.meta.nextId) STATE.meta.nextId = keepNextId;
   }
   STATE = migrateState(STATE);
@@ -1558,9 +1662,14 @@ function storeAuthSession(data){
   AUTH_UI.session = session;
   AUTH_UI.user = session.user || null;
   safeLocalSet(AUTH_SESSION_KEY, JSON.stringify(session));
+  startRemotePullLoop();
   return session;
 }
+function stopRemotePullLoop(){
+  if (remotePullTimer){ clearInterval(remotePullTimer); remotePullTimer=null; }
+}
 function clearAuthSession(){
+  stopRemotePullLoop();
   AUTH_UI.session = null;
   AUTH_UI.user = null;
   safeLocalRemove(AUTH_SESSION_KEY);
@@ -1574,6 +1683,7 @@ function restoreAuthSession(){
     if (!session || !session.access_token || !session.refresh_token) return null;
     AUTH_UI.session = session;
     AUTH_UI.user = session.user || null;
+    startRemotePullLoop();
     return session;
   } catch(e){ return null; }
 }
@@ -1657,86 +1767,86 @@ function fetchRemoteStateForUser(){
     var url = SUPABASE_URL + '/rest/v1/vocab_user_progress?user_id=eq.' + encodeURIComponent(uid) + '&select=state,updated_at&limit=1';
     return withFetchTimeout(url, {
       method:'GET',
-      headers:{ 'apikey':SUPABASE_KEY, 'Authorization':'Bearer ' + session.access_token, 'Accept':'application/json' }
+      headers:{ 'apikey':SUPABASE_KEY, 'Authorization':'Bearer ' + session.access_token, 'Accept':'application/json', 'Cache-Control':'no-store' }
     }).then(readJsonResponse).then(function(rows){ return rows && rows.length ? rows[0] : null; });
   });
 }
+function writeRemotePayload(session, payload){
+  var uid=session.user.id;
+  var body=[{ user_id:uid, state:payload }];
+  var url=SUPABASE_URL + '/rest/v1/vocab_user_progress?on_conflict=user_id';
+  return withFetchTimeout(url, {
+    method:'POST',
+    headers:{
+      'apikey':SUPABASE_KEY,
+      'Authorization':'Bearer ' + session.access_token,
+      'Content-Type':'application/json',
+      'Prefer':'resolution=merge-duplicates,return=minimal'
+    },
+    body:JSON.stringify(body)
+  }).then(function(res){ if(!res.ok) return readJsonResponse(res); return null; });
+}
 function saveRemoteNow(){
   if (!STATE || !AUTH_UI.session) return Promise.resolve(false);
-  if (remoteSaveInFlight){ remoteSaveQueued = true; return Promise.resolve(false); }
-  remoteSaveInFlight = true;
+  if (remoteSaveInFlight){ remoteSaveQueued=true; return Promise.resolve(false); }
+  remoteSaveInFlight=true;
   setSyncStatus('syncing', 'Synchronisiere Fortschritt …');
   return ensureAuthSession().then(function(session){
     if (!session || !session.user || !session.user.id) throw new Error('Nicht angemeldet');
-    var uid = session.user.id;
-    var body = [{ user_id:uid, state:remotePayloadFromState(), updated_at:new Date().toISOString() }];
-    var url = SUPABASE_URL + '/rest/v1/vocab_user_progress?on_conflict=user_id';
-    return withFetchTimeout(url, {
-      method:'POST',
-      headers:{
-        'apikey':SUPABASE_KEY,
-        'Authorization':'Bearer ' + session.access_token,
-        'Content-Type':'application/json',
-        'Prefer':'resolution=merge-duplicates,return=minimal'
-      },
-      body:JSON.stringify(body)
-    }).then(function(res){ if(!res.ok) return readJsonResponse(res); return null; }).then(function(){
-      setLocalOwner(uid);
-      remoteSaveInFlight = false;
-      SYNC_UI.lastSyncedAt = new Date().toISOString();
-      setSyncStatus('ok', 'Fortschritt online gespeichert');
-      if (remoteSaveQueued){ remoteSaveQueued = false; return saveRemoteNow(); }
+    var localPayload=remotePayloadFromState();
+    return fetchRemoteStateForUser().then(function(remoteRow){
+      var merged=remoteRow && remoteRow.state ? mergePayloads(localPayload, remoteRow.state) : localPayload;
+      /* Make the merged state the local state as well so this device can never regress the cloud. */
+      applyRemotePayload(merged);
+      saveLocalSnapshot();
+      return writeRemotePayload(session, remotePayloadFromState());
+    }).then(function(){
+      setLocalOwner(session.user.id);
+      remoteSaveInFlight=false;
+      SYNC_UI.lastSyncedAt=new Date().toISOString();
+      setSyncStatus('ok', 'Fortschritt auf allen Geräten synchronisiert');
+      if (remoteSaveQueued){ remoteSaveQueued=false; return saveRemoteNow(); }
       return true;
     });
   }).catch(function(){
-    remoteSaveInFlight = false;
-    setSyncStatus('error', AUTH_UI.session ? 'Offline gespeichert – Online-Sync wird später erneut versucht' : 'Nicht angemeldet – Fortschritt bleibt lokal');
+    remoteSaveInFlight=false;
+    setSyncStatus('error', AUTH_UI.session ? 'Offline gespeichert – Online-Sync wird automatisch erneut versucht' : 'Nicht angemeldet – Fortschritt bleibt lokal');
     return false;
   });
 }
 function scheduleRemoteSave(){
   if (!AUTH_UI.session) return;
   if (remoteSaveTimer) clearTimeout(remoteSaveTimer);
-  remoteSaveTimer = setTimeout(function(){ saveRemoteNow(); }, 1200);
+  remoteSaveTimer=setTimeout(function(){ saveRemoteNow(); }, 900);
 }
 function loadRemoteAndMerge(forceRemote){
   if (!STATE || !AUTH_UI.session) return Promise.resolve(false);
-  setSyncStatus('syncing', 'Lade Online-Fortschritt …');
+  setSyncStatus('syncing', forceRemote ? 'Lade Cloud-Fortschritt …' : 'Gleiche Fortschritt ab …');
   return ensureAuthSession().then(function(session){
     if (!session || !session.user || !session.user.id) throw new Error('Nicht angemeldet');
-    var uid = session.user.id;
-    var owner = getLocalOwner();
     return fetchRemoteStateForUser().then(function(remoteRow){
       if (!remoteRow || !remoteRow.state){
-        if (owner && owner !== uid){
-          STATE = defaultState();
-          saveLocalSnapshot();
-        }
-        setLocalOwner(uid);
-        setSyncStatus('syncing', 'Erste Online-Sicherung wird erstellt …');
+        setLocalOwner(session.user.id);
         return saveRemoteNow();
       }
-      var remote = remoteRow.state;
-      var localPayload = remotePayloadFromState();
-      var localTs = Date.parse((STATE.meta && STATE.meta.lastModifiedAt) || '') || 0;
-      var remoteTs = Date.parse((remote.meta && remote.meta.lastModifiedAt) || remoteRow.updated_at || '') || 0;
-      var localScore = progressStrength(localPayload);
-      var remoteScore = progressStrength(remote);
-      var mustUseRemote = forceRemote || (owner && owner !== uid) || (!owner && remoteScore > localScore);
-      if (mustUseRemote || (remoteScore===localScore && remoteTs > localTs)){
-        if (applyRemotePayload(remote)){
-          setLocalOwner(uid);
-          saveLocalSnapshot();
-          SYNC_UI.lastSyncedAt = new Date().toISOString();
-          setSyncStatus('ok', 'Online-Fortschritt geladen');
-          render();
-          return true;
-        }
+      var localPayload=remotePayloadFromState();
+      var merged=forceRemote ? cloneJson(remoteRow.state) : mergePayloads(localPayload, remoteRow.state);
+      var remoteBefore=comparablePayload(remoteRow.state);
+      if (applyRemotePayload(merged)){
+        setLocalOwner(session.user.id);
+        saveLocalSnapshot();
+        if (UI.screen!=='session') render();
       }
-      setLocalOwner(uid);
-      if (localScore > remoteScore || localTs > remoteTs) return saveRemoteNow();
-      SYNC_UI.lastSyncedAt = new Date().toISOString();
-      setSyncStatus('ok', 'Online synchronisiert');
+      var mergedNow=remotePayloadFromState();
+      if (!forceRemote && comparablePayload(mergedNow)!==remoteBefore){
+        return writeRemotePayload(session, mergedNow).then(function(){
+          SYNC_UI.lastSyncedAt=new Date().toISOString();
+          setSyncStatus('ok', 'Fortschritt auf allen Geräten synchronisiert');
+          return true;
+        });
+      }
+      SYNC_UI.lastSyncedAt=new Date().toISOString();
+      setSyncStatus('ok', forceRemote ? 'Cloud-Fortschritt geladen' : 'Online synchronisiert');
       return true;
     });
   }).catch(function(){
@@ -1744,6 +1854,40 @@ function loadRemoteAndMerge(forceRemote){
     return false;
   });
 }
+function pullRemoteSilently(){
+  if (!AUTH_UI.session || !STATE || remotePullInFlight || remoteSaveInFlight) return Promise.resolve(false);
+  remotePullInFlight=true;
+  return ensureAuthSession().then(function(session){
+    if (!session) return false;
+    return fetchRemoteStateForUser().then(function(remoteRow){
+      if (!remoteRow || !remoteRow.state) return false;
+      var localPayload=remotePayloadFromState();
+      var before=comparablePayload(localPayload);
+      var merged=mergePayloads(localPayload, remoteRow.state);
+      var after=comparablePayload(merged);
+      if (after!==before){
+        applyRemotePayload(merged);
+        saveLocalSnapshot();
+        if (UI.screen!=='session') render();
+      }
+      /* If this device had progress the server did not yet know, push the merged result back. */
+      if (comparablePayload(merged)!==comparablePayload(remoteRow.state)) scheduleRemoteSave();
+      SYNC_UI.lastSyncedAt=new Date().toISOString();
+      setSyncStatus('ok', 'Online synchronisiert');
+      return after!==before;
+    });
+  }).catch(function(){ return false; }).then(function(result){ remotePullInFlight=false; return result; }, function(){ remotePullInFlight=false; return false; });
+}
+function startRemotePullLoop(){
+  stopRemotePullLoop();
+  if (!AUTH_UI.session) return;
+  remotePullTimer=setInterval(function(){
+    if (!document.hidden) pullRemoteSilently();
+  }, REMOTE_PULL_INTERVAL_MS);
+}
+window.addEventListener('focus', function(){ if (AUTH_UI.session) pullRemoteSilently(); });
+document.addEventListener('visibilitychange', function(){ if (!document.hidden && AUTH_UI.session) pullRemoteSilently(); });
+
 var TIER_ORDER = ['S','A','B','C','D'];
 var INTERVALS_DAYS = [1,3,7,14,30,60,120];
 var DEFAULT_SETTINGS = {
@@ -3748,7 +3892,7 @@ function renderSettings(){
   h += '</div>';
 
   h += '<div class="section"><h2>Account & cloud sync</h2><div class="card account-card">';
-  h += '<div class="account-head"><div><div class="account-title">Fortschritt auf allen Geräten</div><div class="account-copy">Mit demselben Konto auf Computer, Handy oder Tablet anmelden. Dein Lernstand wird automatisch über Supabase synchronisiert.</div></div></div>';
+  h += '<div class="account-head"><div><div class="account-title">Fortschritt auf allen Geräten</div><div class="account-copy">Mit demselben Konto auf Computer, Handy oder Tablet anmelden. Dein Lernstand wird automatisch abgeglichen – auch wenn du zwischen mehreren Geräten wechselst.</div></div></div>';
   h += '<div id="cloud-sync-status" class="cloud-sync-status '+SYNC_UI.status+'">'+escapeHtml(SYNC_UI.message || syncStatusText())+'</div>';
   if (AUTH_UI.session && AUTH_UI.user){
     var accountEmail = AUTH_UI.user.email || 'Account';
