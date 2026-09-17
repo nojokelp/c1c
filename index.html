@@ -402,7 +402,8 @@
   #c1app .section:nth-of-type(5){animation-delay:.26s} #c1app .section:nth-of-type(n+6){animation-delay:.3s}
   #c1app .flip-scene { perspective: 1400px; }
   #c1app .flip-card {
-    position: relative; min-height: 430px;
+    position: relative;
+    cursor: pointer; min-height: 430px;
     transform-style: preserve-3d;
   }
   @keyframes flipToBack { from { transform: rotateY(0deg); } to { transform: rotateY(180deg); } }
@@ -1316,7 +1317,7 @@ var C1_STORAGE = (function(){
 })();
 
 /* ============================= CONSTANTS ============================= */
-var APP_BUILD = '2026-09-17-example-flash-direction';
+var APP_BUILD = '2026-09-17-writing-repeats';
 
 /* ============================= CLOUD SYNC (SUPABASE) ============================= */
 /* Same Supabase project as the other app. The publishable key is intentionally client-side. */
@@ -1658,6 +1659,63 @@ function renderExampleBox(it){
   return '<div class="example-box"><span class="example-label">Example sentence</span>“'+escapeHtml(ex)+'”</div>';
 }
 function normalizeAnswer(s){ return String(s||'').trim().toLowerCase().replace(/\s+/g,' '); }
+function normalizePlaceholderNotation(s){
+  return normalizeAnswer(s)
+    .replace(/\bsomething\b/g,'sth')
+    .replace(/\b(?:somebody|someone)\b/g,'sb')
+    .replace(/\s*\/\s*/g,'/');
+}
+function expandSimpleSlashForms(s){
+  var out=[s], seen={};
+  while(out.length){
+    var cur=out.shift();
+    if(seen[cur]) continue;
+    seen[cur]=true;
+    var m=cur.match(/\b([a-z]+)\/([a-z]+)\b/);
+    if(m){
+      out.push(cur.replace(m[0],m[1]));
+      out.push(cur.replace(m[0],m[2]));
+    }
+  }
+  return Object.keys(seen);
+}
+function acceptedAnswerForms(item){
+  var forms=[];
+  [item.english].concat(item.acceptedAnswers||[]).forEach(function(raw){
+    var n=normalizePlaceholderNotation(raw);
+    expandSimpleSlashForms(n).forEach(function(f){ if(forms.indexOf(f)<0) forms.push(f); });
+  });
+  return forms;
+}
+function itemAllowsOptionalPlaceholder(item){
+  var base=normalizePlaceholderNotation(item.english);
+  if(/\b(?:sth|sb)\b/.test(base)) return false;
+  var type=String(item.type||'').toLowerCase();
+  if(type==='phrasal verb') return true;
+  return /\b(?:for|to|on|with|from|about|of|into|against|at|over|under|by)$/.test(base);
+}
+function stripOptionalPlaceholders(s){
+  return normalizePlaceholderNotation(s).replace(/\b(?:sth|sb)\b/g,'').replace(/\s+/g,' ').trim();
+}
+function isAcceptedAnswer(item, input){
+  var norm=normalizePlaceholderNotation(input);
+  var accepted=acceptedAnswerForms(item);
+  if(accepted.indexOf(norm)>=0) return true;
+  if(itemAllowsOptionalPlaceholder(item)){
+    var stripped=stripOptionalPlaceholders(norm);
+    if(accepted.indexOf(stripped)>=0) return true;
+  }
+  return false;
+}
+function answerDistanceForms(item, input){
+  var norm=normalizePlaceholderNotation(input);
+  var forms=acceptedAnswerForms(item).slice();
+  if(itemAllowsOptionalPlaceholder(item)){
+    var stripped=stripOptionalPlaceholders(norm);
+    if(stripped!==norm) norm=stripped;
+  }
+  return {norm:norm, forms:forms};
+}
 function levenshtein(a,b){
   var m=a.length, n=b.length;
   if(m===0) return n; if(n===0) return m;
@@ -2256,28 +2314,55 @@ function rateE2G(rating){
   render();
 }
 
+function queueWritingRepeat(id){
+  var s=UI.session;
+  if(!s || s.mode==='test') return;
+  s.queueG2E.push(id);
+}
+function removeOneQueuedRepeat(id){
+  var s=UI.session;
+  if(!s) return false;
+  for(var i=s.queueG2E.length-1;i>0;i--){
+    if(s.queueG2E[i]===id){ s.queueG2E.splice(i,1); return true; }
+  }
+  return false;
+}
+function completeCurrentG2EOccurrence(id){
+  var s=UI.session;
+  s.queueG2E.shift();
+  if(s.queueG2E.indexOf(id)===-1) finalizeItem(id);
+  g2eDequeue();
+}
+function writingRepeatCount(id){
+  var s=UI.session;
+  if(!s) return 0;
+  var count=0;
+  for(var i=1;i<s.queueG2E.length;i++) if(s.queueG2E[i]===id) count++;
+  return count;
+}
+
 function submitG2E(){
   var s = UI.session;
   var id = s.currentId;
   var item = itemById(id);
-  var norm = normalizeAnswer(s.g2eInput);
-  var accepted = [item.english].concat(item.acceptedAnswers||[]).map(normalizeAnswer);
-  var exact = accepted.indexOf(norm)>=0;
-  var correct = exact;
+  var rawAnswer = s.g2eInput;
+  var correct = isAcceptedAnswer(item, rawAnswer);
+  var distData = answerDistanceForms(item, rawAnswer);
   if (!correct && !STATE.settings.strictSpelling){
-    var minDist = Math.min.apply(null, accepted.map(function(a){ return levenshtein(norm,a); }));
-    if (minDist<=1 && norm.length>0) correct = true;
+    var minDist = Math.min.apply(null, distData.forms.map(function(a){ return levenshtein(distData.norm,a); }));
+    if (minDist<=1 && distData.norm.length>0) correct = true;
   }
-  s.lastCheck = { correct: correct, userAnswer: s.g2eInput, correctAnswer: item.english };
+  s.lastCheck = { correct: correct, userAnswer: rawAnswer, correctAnswer: item.english };
   if (correct){
     s.g2eStage = 'result';
   } else {
     s.results[id].g2eWrong += 1;
-    var closestDist = norm.length>0 ? Math.min.apply(null, accepted.map(function(a){ return levenshtein(norm,a); })) : 999;
-    var wasTypo = closestDist<=2 && norm.length>0;
+    var closestDist = distData.norm.length>0 ? Math.min.apply(null, distData.forms.map(function(a){ return levenshtein(distData.norm,a); })) : 999;
+    var wasTypo = closestDist<=2 && distData.norm.length>0;
     if (wasTypo) s.results[id].g2eTypoWrong += 1;
     else s.results[id].g2eHardWrong += 1;
     s.lastCheck.wasTypo = wasTypo;
+    queueWritingRepeat(id);
     s.g2eStage = 'result';
   }
   render();
@@ -2288,11 +2373,12 @@ function overrideAsCorrect(){
   var id = s.currentId;
   var item = itemById(id);
   var given = (s.lastCheck.userAnswer||'').trim();
-  var norm = normalizeAnswer(given);
-  var alreadyAccepted = [item.english].concat(item.acceptedAnswers||[]).map(normalizeAnswer).indexOf(norm)>=0;
+  var norm = normalizePlaceholderNotation(given);
+  var alreadyAccepted = isAcceptedAnswer(item, given);
   if (given && !alreadyAccepted){
     item.acceptedAnswers = (item.acceptedAnswers||[]).concat([given]);
   }
+  removeOneQueuedRepeat(id);
   s.results[id].g2eWrong = Math.max(0, s.results[id].g2eWrong-1);
   if (s.lastCheck.wasTypo) s.results[id].g2eTypoWrong = Math.max(0, s.results[id].g2eTypoWrong-1);
   else s.results[id].g2eHardWrong = Math.max(0, s.results[id].g2eHardWrong-1);
@@ -2306,6 +2392,7 @@ function dontKnowG2E(){
   var item = itemById(id);
   s.results[id].g2eWrong += 1;
   s.results[id].g2eHardWrong += 1;
+  queueWritingRepeat(id);
   s.lastCheck = { correct:false, userAnswer:'', correctAnswer: item.english, skipped:true };
   s.g2eStage = 'result';
   render();
@@ -2314,9 +2401,7 @@ function continueG2E(){
   var s = UI.session;
   var id = s.currentId;
   if (s.lastCheck.correct){
-    s.queueG2E.shift();
-    finalizeItem(id);
-    g2eDequeue();
+    completeCurrentG2EOccurrence(id);
   } else {
     s.g2eStage = 'retype';
     s.g2eInput = '';
@@ -2328,17 +2413,38 @@ function submitRetype(){
   var s = UI.session;
   var id = s.currentId;
   var item = itemById(id);
-  var norm = normalizeAnswer(s.g2eInput);
-  if (norm === normalizeAnswer(item.english)){
+  if (isAcceptedAnswer(item, s.g2eInput)){
     s.retypeError = null;
-    s.queueG2E.shift();
-    s.queueG2E.splice(Math.min(3, s.queueG2E.length), 0, id);
-    g2eDequeue();
+    completeCurrentG2EOccurrence(id);
     render();
+    if (s.mode==='journey') fireMiniConfetti();
   } else {
-    s.retypeError = { userAnswer: s.g2eInput };
+    var distData = answerDistanceForms(item, s.g2eInput);
+    var closestDist = distData.norm.length>0 ? Math.min.apply(null, distData.forms.map(function(a){ return levenshtein(distData.norm,a); })) : 999;
+    var wasTypo = closestDist<=2 && distData.norm.length>0;
+    s.results[id].g2eWrong += 1;
+    if (wasTypo) s.results[id].g2eTypoWrong += 1;
+    else s.results[id].g2eHardWrong += 1;
+    queueWritingRepeat(id);
+    s.retypeError = { userAnswer: s.g2eInput, wasTypo: wasTypo };
     render();
   }
+}
+function overrideRetypeAsCorrect(){
+  var s=UI.session;
+  var id=s.currentId;
+  var item=itemById(id);
+  var given=(s.g2eInput||'').trim();
+  if(!given) return;
+  if(!isAcceptedAnswer(item,given)) item.acceptedAnswers=(item.acceptedAnswers||[]).concat([given]);
+  removeOneQueuedRepeat(id);
+  s.results[id].g2eWrong=Math.max(0,s.results[id].g2eWrong-1);
+  if(s.retypeError && s.retypeError.wasTypo) s.results[id].g2eTypoWrong=Math.max(0,s.results[id].g2eTypoWrong-1);
+  else s.results[id].g2eHardWrong=Math.max(0,s.results[id].g2eHardWrong-1);
+  s.retypeError=null;
+  scheduleSave();
+  completeCurrentG2EOccurrence(id);
+  render();
 }
 function skipRetype(){
   var s = UI.session;
@@ -2354,13 +2460,11 @@ function submitTestAnswer(){
   var s = UI.session;
   var id = s.currentId;
   var item = itemById(id);
-  var norm = normalizeAnswer(s.g2eInput);
-  var accepted = [item.english].concat(item.acceptedAnswers||[]).map(normalizeAnswer);
-  var exact = accepted.indexOf(norm)>=0;
-  var correct = exact;
+  var correct = isAcceptedAnswer(item, s.g2eInput);
+  var distData = answerDistanceForms(item, s.g2eInput);
   if (!correct && !STATE.settings.strictSpelling){
-    var minDist = Math.min.apply(null, accepted.map(function(a){ return levenshtein(norm,a); }));
-    if (minDist<=1 && norm.length>0) correct = true;
+    var minDist = Math.min.apply(null, distData.forms.map(function(a){ return levenshtein(distData.norm,a); }));
+    if (minDist<=1 && distData.norm.length>0) correct = true;
   }
   recordTestAnswer(id, s.g2eInput, correct);
 }
@@ -2372,9 +2476,8 @@ function recordTestAnswer(id, userAnswer, correct){
   var item = itemById(id);
   if (!correct){
     s.results[id].g2eWrong += 1;
-    var norm = normalizeAnswer(userAnswer);
-    var accepted = [item.english].concat(item.acceptedAnswers||[]).map(normalizeAnswer);
-    var closestDist = norm.length>0 ? Math.min.apply(null, accepted.map(function(a){ return levenshtein(norm,a); })) : 999;
+    var distData = answerDistanceForms(item, userAnswer);
+    var closestDist = distData.norm.length>0 ? Math.min.apply(null, distData.forms.map(function(a){ return levenshtein(distData.norm,a); })) : 999;
     if (closestDist<=2 && norm.length>0) s.results[id].g2eTypoWrong += 1;
     else s.results[id].g2eHardWrong += 1;
   }
@@ -2978,7 +3081,7 @@ function renderE2GCard(){
   h += '<button type="button" class="flash-direction-btn '+(frontIsEnglish?'active':'')+'" data-flash-direction="e2g">English → German</button>';
   h += '<button type="button" class="flash-direction-btn '+(!frontIsEnglish?'active':'')+'" data-flash-direction="g2e">German → English</button>';
   h += '</div></div>';
-  h += '<div class="card sessioncard"><div class="flip-scene"><div class="flip-card'+(s.cardRevealed?' flipped':'')+'">';
+  h += '<div class="card sessioncard"><div class="flip-scene"><div class="flip-card'+(s.cardRevealed?' flipped':'')+'" data-flash-card="1">';
 
   h += '<div class="flip-face flip-front"><div class="bigword-wrap">';
   h += '<div class="badgerow">';
@@ -3007,7 +3110,7 @@ function renderE2GCard(){
   h += '</div></div></div>';
 
   h += '</div></div></div>';
-  h += '<div class="kbd-hint">'+(s.cardRevealed ? '<kbd>1</kbd> didn’t know &nbsp; <kbd>2</kbd> knew it' : '<kbd>Space</kbd> show answer')+'</div>';
+  h += '<div class="kbd-hint">'+(s.cardRevealed ? 'Click card to flip back &nbsp; · &nbsp; <kbd>1</kbd> didn’t know &nbsp; <kbd>2</kbd> knew it' : 'Click card or <kbd>Space</kbd> to show answer')+'</div>';
   return h;
 }
 
@@ -3048,6 +3151,9 @@ function renderG2ECard(){
         h += '</div>';
       }
     }
+    if (STATE.settings.showExamples) h += renderExampleBox(it);
+    var repeatsLeft = writingRepeatCount(id);
+    if (repeatsLeft>0) h += '<div style="margin-top:14px;font-size:12.5px;color:var(--ink-soft);text-align:center;">This word will appear <b>'+repeatsLeft+'</b> more time'+(repeatsLeft===1?'':'s')+' because of previous mistakes.</div>';
     h += '<div style="margin-top:20px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">';
     h += '<button class="btn ink" id="g2e-continue-btn">Continue</button>';
     if (!ok && !s.lastCheck.skipped) h += '<button class="btn ghost" id="g2e-override-btn">'+icon('check',15,'icon-inline')+'My answer was right</button>';
@@ -3434,6 +3540,12 @@ function bindEvents(){
   // Session: e2g
   var revealBtn = document.getElementById('reveal-answer-btn');
   if (revealBtn) revealBtn.addEventListener('click', function(){ UI.session.cardRevealed = true; render(); });
+  var flashCard = root.querySelector('[data-flash-card]');
+  if (flashCard) flashCard.addEventListener('click', function(ev){
+    if (ev.target && ev.target.closest && ev.target.closest('button')) return;
+    UI.session.cardRevealed = !UI.session.cardRevealed;
+    render();
+  });
   root.querySelectorAll('[data-rate]').forEach(function(el){
     el.addEventListener('click', function(){ rateE2G(el.getAttribute('data-rate')); });
   });
@@ -3453,8 +3565,8 @@ function bindEvents(){
   if (overrideBtn) overrideBtn.addEventListener('click', overrideAsCorrect);
   var retypeBtn = document.getElementById('g2e-retype-btn');
   if (retypeBtn) retypeBtn.addEventListener('click', submitRetype);
-  var retypeSkipBtn = document.getElementById('g2e-retype-skip-btn');
-  if (retypeSkipBtn) retypeSkipBtn.addEventListener('click', skipRetype);
+  var retypeOverrideBtn = document.getElementById('g2e-retype-override-btn');
+  if (retypeOverrideBtn) retypeOverrideBtn.addEventListener('click', overrideRetypeAsCorrect);
   var testNextBtn = document.getElementById('g2e-test-next-btn');
   if (testNextBtn) testNextBtn.addEventListener('click', submitTestAnswer);
   var testSkipBtn = document.getElementById('g2e-test-skip-btn');
@@ -3631,9 +3743,8 @@ document.addEventListener('keydown', function(ev){
       moveLearnCard(-1);
     }
   } else if (s.phase==='e2g'){
-    if (!s.cardRevealed){
-      if (ev.key===' '){ ev.preventDefault(); s.cardRevealed=true; render(); }
-    } else {
+    if (ev.key===' '){ ev.preventDefault(); s.cardRevealed=!s.cardRevealed; render(); }
+    else if (s.cardRevealed){
       if (ev.key==='1'){ rateE2G('no'); }
       else if (ev.key==='2'){ rateE2G('yes'); }
     }
