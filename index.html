@@ -194,7 +194,7 @@
   #c1app .example-label { display:block; font-style:normal; font-size:10.5px; line-height:1; text-transform:uppercase; letter-spacing:.09em; font-weight:800; color:var(--indigo); margin-bottom:7px; }
   #c1app .writing-german-example {
     max-width: 520px;
-    margin: 10px auto 18px;
+    margin: 8px auto 12px;
     padding: 9px 12px;
     border-radius: 10px;
     background: rgba(238,242,255,.72);
@@ -1189,8 +1189,7 @@
   }
   @media (max-width: 740px) {
     #c1app .journey-stats, #c1app .journey-stage-flow, #c1app .journey-session-stages { grid-template-columns: 1fr; }
-  
-
+  }
 
   /* Step 1: stack animation — only the top card moves */
   #c1app .learn-stack {
@@ -1245,7 +1244,7 @@
   #c1app .card.sessioncard.learn-top-card.learn-cycle-to-back {
     pointer-events: none;
     transform-origin: 50% 55%;
-    animation: learnTopToBack .58s cubic-bezier(.22,.72,.25,1) both;
+    animation: learnTopToBack .72s cubic-bezier(.22,.72,.25,1) both;
   }
   #c1app .card.sessioncard.learn-top-card.learn-swipe-out-left {
     pointer-events: none;
@@ -1257,33 +1256,28 @@
   }
   @keyframes learnTopToBack {
     0% {
-      opacity:1;
-      z-index:3;
-      transform:translateX(0) translateY(0) rotate(0deg) scale(1);
+      opacity:1; z-index:6;
+      transform:translate3d(0,0,0) rotate(0deg) scale(1);
       box-shadow:0 22px 48px -28px rgba(15,23,42,.36);
     }
-    38% {
-      opacity:1;
-      z-index:3;
-      transform:translateX(64%) translateY(-16px) rotate(7deg) scale(.995);
-      box-shadow:0 28px 44px -24px rgba(15,23,42,.32);
+    28% {
+      opacity:1; z-index:6;
+      transform:translate3d(72%, -18px, 0) rotate(8deg) scale(.995);
+      box-shadow:0 28px 46px -24px rgba(15,23,42,.34);
     }
-    50% {
-      opacity:.95;
-      z-index:0;
-      transform:translateX(54%) translateY(3px) rotate(4deg) scale(.988);
+    47% {
+      opacity:.96; z-index:0;
+      transform:translate3d(62%, 10px, 0) rotate(5deg) scale(.985);
     }
-    78% {
-      opacity:.84;
-      z-index:0;
-      transform:translateX(5%) translateY(calc(var(--stack-depth, 0px) + 12px)) rotate(-.8deg) scale(.978);
-      box-shadow:0 9px 22px -15px rgba(15,23,42,.22);
+    72% {
+      opacity:.88; z-index:0;
+      transform:translate3d(12%, calc(var(--stack-depth, 0px) + 16px), 0) rotate(-1.2deg) scale(.976);
+      box-shadow:0 8px 18px -14px rgba(15,23,42,.18);
     }
     100% {
-      opacity:.68;
-      z-index:0;
-      transform:translateX(0) translateY(calc(var(--stack-depth, 0px) + 16px)) rotate(-.25deg) scale(.974);
-      box-shadow:0 7px 18px -15px rgba(15,23,42,.18);
+      opacity:.72; z-index:0;
+      transform:translate3d(0, calc(var(--stack-depth, 0px) + 20px), 0) rotate(-.4deg) scale(.97);
+      box-shadow:0 5px 14px -12px rgba(15,23,42,.15);
     }
   }
   @keyframes learnTopOutLeft {
@@ -1484,7 +1478,7 @@ var C1_STORAGE = (function(){
 })();
 
 /* ============================= CONSTANTS ============================= */
-var APP_BUILD = '2026-09-17-german-writing-context-random-repeats';
+var APP_BUILD = '2026-09-17-verified-writing-learn-fixes';
 
 /* ============================= ACCOUNT + CLOUD SYNC (SUPABASE) ============================= */
 /* Publishable keys are designed for browser clients. User data is protected by Supabase Auth + RLS. */
@@ -2898,17 +2892,27 @@ function insertWritingOccurrenceRandom(id, minGap){
   if(!s || !s.queueG2E) return;
   minGap = (typeof minGap==='number') ? minGap : 1;
 
-  var minIndex = Math.min(s.queueG2E.length, Math.max(1, minGap + 1));
+  var earliest = Math.min(s.queueG2E.length, Math.max(2, minGap + 1));
   var candidates = [];
-  for(var pos=minIndex; pos<=s.queueG2E.length; pos++){
+
+  for(var pos=earliest; pos<=s.queueG2E.length; pos++){
     var prev = pos>0 ? s.queueG2E[pos-1] : null;
     var next = pos<s.queueG2E.length ? s.queueG2E[pos] : null;
-    if(prev!==id && next!==id) candidates.push(pos);
+    if(prev===id || next===id) continue;
+
+    var differentInBetween = false;
+    for(var scan=1; scan<pos; scan++){
+      if(s.queueG2E[scan]!==id){ differentInBetween=true; break; }
+    }
+    if(differentInBetween || pos===s.queueG2E.length) candidates.push(pos);
   }
 
-  // If the queue is too short to keep duplicates apart, use any later slot.
   if(!candidates.length){
-    for(var pos2=minIndex; pos2<=s.queueG2E.length; pos2++) candidates.push(pos2);
+    for(var pos2=1; pos2<=s.queueG2E.length; pos2++){
+      var prev2 = pos2>0 ? s.queueG2E[pos2-1] : null;
+      var next2 = pos2<s.queueG2E.length ? s.queueG2E[pos2] : null;
+      if(prev2!==id && next2!==id) candidates.push(pos2);
+    }
   }
   if(!candidates.length) candidates.push(s.queueG2E.length);
 
@@ -3272,13 +3276,21 @@ function fireDolphinAdvanceSwim(){
 
 function focusWritingInput(){
   if (!UI.session || UI.screen!=='session' || UI.session.phase!=='g2e' || UI.session.g2eStage!=='input') return;
-  var field = document.getElementById('g2e-field');
-  if (!field || field.disabled) return;
-  try { field.focus({preventScroll:true}); } catch(e) { try { field.focus(); } catch(e2){} }
-  try {
-    var len = field.value.length;
-    field.setSelectionRange(len, len);
-  } catch(e3){}
+
+  function doFocus(){
+    var field = document.getElementById('g2e-field');
+    if (!field || field.disabled) return;
+    try { field.focus({preventScroll:true}); } catch(e) { try { field.focus(); } catch(e2){} }
+    try {
+      var len = field.value.length;
+      field.setSelectionRange(len, len);
+    } catch(e3){}
+  }
+
+  doFocus();
+  if (typeof requestAnimationFrame==='function') requestAnimationFrame(doFocus);
+  setTimeout(doFocus, 30);
+  setTimeout(doFocus, 100);
 }
 
 function render(){
@@ -3668,7 +3680,7 @@ function moveLearnCard(delta){
   if (!card){ commit(); return; }
   if (goingForward){
     card.classList.add('learn-cycle-to-back');
-    setTimeout(commit, 545);
+    setTimeout(commit, 690);
   } else {
     card.classList.add('learn-swipe-out-right');
     setTimeout(commit, 205);
@@ -3794,11 +3806,11 @@ function renderG2ECard(){
   var it = itemById(id);
   var h = '<div class="card sessioncard"><div class="bigword-wrap">';
   h += '<div class="bigmeaning serif">'+escapeHtml((it.german||[]).join('; '))+'</div>';
-  if (it.type) h += '<div class="wordtype">'+escapeHtml(it.type)+'</div>';
   if (s.mode!=='test') h += renderGermanWritingExample(it);
+  if (it.type) h += '<div class="wordtype">'+escapeHtml(it.type)+'</div>';
 
   if (s.mode==='test'){
-    h += '<div class="g2e-input-wrap"><input type="text" class="g2e-input" id="g2e-field" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Type the English word\u2026" value="'+escapeHtml(s.g2eInput)+'"></div>';
+    h += '<div class="g2e-input-wrap"><input type="text" class="g2e-input" id="g2e-field" autofocus autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Type the English word\u2026" value="'+escapeHtml(s.g2eInput)+'"></div>';
     h += '<div style="margin-top:18px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;"><button class="btn ink" id="g2e-test-next-btn">Next</button><button class="btn ghost" id="g2e-test-skip-btn">'+icon('x',15,'icon-inline')+'I don\u2019t know</button></div>';
     h += '<div style="font-size:12.5px;color:var(--ink-faint);margin-top:16px;">You won\u2019t see if you\u2019re right until the end \u2014 that\u2019s the test.</div>';
     h += '</div></div>';
@@ -3807,7 +3819,7 @@ function renderG2ECard(){
   }
 
   if (s.g2eStage==='input'){
-    h += '<div class="g2e-input-wrap"><input type="text" class="g2e-input" id="g2e-field" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Type the English word\u2026" value="'+escapeHtml(s.g2eInput)+'"></div>';
+    h += '<div class="g2e-input-wrap"><input type="text" class="g2e-input" id="g2e-field" autofocus autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Type the English word\u2026" value="'+escapeHtml(s.g2eInput)+'"></div>';
     h += '<div style="margin-top:18px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;"><button class="btn ink" id="g2e-check-btn">'+icon('check',15,'icon-inline')+'Check</button><button class="btn ghost" id="g2e-dontknow-btn">'+icon('x',15,'icon-inline')+'I don\u2019t know</button></div>';
   } else if (s.g2eStage==='result'){
     var ok = s.lastCheck.correct;
@@ -3835,7 +3847,7 @@ function renderG2ECard(){
     h += '</div>';
   } else if (s.g2eStage==='retype'){
     h += '<div style="font-size:13px;color:var(--ink-soft);margin-bottom:10px;">Type the correct word once to continue</div>';
-    h += '<div class="g2e-input-wrap"><input type="text" class="g2e-input'+(s.retypeError?' wrong':'')+'" id="g2e-field" autocomplete="off" autocapitalize="off" spellcheck="false" value="'+escapeHtml(s.g2eInput)+'"></div>';
+    h += '<div class="g2e-input-wrap"><input type="text" class="g2e-input'+(s.retypeError?' wrong':'')+'" id="g2e-field" autofocus autocomplete="off" autocapitalize="off" spellcheck="false" value="'+escapeHtml(s.g2eInput)+'"></div>';
     if (s.retypeError){
       var rdiff = diffParts(itemById(s.currentId).english, s.retypeError.userAnswer);
       h += '<div class="result-banner bad" style="margin-top:14px;">Not quite \u2014 check the highlighted letters</div>';
