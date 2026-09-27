@@ -1644,7 +1644,7 @@ var C1_STORAGE = (function(){
 })();
 
 /* ============================= CONSTANTS ============================= */
-var APP_BUILD = '2026-09-26-all-natural-examples-state-refresh';
+var APP_BUILD = '2026-09-27-stage-review-every-3-levels';
 
 /* ============================= ACCOUNT + CLOUD SYNC (SUPABASE) ============================= */
 /* Publishable keys are designed for browser clients. User data is protected by Supabase Auth + RLS. */
@@ -2713,7 +2713,8 @@ function getFlashcardModeProgressData(){
   var pendingReviewLevel = null;
   var pendingTestIndex = null;
 
-  if (completedCount>0){
+  // A cumulative review is required only after a complete stage = 3 levels.
+  if (completedCount>0 && completedCount%3===0){
     var cumulativePool = getFlashcardModeReviewTestPool(completedCount);
     if (!reviewTests[String(completedCount)] && cumulativePool.length>0){
       pendingReviewLevel = completedCount;
@@ -3216,11 +3217,13 @@ function finishSession(){
       if (fcCompleted > fcDataBefore.levels.length) fcCompleted = fcDataBefore.levels.length;
       STATE.meta.currentFlashcardModeLevel = fcCompleted;
 
-      // After every level: cumulative test of every first-try miss learned so far.
-      var cumulativePoolAfterLevel = getFlashcardModeReviewTestPool(fcCompleted);
-      if (!cumulativePoolAfterLevel.length){
-        if (!STATE.meta.completedFlashcardModeReviewTests || typeof STATE.meta.completedFlashcardModeReviewTests!=='object') STATE.meta.completedFlashcardModeReviewTests = {};
-        STATE.meta.completedFlashcardModeReviewTests[String(fcCompleted)] = true;
+      // Cumulative review only after a complete stage (3 levels).
+      if (fcCompleted>0 && fcCompleted%3===0){
+        var cumulativePoolAfterStage = getFlashcardModeReviewTestPool(fcCompleted);
+        if (!cumulativePoolAfterStage.length){
+          if (!STATE.meta.completedFlashcardModeReviewTests || typeof STATE.meta.completedFlashcardModeReviewTests!=='object') STATE.meta.completedFlashcardModeReviewTests = {};
+          STATE.meta.completedFlashcardModeReviewTests[String(fcCompleted)] = true;
+        }
       }
 
       // Every 3 levels: keep the separate 3-level checkpoint as well.
@@ -4105,28 +4108,31 @@ function renderLevels(){
 function renderFlashcardMode(){
   var data = getFlashcardModeProgressData();
   var completedTests = Object.keys(data.completedTests||{}).filter(function(k){ return !!data.completedTests[k]; }).length;
-  var completedReviews = Object.keys(data.completedReviewTests||{}).filter(function(k){ return !!data.completedReviewTests[k]; }).length;
+  var completedReviews = Object.keys(data.completedReviewTests||{}).filter(function(k){
+    return !!data.completedReviewTests[k] && Number(k)>0 && Number(k)%3===0;
+  }).length;
 
   var h = '<div class="flashgame-hero">';
   h += '<div class="flashgame-eyebrow">Flashcard Game Mode</div>';
   h += '<div class="flashgame-title">English → German · one level at a time</div>';
-  h += '<div class="flashgame-sub">After every level, a cumulative review tests all words learned so far that you did not know on the first try. After every 3 levels, the separate 3-level checkpoint remains too. Every test can be repeated as often as you want. In tests, “Don’t show again” permanently removes a word from future tests.</div>';
-  h += '<div class="flashgame-stats"><div><strong>'+data.completedCount+'</strong><span>Levels complete</span></div><div><strong>'+completedReviews+'</strong><span>Level reviews done</span></div><div><strong>'+completedTests+'</strong><span>Checkpoints done</span></div></div>';
+  h += '<div class="flashgame-sub">One stage contains 3 levels. After each stage, a cumulative review tests all words learned so far that you did not know on the first try. The separate 3-level checkpoint then follows. Every test can be repeated as often as you want. In tests, “Don’t show again” permanently removes a word from future tests.</div>';
+  h += '<div class="flashgame-stats"><div><strong>'+data.completedCount+'</strong><span>Levels complete</span></div><div><strong>'+completedReviews+'</strong><span>Stage reviews done</span></div><div><strong>'+completedTests+'</strong><span>Checkpoints done</span></div></div>';
 
   h += '<div class="flashgame-cta">';
   if (data.pendingReviewLevel!==null){
     var cumulativePool=getFlashcardModeReviewTestPool(data.pendingReviewLevel);
-    h += '<div><b>Review after Level '+data.pendingReviewLevel+'</b><span>'+cumulativePool.length+' first-try miss'+(cumulativePool.length===1?'':'es')+' from all learned levels</span></div>';
-    h += '<button class="btn primary" data-start-flash-review="'+data.pendingReviewLevel+'">Start review</button>';
+    var pendingStage=Math.ceil(data.pendingReviewLevel/3);
+    h += '<div><b>Stage '+pendingStage+' Review</b><span>'+cumulativePool.length+' first-try miss'+(cumulativePool.length===1?'':'es')+' from all '+data.pendingReviewLevel+' learned levels</span></div>';
+    h += '<button class="btn primary" data-start-flash-review="'+data.pendingReviewLevel+'">Start stage review</button>';
   } else if (data.pendingTestIndex!==null){
     var pendingPool=getFlashcardModeTestPool(data.pendingTestIndex);
-    h += '<div><b>Checkpoint Test '+data.pendingTestIndex+'</b><span>'+pendingPool.length+' first-try miss'+(pendingPool.length===1?'':'es')+' from the last 3 levels</span></div>';
+    h += '<div><b>Checkpoint Test '+data.pendingTestIndex+'</b><span>'+pendingPool.length+' first-try miss'+(pendingPool.length===1?'':'es')+' from this stage</span></div>';
     h += '<button class="btn primary" data-start-flash-test="'+data.pendingTestIndex+'">Start checkpoint</button>';
   } else if (data.currentIndex!==null){
     h += '<div><b>Level '+(data.currentIndex+1)+'</b><span>10 English → German flashcards</span></div>';
     h += '<button class="btn primary" data-start-flash-level="'+data.currentIndex+'">Continue</button>';
   } else {
-    h += '<div><b>Flashcard journey complete</b><span>You finished every level and required test. You can still retake any test below.</span></div>';
+    h += '<div><b>Flashcard journey complete</b><span>You finished every level and required test. You can still retake any stage review or checkpoint below.</span></div>';
   }
   h += '</div></div>';
 
@@ -4137,6 +4143,7 @@ function renderFlashcardMode(){
     var first=g*3;
     var last=Math.min(first+3,data.levels.length);
     var testIndex=g+1;
+    var stageEndLevel=last;
 
     h += '<div class="flashgame-stage"><div class="flashgame-stage-head"><span>Stage '+(g+1)+'</span><small>Levels '+(first+1)+'–'+last+'</small></div><div class="flashgame-nodes">';
 
@@ -4145,18 +4152,18 @@ function renderFlashcardMode(){
       var status=li<data.completedCount?'done':(data.currentIndex===li?'current':'locked');
       var attrs=(status==='locked')?' disabled':' data-start-flash-level="'+li+'"';
       h += '<button class="flashgame-node level '+status+'"'+attrs+'><span class="node-icon">'+(status==='done'?icon('check',16):icon('layers',16))+'</span><span class="node-main">Level '+levelNumber+'</span><span class="node-sub">'+data.levels[li].ids.length+' cards</span></button>';
-
-      // Cumulative review after every level. Once unlocked it stays replayable forever.
-      var reviewUnlocked=data.completedCount>=levelNumber;
-      var reviewPool=getFlashcardModeReviewTestPool(levelNumber);
-      var reviewDone=!!data.completedReviewTests[String(levelNumber)] || (reviewUnlocked && reviewPool.length===0);
-      var reviewCurrent=data.pendingReviewLevel===levelNumber;
-      var reviewStatus=reviewDone?'done':(reviewCurrent?'current':'locked');
-      var reviewAttrs=(reviewUnlocked && reviewPool.length>0)?' data-start-flash-review="'+levelNumber+'"':' disabled';
-      h += '<button class="flashgame-node review '+reviewStatus+'"'+reviewAttrs+'><span class="node-icon">'+(reviewDone?icon('cycle',16):icon('clipboard',16))+'</span><span class="node-main">Review '+levelNumber+'</span><span class="node-sub">'+(reviewPool.length===0?'No review needed':(reviewPool.length+' cumulative miss'+(reviewPool.length===1?'':'es')+(reviewDone?' · Retake':'') ))+'</span></button>';
     }
 
-    // Existing 3-level checkpoint. Completed checkpoints also remain replayable.
+    // One cumulative review after the entire 3-level stage.
+    var reviewUnlocked=data.completedCount>=stageEndLevel;
+    var reviewPool=getFlashcardModeReviewTestPool(stageEndLevel);
+    var reviewDone=!!data.completedReviewTests[String(stageEndLevel)] || (reviewUnlocked && reviewPool.length===0);
+    var reviewCurrent=data.pendingReviewLevel===stageEndLevel;
+    var reviewStatus=reviewDone?'done':(reviewCurrent?'current':'locked');
+    var reviewAttrs=(reviewUnlocked && reviewPool.length>0)?' data-start-flash-review="'+stageEndLevel+'"':' disabled';
+    h += '<button class="flashgame-node review '+reviewStatus+'"'+reviewAttrs+'><span class="node-icon">'+(reviewDone?icon('cycle',16):icon('clipboard',16))+'</span><span class="node-main">Stage '+(g+1)+' Review</span><span class="node-sub">'+(reviewPool.length===0?'No review needed':(reviewPool.length+' cumulative miss'+(reviewPool.length===1?'':'es')+(reviewDone?' · Retake':'')))+'</span></button>';
+
+    // Separate checkpoint for first-try misses from this 3-level stage.
     var poolCount=getFlashcardModeTestPool(testIndex).length;
     var testUnlocked=data.completedCount>=last;
     var testDone=!!data.completedTests[String(testIndex)] || (testUnlocked && poolCount===0);
@@ -4178,13 +4185,14 @@ function renderFlashcardDashboardCard(){
 
   if (data.pendingReviewLevel!==null){
     var reviewPool=getFlashcardModeReviewTestPool(data.pendingReviewLevel);
-    h+='<div class="flashgame-dashboard-sub">Review nach Level '+data.pendingReviewLevel+': '+reviewPool.length+' bisherige First-Try-Fehler.</div>';
-    h+='<button class="btn primary" data-start-flash-review="'+data.pendingReviewLevel+'">Review starten</button>';
+    var stageNumber=Math.ceil(data.pendingReviewLevel/3);
+    h+='<div class="flashgame-dashboard-sub">Stage '+stageNumber+' Review: '+reviewPool.length+' bisherige First-Try-Fehler aus allen '+data.pendingReviewLevel+' gelernten Levels.</div>';
+    h+='<button class="btn primary" data-start-flash-review="'+data.pendingReviewLevel+'">Stage Review starten</button>';
   } else if (data.pendingTestIndex!==null){
     h+='<div class="flashgame-dashboard-sub">Checkpoint '+data.pendingTestIndex+': nur First-Try-Fehler aus den letzten 3 Levels.</div>';
     h+='<button class="btn primary" data-start-flash-test="'+data.pendingTestIndex+'">Checkpoint starten</button>';
   } else if (data.currentIndex!==null){
-    h+='<div class="flashgame-dashboard-sub">Level '+(data.currentIndex+1)+' von '+data.levels.length+' · 10 Karteikarten</div>';
+    h+='<div class="flashgame-dashboard-sub">Level '+(data.currentIndex+1)+' von '+data.levels.length+' · Stage '+(Math.floor(data.currentIndex/3)+1)+'</div>';
     h+='<button class="btn primary" data-start-flash-level="'+data.currentIndex+'">Mit Level '+(data.currentIndex+1)+' weitermachen</button>';
   } else {
     h+='<div class="flashgame-dashboard-sub">Alle Flashcard-Level und Pflicht-Tests abgeschlossen.</div>';
@@ -4297,12 +4305,12 @@ function renderSessionShell(){
   var s = UI.session;
   var h = '<div class="shell narrow">';
   var label = s.phase==='learn' ? 'Learning new words'
-    : s.phase==='e2g' ? (s.mode==='flashcardLevel' ? ('Flashcard Level '+((s.flashcardModeLevelIndex||0)+1)+' · English → German') : s.mode==='flashcardReviewTest' ? ('Cumulative Review '+(s.flashcardModeReviewLevel||'')+' · English → German') : s.mode==='flashcardTest' ? ('Checkpoint '+(s.flashcardModeTestIndex||'')+' · English → German') : s.mode==='flashcards' ? 'Flashcards · English → German' : 'English → German')
+    : s.phase==='e2g' ? (s.mode==='flashcardLevel' ? ('Flashcard Level '+((s.flashcardModeLevelIndex||0)+1)+' · English → German') : s.mode==='flashcardReviewTest' ? ('Stage '+Math.ceil((s.flashcardModeReviewLevel||0)/3)+' Review · English → German') : s.mode==='flashcardTest' ? ('Checkpoint '+(s.flashcardModeTestIndex||'')+' · English → German') : s.mode==='flashcards' ? 'Flashcards · English → German' : 'English → German')
     : s.phase==='g2e' ? (s.mode==='reviewG2E' ? 'Reviewing practiced words \u00b7 German \u2192 English' : s.mode==='test' ? 'Vocabulary test \u00b7 German \u2192 English' : s.mode==='writing' ? 'Writing practice \u00b7 German \u2192 English' : 'German \u2192 English')
     : 'Session complete';
   h += '<div class="exitbar"><div class="phaselabel serif" style="font-size:15px;">'+label+'</div>'+(s.phase!=='summary' ? '<button class="exit" id="exit-session-btn">Exit</button>' : '')+'</div>';
   if (s.mode==='journey' && s.phase!=='summary') h += journeyStageMarkup(s);
-  if ((s.mode==='flashcardLevel' || s.mode==='flashcardTest' || s.mode==='flashcardReviewTest') && s.phase!=='summary') h += '<div class="flashgame-session-banner"><span>'+icon('layers',15,'icon-inline')+(s.mode==='flashcardLevel' ? ('Level '+((s.flashcardModeLevelIndex||0)+1)+' of '+(s.flashcardModeTotalLevels||'')) : s.mode==='flashcardReviewTest' ? ('Cumulative review after Level '+(s.flashcardModeReviewLevel||'')) : ('Checkpoint '+(s.flashcardModeTestIndex||'')))+'</span><b>English → German only</b></div>';
+  if ((s.mode==='flashcardLevel' || s.mode==='flashcardTest' || s.mode==='flashcardReviewTest') && s.phase!=='summary') h += '<div class="flashgame-session-banner"><span>'+icon('layers',15,'icon-inline')+(s.mode==='flashcardLevel' ? ('Level '+((s.flashcardModeLevelIndex||0)+1)+' of '+(s.flashcardModeTotalLevels||'')) : s.mode==='flashcardReviewTest' ? ('Stage '+Math.ceil((s.flashcardModeReviewLevel||0)/3)+' review · after Level '+(s.flashcardModeReviewLevel||'')) : ('Checkpoint '+(s.flashcardModeTestIndex||'')))+'</span><b>English → German only</b></div>';
 
   if (s.phase==='learn'){
     var total = s.newWords.length;
@@ -4645,9 +4653,9 @@ function renderSummary(){
     h += '<div class="journey-summary-banner"><div class="title">Level '+((s.journeyLevelIndex||0)+1)+' complete</div><div class="sub">'+(s.nextJourneyLevel!==null ? ('Level '+(s.nextJourneyLevel+1)+' is now unlocked.') : 'You completed the final level in the journey.')+'</div></div>';
   }
   if (s.mode==='flashcardLevel'){
-    h += '<div class="flashgame-summary-banner"><div class="title">Flashcard Level '+((s.flashcardModeLevelIndex||0)+1)+' complete</div><div class="sub">'+(s.nextFlashcardModeReviewLevel!==null ? ('Cumulative Review '+s.nextFlashcardModeReviewLevel+' is now unlocked.') : s.nextFlashcardModeTest!==null ? ('Checkpoint '+s.nextFlashcardModeTest+' is now unlocked.') : s.nextFlashcardModeLevel!==null ? ('Level '+(s.nextFlashcardModeLevel+1)+' is now unlocked.') : 'All flashcard levels are complete.')+'</div></div>';
+    h += '<div class="flashgame-summary-banner"><div class="title">Flashcard Level '+((s.flashcardModeLevelIndex||0)+1)+' complete</div><div class="sub">'+(s.nextFlashcardModeReviewLevel!==null ? ('Stage '+Math.ceil(s.nextFlashcardModeReviewLevel/3)+' Review is now unlocked.') : s.nextFlashcardModeTest!==null ? ('Checkpoint '+s.nextFlashcardModeTest+' is now unlocked.') : s.nextFlashcardModeLevel!==null ? ('Level '+(s.nextFlashcardModeLevel+1)+' is now unlocked.') : 'All flashcard levels are complete.')+'</div></div>';
   } else if (s.mode==='flashcardReviewTest'){
-    h += '<div class="flashgame-summary-banner"><div class="title">Cumulative Review '+(s.flashcardModeReviewLevel||'')+' complete</div><div class="sub">'+(s.nextFlashcardModeTest!==null ? ('Checkpoint '+s.nextFlashcardModeTest+' is now unlocked.') : s.nextFlashcardModeLevel!==null ? ('Level '+(s.nextFlashcardModeLevel+1)+' is now unlocked.') : 'Review complete. You can retake it anytime.')+'</div></div>';
+    h += '<div class="flashgame-summary-banner"><div class="title">Stage '+Math.ceil((s.flashcardModeReviewLevel||0)/3)+' Review complete</div><div class="sub">'+(s.nextFlashcardModeTest!==null ? ('Checkpoint '+s.nextFlashcardModeTest+' is now unlocked.') : s.nextFlashcardModeLevel!==null ? ('Level '+(s.nextFlashcardModeLevel+1)+' is now unlocked.') : 'Review complete. You can retake it anytime.')+'</div></div>';
   } else if (s.mode==='flashcardTest'){
     h += '<div class="flashgame-summary-banner"><div class="title">Checkpoint '+(s.flashcardModeTestIndex||'')+' complete</div><div class="sub">'+(s.nextFlashcardModeLevel!==null ? ('Level '+(s.nextFlashcardModeLevel+1)+' is now unlocked.') : 'Checkpoint complete. You can retake it anytime.')+'</div></div>';
   }
@@ -4682,10 +4690,10 @@ function renderSummary(){
   h += '<div style="display:flex;gap:10px;justify-content:center;margin-top:12px;flex-wrap:wrap;">';
   if (uniqMistakes.length) h += '<button class="btn primary" id="practice-mistakes-btn">Practice mistakes</button>';
   if (s.mode==='journey' && s.nextJourneyLevel!==null) h += '<button class="btn primary" id="next-level-btn">Start level '+(s.nextJourneyLevel+1)+'</button>';
-  if (s.mode==='flashcardLevel' && s.nextFlashcardModeReviewLevel!==null) h += '<button class="btn primary" id="next-flash-review-btn">Start Review '+s.nextFlashcardModeReviewLevel+'</button>';
+  if (s.mode==='flashcardLevel' && s.nextFlashcardModeReviewLevel!==null) h += '<button class="btn primary" id="next-flash-review-btn">Start Stage '+Math.ceil(s.nextFlashcardModeReviewLevel/3)+' Review</button>';
   else if ((s.mode==='flashcardLevel' || s.mode==='flashcardReviewTest') && s.nextFlashcardModeTest!==null) h += '<button class="btn primary" id="next-flash-test-btn">Start Checkpoint '+s.nextFlashcardModeTest+'</button>';
   else if ((s.mode==='flashcardLevel' || s.mode==='flashcardTest' || s.mode==='flashcardReviewTest') && s.nextFlashcardModeLevel!==null) h += '<button class="btn primary" id="next-flash-level-btn">Start Level '+(s.nextFlashcardModeLevel+1)+'</button>';
-  if (s.mode==='flashcardReviewTest') h += '<button class="btn ghost" id="retake-flash-review-btn">Retake this review</button>';
+  if (s.mode==='flashcardReviewTest') h += '<button class="btn ghost" id="retake-flash-review-btn">Retake this stage review</button>';
   if (s.mode==='flashcardTest') h += '<button class="btn ghost" id="retake-flash-test-btn">Retake this checkpoint</button>';
   h += '<button class="btn ghost" id="back-dashboard-btn">'+((s.mode==='journey' || s.returnScreen==='levels')?'Back to levels':s.returnScreen==='flashcardMode'?'Back to Flashcards':'Back to dashboard')+'</button>';
   h += '</div>';
