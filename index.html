@@ -3,11 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0">
-<meta name="lexicon-build" content="2026-10-05-premium-native-redesign-qa2">
-<title>Lexicon – Cambridge C1 Advanced</title>
+<title>Cambridge C1 Vocabulary Trainer</title>
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -1831,6 +1827,25 @@
 @media(min-width:761px){#c1app .vocab-list{max-height:calc(100vh - 248px);overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#CDD2DD transparent}#c1app .vocab-list::-webkit-scrollbar{width:8px}#c1app .vocab-list::-webkit-scrollbar-thumb{background:#CDD2DD;border-radius:99px;border:2px solid #fff}}
 @media(max-width:760px){#c1app .settings-grid{gap:14px}.settings-group-card{padding:16px}.settings-group-head{padding-bottom:12px}.settings-group-card .field,.settings-group-card .toggle-row{min-height:60px;padding:13px 0}.settings-group-card .ctl{max-width:100%;width:100%}.danger-zone{align-items:flex-start;flex-direction:column}.data-actions>*{flex:1 1 auto;justify-content:center}.settings-section-title{margin-left:2px}.page-settings>.settings-section>.card{padding:16px!important}.vocab-row.selected{box-shadow:none!important}}
 
+
+/* ============================= PREMIUM AUTH GATE ============================= */
+html.auth-gate-open,html.auth-gate-open body{overflow:hidden!important}
+#c1app .auth-gate-backdrop{position:fixed;inset:0;z-index:100000;display:grid;place-items:center;padding:28px;background:rgba(9,14,28,.48);backdrop-filter:blur(20px) saturate(1.08);-webkit-backdrop-filter:blur(20px) saturate(1.08);animation:authGateFade .25s ease both}
+#c1app .auth-gate-card{width:min(980px,calc(100vw - 40px));min-height:610px;display:grid;grid-template-columns:1.08fr .92fr;overflow:hidden;border-radius:34px;background:#fff;box-shadow:0 40px 110px rgba(15,23,42,.28),0 0 0 1px rgba(255,255,255,.72);animation:authGateIn .35s cubic-bezier(.2,.8,.2,1) both}
+#c1app .auth-gate-visual{position:relative;overflow:hidden;padding:44px 46px;color:#fff;background:linear-gradient(145deg,#18285f 0%,#4f46e5 48%,#1ba9ff 118%)}
+#c1app .auth-gate-visual:after{content:'';position:absolute;inset:auto -22% -32% 8%;height:62%;border-radius:50%;border:1px solid rgba(255,255,255,.13);transform:rotate(-10deg);box-shadow:0 -34px 80px rgba(56,189,248,.12)}
+#c1app .auth-gate-glow{position:absolute;border-radius:999px;filter:blur(2px);pointer-events:none}.auth-gate-glow.one{width:280px;height:280px;right:-100px;top:-70px;background:radial-gradient(circle,rgba(125,211,252,.48),rgba(125,211,252,0) 68%)}#c1app .auth-gate-glow.two{width:220px;height:220px;left:-80px;bottom:-75px;background:radial-gradient(circle,rgba(196,181,253,.34),rgba(196,181,253,0) 70%)}
+#c1app .auth-gate-brand,#c1app .auth-mobile-brand{position:relative;z-index:2;display:flex;align-items:center;gap:13px}#c1app .auth-gate-logo{width:48px;height:48px;border-radius:15px;display:grid;place-items:center;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.22);box-shadow:inset 0 1px 0 rgba(255,255,255,.18);font-size:22px;font-weight:900;color:#fff}#c1app .auth-gate-brand b{display:block;font-size:17px;letter-spacing:-.02em}#c1app .auth-gate-brand span{display:block;margin-top:2px;font-size:12px;color:rgba(255,255,255,.68)}
+#c1app .auth-gate-copy{position:relative;z-index:2;margin-top:94px;max-width:470px}#c1app .auth-kicker{font-size:11px;font-weight:850;letter-spacing:.13em;color:#bae6fd}#c1app .auth-gate-copy h1{margin:13px 0 15px;font-size:43px;line-height:1.04;letter-spacing:-.045em;color:#fff}#c1app .auth-gate-copy p{margin:0;max-width:430px;color:rgba(255,255,255,.78);font-size:15px;line-height:1.65}
+#c1app .auth-benefits{position:absolute;z-index:2;left:46px;right:46px;bottom:42px;display:grid;gap:11px}#c1app .auth-benefits span{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:700;color:rgba(255,255,255,.88)}#c1app .auth-benefits svg{color:#7dd3fc}
+#c1app .auth-gate-form-side{display:flex;flex-direction:column;justify-content:center;padding:48px 50px;background:linear-gradient(180deg,#fff 0%,#fbfcff 100%)}#c1app .auth-mobile-brand{display:none}#c1app .auth-mode-tabs{display:grid;grid-template-columns:1fr 1fr;gap:5px;padding:5px;border-radius:13px;background:#f1f4fa;margin-bottom:32px}#c1app .auth-mode-tab{min-height:39px;border:0;border-radius:9px;background:transparent;color:#64748b;font-weight:760;cursor:pointer;transition:.2s ease}#c1app .auth-mode-tab.active{background:#fff;color:#312e81;box-shadow:0 3px 12px rgba(15,23,42,.09)}
+#c1app .auth-form-heading h2{margin:0;color:#111827;font-size:29px;line-height:1.1;letter-spacing:-.035em}#c1app .auth-form-heading p{margin:10px 0 25px;color:#718096;font-size:13.5px;line-height:1.55}#c1app .auth-gate-fields{display:grid;gap:14px}#c1app .auth-gate-fields label span{display:block;margin:0 0 7px;color:#334155;font-size:12px;font-weight:760}#c1app .auth-gate-fields input{width:100%;height:49px;padding:0 14px;border:1px solid #dde3ee;border-radius:13px;background:#fff;color:#111827;font-size:14px;outline:none;transition:.18s ease}#c1app .auth-gate-fields input:focus{border-color:#7367f6;box-shadow:0 0 0 4px rgba(99,102,241,.11)}
+#c1app .auth-primary-btn{width:100%;height:50px;margin-top:18px;display:flex;align-items:center;justify-content:center;gap:9px;border:0;border-radius:14px;background:linear-gradient(135deg,#5145e5,#6657f5);color:#fff;font-size:14px;font-weight:820;box-shadow:0 13px 26px rgba(79,70,229,.24);cursor:pointer;transition:transform .15s ease,box-shadow .15s ease}#c1app .auth-primary-btn:hover{box-shadow:0 17px 32px rgba(79,70,229,.3);transform:translateY(-1px)}#c1app .auth-primary-btn:active{transform:scale(.985)}#c1app .auth-divider{display:flex;align-items:center;gap:12px;margin:22px 0 16px;color:#94a3b8;font-size:11px}#c1app .auth-divider:before,#c1app .auth-divider:after{content:'';height:1px;background:#e8edf5;flex:1}#c1app .auth-guest-btn{width:100%;height:46px;border:1px solid #dfe5ef;border-radius:13px;background:#fff;color:#334155;font-weight:760;cursor:pointer;transition:.18s ease}#c1app .auth-guest-btn:hover{background:#f8fafc;border-color:#cfd7e4}#c1app .auth-guest-note{display:flex;align-items:flex-start;gap:8px;margin-top:16px;padding:11px 12px;border-radius:11px;background:#fff8ed;color:#8a5a17}#c1app .auth-guest-note svg{flex:0 0 auto;margin-top:1px}#c1app .auth-guest-note p{margin:0;font-size:10.7px;line-height:1.45}#c1app .auth-guest-note b{font-weight:820}
+#c1app .auth-gate-form-side .account-msg{margin:12px 0 0;font-size:11px}
+@keyframes authGateFade{from{opacity:0}to{opacity:1}}@keyframes authGateIn{from{opacity:0;transform:translateY(16px) scale(.985)}to{opacity:1;transform:none}}
+@media(max-width:760px){#c1app .auth-gate-backdrop{padding:0;align-items:stretch;background:#f7f9fd;backdrop-filter:none;-webkit-backdrop-filter:none}#c1app .auth-gate-card{width:100%;min-height:100dvh;grid-template-columns:1fr;border-radius:0;box-shadow:none;overflow:auto;background:#fbfcff;padding-bottom:env(safe-area-inset-bottom)}#c1app .auth-gate-visual{display:none}#c1app .auth-gate-form-side{justify-content:flex-start;min-height:100dvh;padding:calc(34px + env(safe-area-inset-top)) 22px 28px;background:linear-gradient(180deg,#f8faff 0%,#fff 32%,#fff 100%)}#c1app .auth-mobile-brand{display:flex;margin-bottom:50px}#c1app .auth-mobile-brand .auth-gate-logo.small{width:44px;height:44px;background:linear-gradient(135deg,#5145e5,#1ba9ff);box-shadow:0 10px 24px rgba(79,70,229,.2)}#c1app .auth-mobile-brand b{display:block;color:#111827;font-size:19px;line-height:1.05}#c1app .auth-mobile-brand span{display:block;margin-top:3px;color:#8b98ac;font-size:11px}#c1app .auth-mode-tabs{margin-bottom:30px}#c1app .auth-form-heading h2{font-size:31px}#c1app .auth-form-heading p{font-size:14px;margin-bottom:27px}#c1app .auth-gate-fields input{height:54px;border-radius:15px;font-size:16px}#c1app .auth-primary-btn{height:54px;border-radius:15px;font-size:15px;margin-top:20px}#c1app .auth-guest-btn{height:50px;border-radius:15px}#c1app .auth-guest-note{margin-top:18px;padding:12px 13px} }
+@media(prefers-reduced-motion:reduce){#c1app .auth-gate-backdrop,#c1app .auth-gate-card{animation:none}#c1app .auth-primary-btn{transition:none}}
+
 </style>
 </head>
 <body>
@@ -1920,7 +1935,7 @@ var C1_STORAGE = (function(){
 })();
 
 /* ============================= CONSTANTS ============================= */
-var APP_BUILD = '2026-10-05-premium-native-redesign-qa2';
+var APP_BUILD = '2026-10-05-premium-auth-gate-guest';
 
 /* ============================= ACCOUNT + CLOUD SYNC (SUPABASE) ============================= */
 /* Publishable keys are designed for browser clients. User data is protected by Supabase Auth + RLS. */
@@ -1933,6 +1948,7 @@ var REMOTE_SYNC_TIMEOUT_MS = 7000;
 var REMOTE_PULL_INTERVAL_MS = 10000;
 var SYNC_UI = { status:'idle', message:'', lastSyncedAt:null };
 var AUTH_UI = { session:null, user:null, busy:false, message:'', error:false };
+var ACCESS_UI = { guest:false, authMode:'login' };
 var remoteSaveTimer = null;
 var remoteSaveInFlight = false;
 var remoteSaveQueued = false;
@@ -1955,7 +1971,8 @@ function setSyncStatus(status, message){
   }
 }
 function syncStatusText(){
-  if (!AUTH_UI.session) return 'Nicht angemeldet – Fortschritt wird nur auf diesem Gerät gespeichert';
+  if (ACCESS_UI.guest) return 'Gastmodus – Fortschritt wird nicht gespeichert';
+  if (!AUTH_UI.session) return 'Nicht angemeldet – bitte einloggen, um Fortschritt zu speichern';
   if (SYNC_UI.status==='syncing') return 'Synchronisiere …';
   if (SYNC_UI.status==='ok') return 'Online synchronisiert';
   if (SYNC_UI.status==='error') return 'Online-Sync momentan nicht verfügbar';
@@ -1964,12 +1981,14 @@ function syncStatusText(){
 function setAuthMessage(message, isError){
   AUTH_UI.message = message || '';
   AUTH_UI.error = !!isError;
-  var el = document.getElementById('account-msg');
-  if (el){
-    el.className = 'msg-box account-msg ' + (AUTH_UI.error ? 'err' : 'ok');
-    el.textContent = AUTH_UI.message;
-    el.style.display = AUTH_UI.message ? 'block' : 'none';
-  }
+  ['account-msg','auth-gate-msg'].forEach(function(id){
+    var el = document.getElementById(id);
+    if (el){
+      el.className = 'msg-box account-msg ' + (AUTH_UI.error ? 'err' : 'ok');
+      el.textContent = AUTH_UI.message;
+      el.style.display = AUTH_UI.message ? 'block' : 'none';
+    }
+  });
 }
 function cloneJson(value){
   try { return JSON.parse(JSON.stringify(value)); } catch(e){ return value; }
@@ -2197,7 +2216,7 @@ function clearAuthSession(){
   AUTH_UI.session = null;
   AUTH_UI.user = null;
   safeLocalRemove(AUTH_SESSION_KEY);
-  setSyncStatus('idle', 'Nicht angemeldet – Fortschritt wird nur auf diesem Gerät gespeichert');
+  setSyncStatus('idle', 'Nicht angemeldet – bitte einloggen, um Fortschritt zu speichern');
 }
 function restoreAuthSession(){
   var raw = safeLocalGet(AUTH_SESSION_KEY);
@@ -2233,13 +2252,16 @@ function ensureAuthSession(){
 function signInAccount(email, password){
   email = String(email||'').trim();
   if (!email || !password){ setAuthMessage('Bitte E-Mail und Passwort eingeben.', true); return Promise.resolve(false); }
+  var wasGuest = !!ACCESS_UI.guest;
   AUTH_UI.busy = true; setAuthMessage('Anmeldung läuft …', false);
   return authFetch('/auth/v1/token?grant_type=password', { email:email, password:password }).then(function(data){
     var session = storeAuthSession(data);
     if (!session) throw new Error('Keine gültige Sitzung erhalten.');
+    ACCESS_UI.guest = false;
+    if (wasGuest) STATE = defaultState();
     AUTH_UI.busy = false;
-    setAuthMessage('Angemeldet. Dein Fortschritt wird jetzt synchronisiert.', false);
-    return loadRemoteAndMerge(false).then(function(){ render(); return true; });
+    setAuthMessage('Angemeldet. Dein gespeicherter Fortschritt wird geladen.', false);
+    return loadRemoteAndMerge(wasGuest).then(function(){ render(); return true; });
   }).catch(function(err){
     AUTH_UI.busy = false;
     setAuthMessage('Anmeldung fehlgeschlagen: ' + err.message, true);
@@ -2251,14 +2273,17 @@ function registerAccount(email, password){
   email = String(email||'').trim();
   if (!email || !password){ setAuthMessage('Bitte E-Mail und Passwort eingeben.', true); return Promise.resolve(false); }
   if (String(password).length < 6){ setAuthMessage('Das Passwort muss mindestens 6 Zeichen lang sein.', true); return Promise.resolve(false); }
+  var wasGuest = !!ACCESS_UI.guest;
   AUTH_UI.busy = true; setAuthMessage('Konto wird erstellt …', false);
   var redirect = window.location.origin + window.location.pathname;
   return authFetch('/auth/v1/signup?redirect_to=' + encodeURIComponent(redirect), { email:email, password:password }).then(function(data){
     AUTH_UI.busy = false;
     if (data && data.access_token){
       storeAuthSession(data);
-      setAuthMessage('Konto erstellt. Dein aktueller Fortschritt wird hochgeladen.', false);
-      return loadRemoteAndMerge(false).then(function(){ render(); return true; });
+      ACCESS_UI.guest = false;
+      if (wasGuest) STATE = defaultState();
+      setAuthMessage('Konto erstellt. Dein Konto ist bereit.', false);
+      return loadRemoteAndMerge(wasGuest).then(function(){ render(); return true; });
     }
     setAuthMessage('Konto erstellt. Bitte bestätige zuerst die E-Mail und melde dich danach an.', false);
     render();
@@ -2275,13 +2300,16 @@ function signOutAccount(){
   var p = session ? authFetch('/auth/v1/logout', null, session.access_token).catch(function(){ return null; }) : Promise.resolve(null);
   return p.then(function(){
     clearAuthSession();
-    AUTH_UI.message = 'Abgemeldet. Der lokale Fortschritt bleibt auf diesem Gerät erhalten.';
+    ACCESS_UI.guest = false;
+    ACCESS_UI.authMode = 'login';
+    AUTH_UI.message = 'Du wurdest abgemeldet. Melde dich erneut an, um deinen gespeicherten Stand zu laden.';
     AUTH_UI.error = false;
     render();
     return true;
   });
 }
 function saveLocalSnapshot(){
+  if (ACCESS_UI.guest) return;
   try { C1_STORAGE.set(STORAGE_KEY, JSON.stringify(STATE), false).catch(function(){}); } catch(e){}
 }
 function fetchRemoteStateForUser(){
@@ -2339,7 +2367,7 @@ function saveRemoteNow(){
   });
 }
 function scheduleRemoteSave(){
-  if (!AUTH_UI.session) return;
+  if (ACCESS_UI.guest || !AUTH_UI.session) return;
   if (remoteSaveTimer) clearTimeout(remoteSaveTimer);
   remoteSaveTimer=setTimeout(function(){ saveRemoteNow(); }, 900);
 }
@@ -2455,6 +2483,7 @@ function scheduleSave(){
   saveTimer = setTimeout(function(){ persist(); }, 500);
 }
 function persist(){
+  if (ACCESS_UI.guest) return;
   try {
     if (STATE && STATE.meta) STATE.meta.lastModifiedAt = new Date().toISOString();
     saveLocalSnapshot();
@@ -4190,6 +4219,39 @@ function focusWritingInput(){
   setTimeout(doFocus, 100);
 }
 
+function renderAuthGate(){
+  var registerMode = ACCESS_UI.authMode==='register';
+  var h = '<div class="auth-gate-backdrop" role="dialog" aria-modal="true" aria-labelledby="auth-gate-title">';
+  h += '<div class="auth-gate-card">';
+  h += '<div class="auth-gate-visual"><div class="auth-gate-glow one"></div><div class="auth-gate-glow two"></div>';
+  h += '<div class="auth-gate-brand"><div class="auth-gate-logo">L</div><div><b>Lexicon</b><span>Cambridge C1 Advanced</span></div></div>';
+  h += '<div class="auth-gate-copy"><span class="auth-kicker">YOUR VOCABULARY, EVERYWHERE</span><h1>Mach genau dort weiter, wo du aufgehört hast.</h1><p>Melde dich an, damit Levels, schwierige Wörter, Reviews und dein gesamter Lernfortschritt automatisch auf allen Geräten verfügbar bleiben.</p></div>';
+  h += '<div class="auth-benefits"><span>'+icon('cloud',17)+' Fortschritt synchronisieren</span><span>'+icon('cycle',17)+' Geräte nahtlos wechseln</span><span>'+icon('check',17)+' Lernstand sicher behalten</span></div>';
+  h += '</div>';
+  h += '<div class="auth-gate-form-side">';
+  h += '<div class="auth-mobile-brand"><div class="auth-gate-logo small">L</div><div><b>Lexicon</b><span>Cambridge C1 Advanced</span></div></div>';
+  h += '<div class="auth-mode-tabs"><button type="button" class="auth-mode-tab '+(!registerMode?'active':'')+'" data-auth-mode="login">Einloggen</button><button type="button" class="auth-mode-tab '+(registerMode?'active':'')+'" data-auth-mode="register">Registrieren</button></div>';
+  h += '<div class="auth-form-heading"><h2 id="auth-gate-title">'+(registerMode?'Dein Lexicon-Konto erstellen':'Willkommen zurück')+'</h2><p>'+(registerMode?'Erstelle ein Konto, damit dein zukünftiger Lernstand automatisch gespeichert wird.':'Melde dich an, um deinen zuletzt gespeicherten Lernstand zu laden.')+'</p></div>';
+  h += '<div class="auth-gate-fields"><label><span>E-Mail</span><input id="auth-gate-email" type="email" autocomplete="email" inputmode="email" placeholder="name@example.com"></label><label><span>Passwort</span><input id="auth-gate-password" type="password" autocomplete="'+(registerMode?'new-password':'current-password')+'" placeholder="Mindestens 6 Zeichen"></label></div>';
+  h += '<button type="button" class="auth-primary-btn" id="auth-gate-submit">'+(registerMode?'Konto erstellen':'Einloggen & weiterlernen')+'<span>→</span></button>';
+  h += '<div id="auth-gate-msg" class="msg-box account-msg '+(AUTH_UI.error?'err':'ok')+'" style="'+(AUTH_UI.message?'':'display:none;')+'">'+escapeHtml(AUTH_UI.message||'')+'</div>';
+  h += '<div class="auth-divider"><span>oder</span></div>';
+  h += '<button type="button" class="auth-guest-btn" id="auth-guest-btn">Als Gast fortfahren</button>';
+  h += '<div class="auth-guest-note"><span>'+icon('alert',15)+'</span><p><b>Gastmodus:</b> Dein Fortschritt wird nicht gespeichert. Wenn du die Seite neu lädst oder schließt, geht der Lernstand dieser Gast-Sitzung verloren.</p></div>';
+  h += '</div></div></div>';
+  return h;
+}
+function continueAsGuest(){
+  ACCESS_UI.guest = true;
+  ACCESS_UI.authMode = 'login';
+  AUTH_UI.message = '';
+  AUTH_UI.error = false;
+  STATE = defaultState();
+  UI.screen = 'dashboard';
+  UI.session = null;
+  setSyncStatus('idle', 'Gastmodus – Fortschritt wird nicht gespeichert');
+  render();
+}
 function render(){
   var root = document.getElementById('c1app');
   if (UI.screen==='loading'){ root.innerHTML = '<div class="loading-wrap premium-loading"><span class="loading-orb"></span><b>Lexicon</b><small>Loading your vocabulary…</small></div>'; return; }
@@ -4211,7 +4273,9 @@ function render(){
     if (UI.detailId!==null) html += renderDetailModal();
   }
   if (UI.confirmDialog) html += renderConfirmModal();
+  if (!AUTH_UI.session && !ACCESS_UI.guest) html += renderAuthGate();
   root.innerHTML = html;
+  try { document.documentElement.classList.toggle('auth-gate-open', !AUTH_UI.session && !ACCESS_UI.guest); } catch(e){}
   bindEvents();
   focusWritingInput();
   animateCountUps();
@@ -4253,7 +4317,7 @@ function renderTopbar(){
   var email = (AUTH_UI && AUTH_UI.user && AUTH_UI.user.email) ? AUTH_UI.user.email : '';
   var initial = email ? email.charAt(0).toUpperCase() : 'L';
   var syncClass = (SYNC_UI && SYNC_UI.status) ? SYNC_UI.status : 'idle';
-  var syncLabel = AUTH_UI && AUTH_UI.user ? (syncClass==='ok' || syncClass==='success' ? 'Synced' : 'Cloud sync') : 'Local only';
+  var syncLabel = AUTH_UI && AUTH_UI.user ? (syncClass==='ok' || syncClass==='success' ? 'Synced' : 'Cloud sync') : (ACCESS_UI.guest ? 'Guest · not saved' : 'Sign in');
 
   var h = '<div class="app-layout">';
   h += '<aside class="app-sidebar" aria-label="Main navigation">';
@@ -5222,6 +5286,36 @@ function toggle(id, checked){
 /* ============================= EVENTS ============================= */
 function bindEvents(){
   var root = document.getElementById('c1app');
+  root.querySelectorAll('[data-auth-mode]').forEach(function(el){
+    el.addEventListener('click', function(){
+      ACCESS_UI.authMode = el.getAttribute('data-auth-mode')==='register' ? 'register' : 'login';
+      AUTH_UI.message=''; AUTH_UI.error=false;
+      render();
+      setTimeout(function(){ var e=document.getElementById('auth-gate-email'); if(e) e.focus(); }, 30);
+    });
+  });
+  function gateCredentials(){
+    var e=document.getElementById('auth-gate-email');
+    var p=document.getElementById('auth-gate-password');
+    return {email:e?e.value.trim():'', password:p?p.value:''};
+  }
+  var gateSubmit=document.getElementById('auth-gate-submit');
+  if(gateSubmit) gateSubmit.addEventListener('click', function(){
+    var c=gateCredentials();
+    if(ACCESS_UI.authMode==='register') registerAccount(c.email,c.password);
+    else signInAccount(c.email,c.password);
+  });
+  var gatePassword=document.getElementById('auth-gate-password');
+  if(gatePassword) gatePassword.addEventListener('keydown', function(ev){
+    if(ev.key==='Enter'){
+      ev.preventDefault();
+      var c=gateCredentials();
+      if(ACCESS_UI.authMode==='register') registerAccount(c.email,c.password);
+      else signInAccount(c.email,c.password);
+    }
+  });
+  var guestBtn=document.getElementById('auth-guest-btn');
+  if(guestBtn) guestBtn.addEventListener('click', continueAsGuest);
 
   root.querySelectorAll('[data-nav]').forEach(function(el){
     el.addEventListener('click', function(){ UI.screen = el.getAttribute('data-nav'); UI.detailId=null; render(); });
