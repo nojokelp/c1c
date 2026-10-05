@@ -1803,6 +1803,30 @@
   #c1app *,#c1app *::before,#c1app *::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
 }
 
+
+
+/* === Premium QA refinements: Browser + Settings === */
+#c1app .settings-grid{display:grid;grid-template-columns:minmax(0,1.18fr) minmax(320px,.82fr);gap:18px;align-items:start}
+#c1app .settings-group-card{background:#fff;border:1px solid var(--border);border-radius:24px;box-shadow:var(--shadow-sm);padding:20px 22px}
+#c1app .settings-group-head{display:flex;gap:12px;align-items:flex-start;padding:2px 0 14px;border-bottom:1px solid #EEF0F4;margin-bottom:2px}
+#c1app .settings-group-head h2{font-size:17px;line-height:1.2;margin:1px 0 4px;color:var(--text-primary);letter-spacing:-.02em}
+#c1app .settings-group-head p{margin:0;color:var(--text-secondary);font-size:11.5px;line-height:1.45}
+#c1app .settings-group-icon{width:38px;height:38px;display:grid;place-items:center;flex:0 0 auto;border-radius:12px;background:#EFEDFF;color:var(--primary)}
+#c1app .settings-group-icon.alt{background:#EAF6FF;color:#1989D8}
+#c1app .settings-group-card .field,#c1app .settings-group-card .toggle-row{min-height:66px;padding:15px 0;margin:0;border-bottom:1px solid #EEF0F4}
+#c1app .settings-group-card .field:last-child,#c1app .settings-group-card .toggle-row:last-of-type{border-bottom:0}
+#c1app .settings-group-card .ctl{margin-top:3px;min-height:44px;border-radius:12px;background:#F8F9FC;border:1px solid var(--border);max-width:230px}
+#c1app .settings-note{display:flex;gap:11px;align-items:flex-start;margin-top:14px;padding:14px;border-radius:15px;background:linear-gradient(135deg,#F5F3FF,#F7FAFF);color:var(--text-secondary)}
+#c1app .settings-note>span{color:var(--primary);margin-top:1px}.settings-note b{display:block;color:var(--text-primary);font-size:12px}.settings-note p{margin:3px 0 0;font-size:10.8px;line-height:1.45}
+#c1app .settings-section-title{display:flex;align-items:end;justify-content:space-between;gap:16px;margin:0 4px 10px}
+#c1app .settings-section-title>span{font-size:14px;font-weight:800;color:#454D61}.settings-section-title small{font-size:10.5px;color:var(--text-tertiary)}
+#c1app .page-settings>.settings-section>.card{border:1px solid var(--border)!important;border-radius:22px!important;background:#fff!important;box-shadow:var(--shadow-sm)!important}
+#c1app .data-actions{display:flex;gap:10px;margin-top:10px;flex-wrap:wrap}.danger-zone{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:18px 0 8px;border-top:1px solid #EEF0F4}.danger-zone>div:first-child{display:flex;flex-direction:column;gap:2px}.danger-zone b{font-size:13px}.danger-zone span{font-size:10.5px;color:var(--text-tertiary)}.danger-zone>div:last-child{display:flex;gap:8px;flex-wrap:wrap}.build-label{text-align:center;margin-top:22px;font-size:10px;color:var(--text-tertiary);letter-spacing:.04em}.signout-action{color:#B42318!important;border-color:transparent!important;background:transparent!important}
+#c1app .browser-master{min-width:0}.browser-detail{overflow:hidden}.browser-detail .btn.full{width:100%;justify-content:center;margin-top:9px}.vocab-row:focus-visible{outline:3px solid rgba(91,75,255,.18);outline-offset:1px}.vocab-row.selected{background:linear-gradient(90deg,#F1EFFF,#F8F8FD)!important}.browser-detail{animation:detailIn .18s ease both}@keyframes detailIn{from{opacity:.3;transform:translateX(6px)}to{opacity:1;transform:none}}
+@media(max-width:980px){#c1app .settings-grid{grid-template-columns:1fr}.settings-group-card{border-radius:20px}.settings-section-title small{display:none}}
+@media(min-width:761px){#c1app .vocab-list{max-height:calc(100vh - 248px);overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#CDD2DD transparent}#c1app .vocab-list::-webkit-scrollbar{width:8px}#c1app .vocab-list::-webkit-scrollbar-thumb{background:#CDD2DD;border-radius:99px;border:2px solid #fff}}
+@media(max-width:760px){#c1app .settings-grid{gap:14px}.settings-group-card{padding:16px}.settings-group-head{padding-bottom:12px}.settings-group-card .field,.settings-group-card .toggle-row{min-height:60px;padding:13px 0}.settings-group-card .ctl{max-width:100%;width:100%}.danger-zone{align-items:flex-start;flex-direction:column}.data-actions>*{flex:1 1 auto;justify-content:center}.settings-section-title{margin-left:2px}.page-settings>.settings-section>.card{padding:16px!important}.vocab-row.selected{box-shadow:none!important}}
+
 </style>
 </head>
 <body>
@@ -1892,7 +1916,7 @@ var C1_STORAGE = (function(){
 })();
 
 /* ============================= CONSTANTS ============================= */
-var APP_BUILD = '2026-10-05-premium-native-redesign';
+var APP_BUILD = '2026-10-05-premium-native-redesign-qa2';
 
 /* ============================= ACCOUNT + CLOUD SYNC (SUPABASE) ============================= */
 /* Publishable keys are designed for browser clients. User data is protected by Supabase Auth + RLS. */
@@ -2405,7 +2429,7 @@ var VOCAB_VERSION = 2; // bump whenever TEST_DATA's word set changes, to auto-mi
 
 /* ============================= STATE ============================= */
 var STATE = null;      // persisted
-var UI = { screen: 'loading', session: null, detailId: null, difficultSort: 'mistakes', browserQuery: '', browserFilters: {tier:null, status:null, type:null, tag:null}, importMsg: null, selectedDifficult: {}, confirmDialog: null, testTiers: {S:true, A:true, B:true, C:true, D:true}, introDolphinPlayed: false };
+var UI = { screen: 'loading', session: null, detailId: null, browserSelectedId: null, difficultSort: 'mistakes', browserQuery: '', browserFilters: {tier:null, status:null, type:null, tag:null}, importMsg: null, selectedDifficult: {}, confirmDialog: null, testTiers: {S:true, A:true, B:true, C:true, D:true}, introDolphinPlayed: false };
 function askConfirm(message, onConfirm){
   UI.confirmDialog = { message: message, onConfirm: onConfirm };
   render();
@@ -5032,7 +5056,6 @@ function renderDifficult(){
   UI.__difficultIds=items.map(function(it){return it.id;}); return h;
 }
 
-/* ============================= RENDER: BROWSER
 /* ============================= RENDER: BROWSER ============================= */
 function renderBrowser(){
   var q=normalizeAnswer(UI.browserQuery); var f=UI.browserFilters;
@@ -5045,7 +5068,12 @@ function renderBrowser(){
     return true;
   }).sort(function(a,b){return a.english.localeCompare(b.english);});
 
-  var selected=items.length?items[0]:null;
+  var selected=null;
+  if(items.length){
+    selected=items.find(function(it){return Number(it.id)===Number(UI.browserSelectedId);}) || items[0];
+    UI.browserSelectedId=selected.id;
+  }
+
   var h='<div class="page-heading"><div><span class="eyebrow">VOCABULARY LIBRARY</span><h1>Browse</h1><p>'+STATE.items.length+' Cambridge C1 words, searchable in English and German.</p></div><div class="heading-count">'+items.length+'<small>shown</small></div></div>';
   h+='<div class="browser-layout"><section class="browser-master"><div class="browser-sticky-tools">';
   h+='<div class="premium-search">'+icon('search',19)+'<input type="text" id="browser-search" placeholder="Search English or German…" value="'+escapeHtml(UI.browserQuery)+'"></div>';
@@ -5055,14 +5083,27 @@ function renderBrowser(){
   if(f.tier||f.status||f.type||f.tag||UI.browserQuery) h+='<button class="chip clear" id="clear-filters-btn">Clear</button>';
   h+='</div></div>';
 
-  if(!items.length){ h+='<div class="empty-state premium-empty">'+icon('search',34)+'<div class="em-title">No words match</div><span>Try another search or remove a filter.</span></div></section><aside class="browser-detail empty-detail"></aside></div>'; return h; }
+  if(!items.length){
+    UI.browserSelectedId=null;
+    h+='<div class="empty-state premium-empty">'+icon('search',34)+'<div class="em-title">No words match</div><span>Try another search or remove a filter.</span></div></section><aside class="browser-detail empty-detail"></aside></div>';
+    return h;
+  }
 
   h+='<div class="vocab-list">';
-  items.forEach(function(it,idx){ var st=computeStatus(STATE.progress[it.id]); h+='<button class="vocab-row '+(idx===0?'selected':'')+'" data-detail="'+it.id+'"><span class="status-dot status-'+st+'"></span><span class="vocab-row-copy"><b>'+escapeHtml(it.english)+'</b><small>'+escapeHtml((it.german||[]).join('; '))+'</small></span><span class="vocab-row-meta"><span class="'+tierBadgeClass(it.tier)+'">'+it.tier+'</span><small>'+st+'</small></span></button>'; });
+  items.forEach(function(it){
+    var st=computeStatus(STATE.progress[it.id]);
+    var isSelected=selected && Number(selected.id)===Number(it.id);
+    h+='<button class="vocab-row '+(isSelected?'selected':'')+'" data-browser-select="'+it.id+'" aria-pressed="'+(isSelected?'true':'false')+'"><span class="status-dot status-'+st+'"></span><span class="vocab-row-copy"><b>'+escapeHtml(it.english)+'</b><small>'+escapeHtml((it.german||[]).join('; '))+'</small></span><span class="vocab-row-meta"><span class="'+tierBadgeClass(it.tier)+'">'+it.tier+'</span><small>'+st+'</small></span></button>';
+  });
   h+='</div></section>';
 
   if(selected){
-    var p=STATE.progress[selected.id]||defaultProgress(); var attempts=(p.e2gCorrect||0)+(p.e2gWrong||0)+(p.g2eCorrect||0)+(p.g2eWrong||0); var correct=(p.e2gCorrect||0)+(p.g2eCorrect||0); var acc=attempts?Math.round(100*correct/attempts):null; var mistakes=(p.e2gWrong||0)+(p.g2eWrong||0); var st=computeStatus(p);
+    var p=STATE.progress[selected.id] || {timesSeen:0,e2gCorrect:0,e2gWrong:0,e2gAlmost:0,g2eCorrect:0,g2eWrong:0,g2eHardWrong:0,g2eTypoWrong:0,spellingMistakes:0,lastReviewAt:null,nextReviewDate:null,level:-1,streak:0,lastAnswers:[]};
+    var attempts=(p.e2gCorrect||0)+(p.e2gWrong||0)+(p.g2eCorrect||0)+(p.g2eWrong||0);
+    var correct=(p.e2gCorrect||0)+(p.g2eCorrect||0);
+    var acc=attempts?Math.round(100*correct/attempts):null;
+    var mistakes=(p.e2gWrong||0)+(p.g2eWrong||0);
+    var st=computeStatus(p);
     h+='<aside class="browser-detail"><div class="detail-kicker"><span class="'+tierBadgeClass(selected.tier)+'">Tier '+selected.tier+'</span><span class="status-pill status-'+st+'">'+st+'</span></div><h2>'+escapeHtml(selected.english)+'</h2><div class="detail-translation">'+escapeHtml((selected.german||[]).join('; '))+'</div>';
     if(selected.type) h+='<div class="detail-type">'+escapeHtml(selected.type)+'</div>';
     h+=renderExampleBox(selected);
@@ -5106,38 +5147,42 @@ function renderDetailModal(){
 /* ============================= RENDER: SETTINGS ============================= */
 function renderSettings(){
   var s = STATE.settings;
-  var h = '<div class="page-heading settings-heading"><div><span class="eyebrow">PREFERENCES</span><h1>Settings</h1><p>Learning, appearance, account and data — all in one place.</p></div></div>';
-  h += '<div class="card">';
+  var h = '<div class="page-heading settings-heading"><div><span class="eyebrow">PREFERENCES</span><h1>Settings</h1><p>Learning, study display, account and data — organised like a native app.</p></div></div>';
 
+  h += '<div class="settings-grid">';
+
+  h += '<section class="settings-group-card"><div class="settings-group-head"><span class="settings-group-icon">'+icon('book',18)+'</span><div><h2>Learning</h2><p>Control the pace and review load of each study session.</p></div></div>';
   h += '<div class="field"><label>New words per session</label><div class="desc">How many new words appear in the Learn phase of a session.</div>';
   h += '<select class="ctl" id="set-newPerSession">';
   [5,10,15,20,25].forEach(function(n){ h += '<option value="'+n+'" '+(s.newPerSession===n?'selected':'')+'>'+n+'</option>'; });
   h += '</select></div>';
-
   h += '<div class="field"><label>Daily new word limit</label><div class="desc">Maximum new words introduced per day, across sessions.</div>';
   h += '<select class="ctl" id="set-dailyNewLimit">';
   [10,20,30,40,50].forEach(function(n){ h += '<option value="'+n+'" '+(s.dailyNewLimit===n?'selected':'')+'>'+n+'</option>'; });
   h += '</select></div>';
-
   h += '<div class="field"><label>Reviews per session</label><div class="desc">Unlimited works through everything due. Recommended caps a session at 30 reviews.</div>';
   h += '<select class="ctl" id="set-reviewsMode">';
   h += '<option value="unlimited" '+(s.reviewsMode==='unlimited'?'selected':'')+'>Unlimited</option>';
   h += '<option value="recommended" '+(s.reviewsMode==='recommended'?'selected':'')+'>Recommended (max 30)</option>';
   h += '</select></div>';
+  h += '<div class="toggle-row"><div><div class="t">Strict German → English spelling</div><div class="d">Off accepts a one-character typo as correct. On treats any typo as incorrect.</div></div>'+toggle('set-strictSpelling', s.strictSpelling)+'</div>';
+  h += '</section>';
 
-  h += '<div class="toggle-row"><div><div class="t">Strict German \u2192 English spelling</div><div class="d">Off accepts a one-character typo as correct. On (default, recommended) treats any typo as incorrect.</div></div>'+toggle('set-strictSpelling', s.strictSpelling)+'</div>';
-  h += '<div class="toggle-row"><div><div class="t">Show example sentences during learning</div></div>'+toggle('set-showExamples', s.showExamples)+'</div>';
-  h += '<div class="toggle-row"><div><div class="t">Show tier</div></div>'+toggle('set-showTier', s.showTier)+'</div>';
-  h += '<div class="toggle-row"><div><div class="t">Show relevance score</div></div>'+toggle('set-showScore', s.showScore)+'</div>';
+  h += '<section class="settings-group-card"><div class="settings-group-head"><span class="settings-group-icon alt">'+icon('eye',18)+'</span><div><h2>Study display</h2><p>Choose which learning cues appear while you practise.</p></div></div>';
+  h += '<div class="toggle-row"><div><div class="t">Show example sentences</div><div class="d">Display natural example sentences during learning.</div></div>'+toggle('set-showExamples', s.showExamples)+'</div>';
+  h += '<div class="toggle-row"><div><div class="t">Show tier</div><div class="d">Show the C1 relevance tier on study cards.</div></div>'+toggle('set-showTier', s.showTier)+'</div>';
+  h += '<div class="toggle-row"><div><div class="t">Show relevance score</div><div class="d">Display each word’s relevance score where available.</div></div>'+toggle('set-showScore', s.showScore)+'</div>';
+  h += '<div class="settings-note"><span>'+icon('sparkles',17)+'</span><div><b>Focus-first design</b><p>Your core learning logic stays unchanged; these options only affect what is shown.</p></div></div>';
+  h += '</section>';
   h += '</div>';
 
-  h += '<div class="section"><h2>Account & cloud sync</h2><div class="card account-card">';
+  h += '<div class="section settings-section"><div class="settings-section-title"><span>Account & cloud sync</span><small>Keep progress consistent across devices</small></div><div class="card account-card">';
   h += '<div class="account-head"><div><div class="account-title">Fortschritt auf allen Geräten</div><div class="account-copy">Mit demselben Konto auf Computer, Handy oder Tablet anmelden. Dein Lernstand wird automatisch abgeglichen – auch wenn du zwischen mehreren Geräten wechselst.</div></div></div>';
   h += '<div id="cloud-sync-status" class="cloud-sync-status '+SYNC_UI.status+'">'+escapeHtml(SYNC_UI.message || syncStatusText())+'</div>';
   if (AUTH_UI.session && AUTH_UI.user){
     var accountEmail = AUTH_UI.user.email || 'Account';
     h += '<div class="account-user"><div class="account-avatar">'+escapeHtml(accountEmail.charAt(0).toUpperCase())+'</div><div><div class="account-email">'+escapeHtml(accountEmail)+'</div><div class="account-note">Angemeldet · dein Fortschritt gehört zu diesem Konto.</div></div></div>';
-    h += '<div class="account-actions"><button class="btn ink sm" id="sync-now-btn">Jetzt synchronisieren</button><button class="btn ghost sm" id="load-cloud-btn">Cloud-Fortschritt laden</button><button class="btn ghost sm" id="logout-btn">Abmelden</button></div>';
+    h += '<div class="account-actions"><button class="btn ink sm" id="sync-now-btn">Jetzt synchronisieren</button><button class="btn ghost sm" id="load-cloud-btn">Cloud-Fortschritt laden</button><button class="btn ghost sm signout-action" id="logout-btn">Abmelden</button></div>';
     h += '<div class="account-note">Änderungen werden zusätzlich automatisch gespeichert. Beim ersten Login auf einem neuen Gerät wird der neueste Stand geladen.</div>';
   } else {
     h += '<div class="account-form">';
@@ -5150,26 +5195,22 @@ function renderSettings(){
   h += '<div id="account-msg" class="msg-box account-msg '+(AUTH_UI.error?'err':'ok')+'" style="'+(AUTH_UI.message?'':'display:none;')+'">'+escapeHtml(AUTH_UI.message || '')+'</div>';
   h += '</div></div>';
 
-  h += '<div class="section"><h2>Vocabulary data</h2><div class="card">';
-  h += '<div class="field"><label>Import vocabulary</label><div class="desc">Paste JSON (an array of items, or {"items":[\u2026]}) or CSV with a header row. Existing progress is kept \u2014 matching is done by the English word.</div>';
+  h += '<div class="section settings-section"><div class="settings-section-title"><span>Data & maintenance</span><small>Import, export and reset tools</small></div><div class="card data-maintenance-card">';
+  h += '<div class="field"><label>Import vocabulary</label><div class="desc">Paste JSON (an array of items, or {"items":[…]}) or CSV with a header row. Existing progress is kept — matching is done by the English word.</div>';
   h += '<textarea class="ctl" id="import-textarea" placeholder=\'[{"english":"allocate","german":["zuteilen"],"tier":"A","relevanceScore":88}]\'></textarea>';
-  h += '<div style="display:flex;gap:10px;margin-top:10px;flex-wrap:wrap;">';
+  h += '<div class="data-actions">';
   h += '<button class="btn ink sm" id="import-text-btn">Import pasted text</button>';
   h += '<label class="btn ghost sm" style="margin:0;">Import file<input type="file" id="import-file" accept=".json,.csv,application/json,text/csv" style="display:none;"></label>';
   h += '<button class="btn ghost sm" id="export-json-btn">Export as JSON</button>';
   h += '</div>';
   if (UI.importMsg) h += '<div class="msg-box '+(UI.importMsg.ok?'ok':'err')+'">'+escapeHtml(UI.importMsg.text)+'</div>';
   h += '</div>';
-
-  h += '<div class="field" style="margin-top:24px;"><label>Reset</label><div class="desc">These actions cannot be undone.</div>';
-  h += '<div style="display:flex;gap:10px;flex-wrap:wrap;">';
-  h += '<button class="btn danger sm" id="reset-progress-btn">Reset all progress</button>';
-  h += '<button class="btn danger sm" id="reset-all-btn">Clear all data</button>';
-  h += '</div></div>';
-  h += '<div style="text-align:center;margin-top:26px;font-size:11px;color:var(--ink-faint);">Build '+APP_BUILD+'</div>';
+  h += '<div class="danger-zone"><div><b>Reset</b><span>These actions cannot be undone.</span></div><div><button class="btn danger sm" id="reset-progress-btn">Reset all progress</button><button class="btn danger sm" id="reset-all-btn">Clear all data</button></div></div>';
+  h += '<div class="build-label">Build '+APP_BUILD+'</div>';
   h += '</div></div>';
   return h;
 }
+
 function toggle(id, checked){
   return '<label class="switch"><input type="checkbox" id="'+id+'" '+(checked?'checked':'')+'><span class="slider"></span></label>';
 }
@@ -5397,6 +5438,16 @@ function bindEvents(){
   var clearFiltersBtn = document.getElementById('clear-filters-btn');
   if (clearFiltersBtn) clearFiltersBtn.addEventListener('click', function(){
     UI.browserFilters = {tier:null,status:null,type:null,tag:null}; UI.browserQuery=''; render();
+  });
+
+  root.querySelectorAll('[data-browser-select]').forEach(function(el){
+    el.addEventListener('click', function(){
+      var id=parseInt(el.getAttribute('data-browser-select'),10);
+      if (isNaN(id)) return;
+      if (window.innerWidth <= 760){ UI.detailId=id; }
+      else { UI.browserSelectedId=id; }
+      render();
+    });
   });
 
   // Detail modal
