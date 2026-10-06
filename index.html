@@ -1997,6 +1997,45 @@ html.auth-gate-open,html.auth-gate-open body{overflow:hidden!important}
   .lexicon-mascot-swim { animation:none!important; }
 }
 
+
+/* ============================= MINIMAL UX REDESIGN ============================= */
+#c1app .minimal-home,#c1app .minimal-page-head,#c1app .minimal-practice-grid,#c1app .minimal-vocab-head,#c1app .minimal-vocab-nav,#c1app .minimal-plan,#c1app .minimal-progress-primary,#c1app .minimal-progress-section,#c1app .minimal-readiness-row,#c1app .minimal-list-head,#c1app .minimal-settings-list,#c1app .minimal-inprogress,#c1app .minimal-journey-head,#c1app .minimal-flash-head{max-width:1040px;margin-left:auto;margin-right:auto}
+#c1app .minimal-page-head{margin:12px auto 34px}#c1app .minimal-page-head h1{margin:5px 0 0;font-size:34px;letter-spacing:-.04em;color:var(--text-primary)}#c1app .minimal-page-head p{margin:8px 0 0;color:var(--text-secondary);font-size:14px}
+#c1app .minimal-help-btn{width:32px;height:32px;display:inline-grid;place-items:center;border:0;border-radius:999px;background:#F2F4F8;color:#65718A;font-weight:850;font-size:15px;cursor:pointer;transition:.16s ease;flex:0 0 auto}#c1app .minimal-help-btn:hover{background:#E8E9FF;color:var(--primary);transform:translateY(-1px)}#c1app .minimal-help-btn:focus-visible,#c1app .minimal-filter-btn:focus-visible,#c1app .minimal-settings-trigger:focus-visible{outline:3px solid rgba(91,75,255,.18);outline-offset:2px}
+#c1app .minimal-status{display:inline-flex;align-items:center;width:max-content;padding:5px 8px;border-radius:999px;font-size:9.5px;line-height:1;font-weight:850;letter-spacing:.06em;background:#F0F2F6;color:#707B90}#c1app .minimal-status.active{background:#E7FAF2;color:#16825F}#c1app .minimal-status.warning{background:#FFF1E8;color:#B85C2B}
+#c1app .minimal-home{display:grid;gap:24px}.minimal-home-hero{position:relative;min-height:310px;border-radius:30px;padding:38px 42px;display:flex;align-items:center;justify-content:space-between;overflow:hidden;background:linear-gradient(135deg,#193B64 0%,#0B83C5 58%,#18AEEB 120%);box-shadow:0 20px 48px rgba(18,105,165,.17)}.minimal-home-hero:after{content:'';position:absolute;width:360px;height:360px;border:1px solid rgba(255,255,255,.12);border-radius:50%;right:-110px;top:-90px}.minimal-home-copy{position:relative;z-index:2;max-width:560px}.minimal-home-copy h1{margin:8px 0 7px;color:#fff;font-size:42px;line-height:1.04;letter-spacing:-.045em}.minimal-home-copy p{margin:0 0 24px;color:rgba(255,255,255,.78);font-size:15px}.minimal-primary-cta{height:48px!important;padding:0 22px!important;background:#fff!important;color:#155985!important;border:0!important;border-radius:13px!important;font-weight:850!important}.minimal-home-mascot{position:relative;z-index:2;width:245px;align-self:stretch;display:flex;align-items:center;justify-content:center}.minimal-home-mascot img{width:220px;max-height:260px;object-fit:contain;filter:drop-shadow(0 24px 32px rgba(0,33,74,.2))}
+#c1app .minimal-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:0;padding:8px 0}.minimal-metrics div{padding:10px 24px;border-right:1px solid #E9ECF2}.minimal-metrics div:first-child{padding-left:0}.minimal-metrics div:last-child{border-right:0}.minimal-metrics b{display:block;font-size:25px;letter-spacing:-.035em;color:var(--text-primary)}.minimal-metrics span{display:block;margin-top:3px;font-size:11px;color:var(--text-tertiary)}
+#c1app .minimal-home-section{padding-top:10px}.minimal-section-title{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:12px}.minimal-section-title h2{font-size:18px;margin:0;letter-spacing:-.025em}.minimal-skill-list{border-top:1px solid #E9ECF2}.minimal-skill-list>button{width:100%;min-height:60px;padding:0 5px;display:grid;grid-template-columns:minmax(150px,1fr) 64px 116px;align-items:center;gap:12px;border:0;border-bottom:1px solid #E9ECF2;background:transparent;text-align:left;color:var(--text-primary);cursor:pointer}.minimal-skill-list>button:hover{background:#F9FAFC}.minimal-skill-list>button>span:first-child{font-weight:760;font-size:13px}.minimal-skill-list>button>b{text-align:right;font-size:13px}
+#c1app .minimal-practice-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.minimal-practice-card{position:relative;min-height:188px;padding:21px;border:1px solid #E6E9F0;border-radius:21px;background:#fff;box-shadow:0 8px 24px rgba(35,45,75,.045);display:flex;flex-direction:column}.minimal-practice-card.primary{background:linear-gradient(145deg,#F8F7FF,#fff);border-color:#D8D3FF}.minimal-card-top{display:flex;align-items:center;justify-content:space-between;gap:10px}.minimal-practice-card h2{margin:20px 0 6px;font-size:19px;letter-spacing:-.025em}.minimal-practice-card>strong{font-size:29px;line-height:1;letter-spacing:-.04em;margin-bottom:18px}.minimal-practice-card .btn{margin-top:auto;align-self:flex-start}.minimal-card-open{position:absolute;right:18px;bottom:18px;width:38px;height:38px;border-radius:999px;border:0;background:#F1F3F7;color:#58647A;font-size:18px;cursor:pointer}.minimal-practice-card .minimal-status{margin-top:auto}
+#c1app .minimal-vocab-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin:30px auto 26px}.minimal-vocab-head h1{font-size:35px;margin:5px 0 6px;letter-spacing:-.04em}.minimal-vocab-head p{margin:0;color:var(--text-secondary);font-size:13px}.minimal-vocab-nav{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid #E8EBF1}.minimal-vocab-nav>button{display:grid;grid-template-columns:42px 1fr 24px;align-items:center;gap:12px;min-height:78px;padding:14px 14px;border:0;border-bottom:1px solid #E8EBF1;background:transparent;color:var(--text-primary);text-align:left;cursor:pointer}.minimal-vocab-nav>button:nth-child(odd){border-right:1px solid #E8EBF1}.minimal-vocab-nav>button:hover{background:#F9FAFC}.minimal-vocab-icon{width:36px;height:36px;border-radius:11px;background:#F0EEFF;color:var(--primary);display:grid;place-items:center}.minimal-vocab-nav b{display:block;font-size:14px}.minimal-vocab-nav small{display:block;margin-top:3px;color:var(--text-tertiary);font-size:10.5px}.minimal-vocab-nav>button>i{font-style:normal;color:#9AA4B7;text-align:right}
+#c1app .minimal-plan{border-top:1px solid #E8EBF1}.minimal-plan-block{min-height:92px;padding:22px 4px;display:grid;grid-template-columns:160px minmax(0,1fr) auto;align-items:center;gap:18px;border-bottom:1px solid #E8EBF1}.minimal-plan-block>span{font-size:11px;color:var(--text-tertiary);font-weight:750}.minimal-plan-block>b{font-size:16px}.minimal-plan-block>small{color:var(--text-secondary)}.minimal-plan-block.next .btn{justify-self:end}.minimal-plan-block.adaptive>div{display:flex;align-items:center;gap:10px}.minimal-plan-block.adaptive>div>span:first-child{font-weight:750;font-size:14px}
+#c1app .minimal-inprogress{min-height:560px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:28px 6vw}.minimal-inprogress>.eyebrow{margin-top:26px}.minimal-inprogress h1{font-size:44px;letter-spacing:-.045em;margin:7px 0 12px}.minimal-inprogress>p{font-size:15px;color:var(--text-secondary);margin:18px 0 24px;max-width:470px}.minimal-inprogress-actions{display:flex;align-items:center;gap:10px}
+#c1app .minimal-progress-primary{padding:28px 0 30px;border-bottom:1px solid #E8EBF1}.minimal-progress-primary>div:first-child{max-width:620px}.minimal-progress-primary span{font-size:12px;color:var(--text-secondary)}.minimal-progress-primary b{display:block;font-size:38px;margin:5px 0 12px;letter-spacing:-.04em}.minimal-progress-primary i{display:block;height:7px;background:#ECEEF4;border-radius:99px;overflow:hidden}.minimal-progress-primary i em{display:block;height:100%;background:linear-gradient(90deg,#5B4BFF,#1BA9FF);border-radius:inherit}.minimal-progress-facts{display:flex;gap:24px;margin-top:18px}.minimal-progress-facts span{font-size:12px}.minimal-progress-facts b{display:inline;font-size:12px;margin:0}.minimal-progress-section{padding:30px 0}.minimal-status-list{border-top:1px solid #E8EBF1}.minimal-status-list>div{min-height:54px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #E8EBF1;font-size:13px}.minimal-readiness-row{border-top:1px solid #E8EBF1;border-bottom:1px solid #E8EBF1;min-height:74px;display:flex;align-items:center;justify-content:space-between}.minimal-readiness-row>div{display:flex;align-items:center;gap:20px}.minimal-readiness-row span{font-size:13px;font-weight:750}.minimal-readiness-row b{font-size:20px}
+#c1app .minimal-title-with-help{display:flex;align-items:center;gap:9px}.minimal-title-with-help h1{margin:0;font-size:31px;letter-spacing:-.04em}.minimal-journey-head,.minimal-flash-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin:26px auto 18px}.minimal-journey-head p,.minimal-flash-head p{margin:7px 0 0;color:var(--text-secondary);font-size:12.5px}.journey-session-help{display:flex;justify-content:center;margin-top:8px}.journey-session-help .minimal-help-btn{width:28px;height:28px;font-size:13px}
+#c1app .minimal-list-head{display:flex;align-items:flex-end;justify-content:space-between;gap:22px;margin:18px auto 24px}.minimal-list-head h1{font-size:32px;margin:5px 0 2px;letter-spacing:-.04em}.minimal-list-head p{font-size:12px;margin:0;color:var(--text-secondary)}.minimal-head-actions{display:flex;align-items:center;gap:9px}.minimal-filter-btn{min-height:40px;border:1px solid #E1E5ED;border-radius:11px;padding:0 13px;display:inline-flex;align-items:center;gap:7px;background:#fff;color:#4C5870;font-size:11.5px;font-weight:760;cursor:pointer}.minimal-filter-btn b{min-width:18px;height:18px;border-radius:99px;display:grid;place-items:center;background:#5B4BFF;color:#fff;font-size:9px}.minimal-browser-tools{display:grid!important;grid-template-columns:minmax(0,1fr) auto auto!important;gap:8px!important;align-items:center!important}.minimal-text-clear{width:38px;height:38px;border:0;border-radius:9px;background:#F2F4F8;color:#778399;font-size:19px;cursor:pointer}.minimal-difficult-list{border-top:1px solid #E8EBF1}.minimal-difficult-list .difficult-row{box-shadow:none!important;border-radius:0!important;border:0!important;border-bottom:1px solid #E8EBF1!important;background:transparent!important}.difficulty-accuracy{font-size:12px;color:var(--text-secondary);font-weight:700}
+#c1app .minimal-settings-list{border-top:1px solid #E4E8EF}.minimal-settings-group{border-bottom:1px solid #E4E8EF}.minimal-settings-trigger{width:100%;min-height:70px;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:14px 4px;border:0;background:transparent;text-align:left;cursor:pointer;color:var(--text-primary)}.minimal-settings-trigger>span{min-width:0}.minimal-settings-trigger b{display:block;font-size:14px}.minimal-settings-trigger small{display:block;margin-top:4px;color:var(--text-tertiary);font-size:10.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.minimal-settings-trigger i{font-style:normal;color:#99A3B5;transition:.18s}.minimal-settings-group.open .minimal-settings-trigger i{transform:rotate(90deg)}.minimal-settings-content{padding:0 4px 24px;max-width:760px}.minimal-settings-content .field,.minimal-settings-content .toggle-row{padding:14px 0!important;border-bottom:1px solid #EDF0F4!important}.minimal-settings-content .ctl{max-width:320px}.minimal-account-line{display:grid;grid-template-columns:1fr 1fr;gap:18px;padding:5px 0 15px}.minimal-account-line span{display:block;font-size:10px;color:var(--text-tertiary)}.minimal-account-line b{display:block;margin-top:4px;font-size:13px}.minimal-settings-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.minimal-settings-note{font-size:11px;color:var(--text-secondary);line-height:1.5}.minimal-danger{margin-top:22px;padding-top:18px;border-top:1px solid #F0DFDF;display:flex;align-items:center;justify-content:space-between;gap:20px}.minimal-danger>span{font-size:12px;font-weight:800;color:#9B2C2C}.minimal-danger>div{display:flex;gap:8px}.build-label{margin-top:22px!important}
+#c1app .minimal-overlay{position:fixed;inset:0;z-index:120000;display:flex;align-items:center;justify-content:center;padding:24px;background:rgba(15,23,42,.24);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}#c1app .minimal-sheet{position:relative;width:min(420px,calc(100vw - 32px));padding:28px;border-radius:23px;background:#fff;box-shadow:0 28px 80px rgba(15,23,42,.22);animation:minimalSheetIn .18s ease both}.minimal-sheet h2{margin:6px 34px 10px 0;font-size:22px;letter-spacing:-.03em}.minimal-sheet>p{margin:0;color:var(--text-secondary);font-size:13px;line-height:1.62}.minimal-sheet-close{position:absolute;right:18px;top:16px;width:34px;height:34px;border:0;border-radius:99px;background:#F1F3F6;color:#65718A;font-size:22px;cursor:pointer}.minimal-sheet-handle{display:none}.minimal-got-it{width:100%;justify-content:center;margin-top:22px}.minimal-filter-group{margin-top:18px}.minimal-filter-group>b{display:block;margin-bottom:9px;font-size:11px}.minimal-filter-chips{display:flex;flex-wrap:wrap;gap:7px}.minimal-filter-chips.vertical{display:grid}.minimal-filter-chips.vertical .chip{text-align:left;justify-content:flex-start}.minimal-sheet-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:24px}
+@keyframes minimalSheetIn{from{opacity:0;transform:translateY(7px) scale(.99)}to{opacity:1;transform:none}}
+@media(max-width:900px){#c1app .minimal-practice-grid{grid-template-columns:1fr 1fr}.minimal-home-hero{min-height:270px;padding:30px}.minimal-home-copy h1{font-size:36px}.minimal-home-mascot{width:190px}.minimal-home-mascot img{width:180px}.minimal-vocab-nav{grid-template-columns:1fr}.minimal-vocab-nav>button:nth-child(odd){border-right:0}.minimal-plan-block{grid-template-columns:120px 1fr auto}}
+@media(max-width:760px){#c1app .minimal-page-head{margin:8px 0 24px}.minimal-page-head h1{font-size:29px}.minimal-home{gap:18px}.minimal-home-hero{min-height:295px;padding:27px 23px;align-items:flex-start}.minimal-home-copy{max-width:72%}.minimal-home-copy h1{font-size:31px}.minimal-home-copy p{font-size:13px;margin-bottom:20px}.minimal-home-mascot{position:absolute;right:-7px;bottom:-8px;width:145px;height:175px}.minimal-home-mascot img{width:145px}.minimal-metrics{grid-template-columns:repeat(4,1fr);overflow:hidden}.minimal-metrics div{padding:9px 9px;text-align:center}.minimal-metrics div:first-child{padding-left:9px}.minimal-metrics b{font-size:20px}.minimal-metrics span{font-size:9px}.minimal-skill-list>button{grid-template-columns:1fr 46px 92px;min-height:55px}.minimal-practice-grid{grid-template-columns:1fr 1fr;gap:10px}.minimal-practice-card{min-height:157px;padding:16px}.minimal-practice-card h2{font-size:16px;margin-top:14px}.minimal-practice-card>strong{font-size:24px}.minimal-practice-card .btn{height:38px!important;padding:0 13px!important}.minimal-vocab-head{align-items:flex-start;margin-top:23px}.minimal-vocab-head h1{font-size:29px}.minimal-vocab-head>.btn{height:40px!important;padding:0 12px!important}.minimal-vocab-nav>button{min-height:68px}.minimal-plan-block{grid-template-columns:1fr auto;gap:10px;padding:18px 2px}.minimal-plan-block>span{grid-column:1/-1}.minimal-plan-block.next .btn{grid-column:2}.minimal-plan-block.adaptive>div{grid-column:1}.minimal-inprogress{min-height:calc(100dvh - 190px);padding:20px 5px}.minimal-inprogress h1{font-size:36px}.minimal-progress-primary{padding-top:12px}.minimal-journey-head,.minimal-flash-head{align-items:flex-start;margin-top:21px}.minimal-title-with-help h1{font-size:26px}.minimal-journey-head>.btn,.minimal-flash-head>.btn{height:40px!important;padding:0 12px!important;font-size:11px!important}.minimal-list-head{align-items:center;margin-top:9px}.minimal-list-head h1{font-size:28px}.minimal-head-actions .btn{height:40px!important}.minimal-browser-tools{grid-template-columns:minmax(0,1fr) auto!important}.minimal-browser-tools .minimal-text-clear{display:none}.minimal-settings-trigger{min-height:65px}.minimal-settings-content{padding-bottom:20px}.minimal-settings-content .ctl{max-width:100%;width:100%}.minimal-account-line{grid-template-columns:1fr}.minimal-danger{align-items:flex-start;flex-direction:column}.minimal-danger>div{flex-wrap:wrap}.minimal-overlay{align-items:flex-end!important;padding:0!important;background:rgba(15,23,42,.3)!important}.minimal-sheet{width:100%!important;max-height:78dvh;overflow:auto;border-radius:25px 25px 0 0!important;padding:16px 20px calc(22px + env(safe-area-inset-bottom))!important;animation:minimalSheetMobile .22s cubic-bezier(.2,.8,.2,1) both!important}.minimal-sheet-handle{display:block;width:40px;height:4px;border-radius:99px;background:#D8DCE4;margin:0 auto 18px}.minimal-sheet-close{top:18px}.minimal-filter-chips.vertical{display:flex;flex-wrap:wrap}.utility-sheet{max-height:70dvh}}
+@keyframes minimalSheetMobile{from{transform:translateY(100%)}to{transform:none}}
+@media(max-width:430px){#c1app .minimal-practice-grid{grid-template-columns:1fr 1fr}.minimal-practice-card{min-height:150px}.minimal-skill-list>button{grid-template-columns:1fr 36px 86px}.minimal-skill-list .minimal-status{font-size:8px;padding:4px 6px}}
+@media(prefers-reduced-motion:reduce){#c1app .minimal-sheet{animation:none!important}.minimal-help-btn,.minimal-settings-trigger i{transition:none!important}}
+
+
+/* === Minimal UX final QA refinements === */
+@media(min-width:761px){
+  #c1app .minimal-overlay{background:transparent!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;display:block!important;padding:0!important;pointer-events:auto}
+  #c1app .minimal-sheet{position:fixed!important;left:var(--overlay-x,calc(50vw - 210px))!important;top:var(--overlay-y,120px)!important;width:min(420px,calc(100vw - 36px))!important;max-height:min(520px,calc(100vh - 36px))!important;overflow:auto!important;border:1px solid #E4E7EE!important;box-shadow:0 20px 55px rgba(15,23,42,.18)!important}
+}
+#c1app .page-flashcardMode .section>h2{color:var(--text-primary)!important;opacity:1!important}
+#c1app .page-flashcardMode .flashgame-path,#c1app .page-flashcardMode .flashgame-stage,#c1app .page-flashcardMode .flashgame-stage-head{opacity:1!important;filter:none!important}
+#c1app .page-flashcardMode .flashgame-node.current{opacity:1!important;filter:none!important;color:var(--text-primary)!important}
+#c1app .page-flashcardMode .flashgame-node.locked{opacity:.62!important}
+#c1app .page-flashcardMode .flashgame-stage-head{color:var(--text-primary)!important}
+#c1app .minimal-settings-note{display:none!important}
+@media(max-width:760px){#c1app .minimal-overlay{display:flex!important;background:rgba(15,23,42,.3)!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}.minimal-sheet{position:relative!important;left:auto!important;top:auto!important}}
+
 </style>
 </head>
 <body>
@@ -2086,7 +2125,7 @@ var C1_STORAGE = (function(){
 })();
 
 /* ============================= CONSTANTS ============================= */
-var APP_BUILD = '2026-10-05-exam-prep-platform-dolphin-swim-v1';
+var APP_BUILD = '2026-10-06-minimal-progressive-disclosure-final';
 
 /* ============================= ACCOUNT + CLOUD SYNC (SUPABASE) ============================= */
 /* Publishable keys are designed for browser clients. User data is protected by Supabase Auth + RLS. */
@@ -2628,7 +2667,7 @@ var VOCAB_VERSION = 2; // bump whenever TEST_DATA's word set changes, to auto-mi
 
 /* ============================= STATE ============================= */
 var STATE = null;      // persisted
-var UI = { screen: 'loading', session: null, detailId: null, browserSelectedId: null, difficultSort: 'mistakes', browserQuery: '', browserFilters: {tier:null, status:null, type:null, tag:null}, importMsg: null, selectedDifficult: {}, confirmDialog: null, testTiers: {S:true, A:true, B:true, C:true, D:true}, introDolphinPlayed: false, platformReturn:'practice' };
+var UI = { screen: 'loading', session: null, detailId: null, browserSelectedId: null, difficultSort: 'mistakes', browserQuery: '', browserFilters: {tier:null, status:null, type:null, tag:null}, importMsg: null, selectedDifficult: {}, confirmDialog: null, testTiers: {S:true, A:true, B:true, C:true, D:true}, introDolphinPlayed: false, platformReturn:'practice', helpTopic:null, utilityPanel:null, overlayAnchor:null, settingsOpen:'account' };
 function askConfirm(message, onConfirm){
   UI.confirmDialog = { message: message, onConfirm: onConfirm };
   render();
@@ -4532,6 +4571,8 @@ function render(){
     html += '</div>';
     if (UI.detailId!==null) html += renderDetailModal();
   }
+  html += renderInfoSheet();
+  html += renderUtilityPanel();
   if (UI.confirmDialog) html += renderConfirmModal();
   if (!AUTH_UI.session && !ACCESS_UI.guest) html += renderAuthGate();
   root.innerHTML = html;
@@ -4595,6 +4636,7 @@ function renderTopbar(){
   h += groupLabel('PREPARATION');
   h += navBtn('plan','Plan','target',UI.screen==='plan');
   h += groupLabel('PRACTICE');
+  h += navBtn('practice','Overview','layers',UI.screen==='practice');
   h += navBtn('vocabulary','Vocabulary','book',isVocabularyScreen(UI.screen));
   h += navBtn('reading','Reading','eye',UI.screen==='reading');
   h += navBtn('listening','Listening','layers',UI.screen==='listening');
@@ -4679,7 +4721,7 @@ function renderJourneyPath(journey){
   for (var i=0;i<nodes.length;i++) pts.push(patternX[i%patternX.length]+','+(66+i*132));
   pts.push('50,'+goalY);
 
-  var activeStage=Math.max(1,Math.floor((Math.max(1,(journey.currentIndex!==null?journey.currentIndex+1:journey.completedCount||1))-1)/3)+1); var stageFirst=(activeStage-1)*3+1; var stageLast=Math.min(stageFirst+2,journey.levels.length); var h='<div class="page-heading journey-heading"><div><span class="eyebrow">YOUR JOURNEY</span><h1>90 levels. One clear path.</h1><p>Build C1 vocabulary through Learn → Flashcards → Writing.</p></div><div class="heading-count">'+journey.completedCount+'<small>complete</small></div></div><div class="stage-sticky">Stage '+activeStage+' · Levels '+stageFirst+'–'+stageLast+'</div><div class="section journey-section"><div class="card journey-path-card">';
+  var activeStage=Math.max(1,Math.floor((Math.max(1,(journey.currentIndex!==null?journey.currentIndex+1:journey.completedCount||1))-1)/3)+1); var stageFirst=(activeStage-1)*3+1; var stageLast=Math.min(stageFirst+2,journey.levels.length); var currentJourneyNumber=journey.currentIndex!==null?journey.currentIndex+1:journey.levels.length; var h='<div class="minimal-journey-head"><div><div class="minimal-title-with-help"><h1>Vocabulary Journey</h1>'+renderHelpButton('vocabularyJourney','How Vocabulary Journey works')+'</div><p>Level '+currentJourneyNumber+' of '+journey.levels.length+' · Stage '+activeStage+'</p></div>'+(journey.currentIndex!==null?'<button class="btn primary" data-start-level="'+journey.currentIndex+'">Continue Level '+currentJourneyNumber+'</button>':'<span class="minimal-status active">COMPLETE</span>')+'</div><div class="stage-sticky">Stage '+activeStage+' · Levels '+stageFirst+'–'+stageLast+'</div><div class="section journey-section"><div class="card journey-path-card">';
   h+='<div class="journey-path" style="min-height:'+(goalY+112)+'px;">';
   h+='<div class="journey-sea-decor">';
   h+='<div class="water-glow"></div>';
@@ -4789,7 +4831,7 @@ function journeyStageMarkup(s){
     var cls=(s.phase===pair[1]?'active ':'')+(visited[pair[1]]?'visited':'');
     h+='<button type="button" class="journey-stage-chip '+cls+'" data-journey-phase="'+pair[1]+'">'+pair[0]+'</button>';
   });
-  h+='</div><div style="margin-top:9px;font-size:11.5px;color:var(--ink-soft);text-align:center;">You can switch sections anytime. The level is completed only after Writing is finished.</div></div>';
+  h+='</div><div class="journey-session-help">'+renderHelpButton('journeySession','How Journey lessons work')+'</div></div>';
   return h;
 }
 
@@ -4802,34 +4844,14 @@ function renderLevels(){
 function renderFlashcardMode(){
   var data = getFlashcardModeProgressData();
   var completedTests = Object.keys(data.completedTests||{}).filter(function(k){ return !!data.completedTests[k]; }).length;
-  var completedReviews = Object.keys(data.completedReviewTests||{}).filter(function(k){
-    return !!data.completedReviewTests[k] && Number(k)>0 && Number(k)%3===0;
-  }).length;
-
-  var h = '<div class="flashgame-hero">';
-  h += '<div class="flashgame-eyebrow">Flashcard Game Mode</div>';
-  h += '<div class="flashgame-title">English → German · one level at a time</div>';
-  h += '<div class="flashgame-sub">One stage contains 3 levels. After each stage, a cumulative review tests all words learned so far that you did not know on the first try. The separate 3-level checkpoint then follows. Every test can be repeated as often as you want. In tests, “Don’t show again” permanently removes a word from future tests.</div>';
-  h += '<div class="flashgame-stats"><div><strong>'+data.completedCount+'</strong><span>Levels complete</span></div><div><strong>'+completedReviews+'</strong><span>Stage reviews done</span></div><div><strong>'+completedTests+'</strong><span>Checkpoints done</span></div></div>';
-
-  h += '<div class="flashgame-cta">';
-  if (data.pendingReviewLevel!==null){
-    var cumulativePool=getFlashcardModeReviewTestPool(data.pendingReviewLevel);
-    var pendingStage=Math.ceil(data.pendingReviewLevel/3);
-    h += '<div><b>Stage '+pendingStage+' Review</b><span>'+cumulativePool.length+' first-try miss'+(cumulativePool.length===1?'':'es')+' from all '+data.pendingReviewLevel+' learned levels</span></div>';
-    h += '<button class="btn primary" data-start-flash-review="'+data.pendingReviewLevel+'">Start stage review</button>';
-  } else if (data.pendingTestIndex!==null){
-    var pendingPool=getFlashcardModeTestPool(data.pendingTestIndex);
-    h += '<div><b>Checkpoint Test '+data.pendingTestIndex+'</b><span>'+pendingPool.length+' first-try miss'+(pendingPool.length===1?'':'es')+' from this stage</span></div>';
-    h += '<button class="btn primary" data-start-flash-test="'+data.pendingTestIndex+'">Start checkpoint</button>';
-  } else if (data.currentIndex!==null){
-    h += '<div><b>Level '+(data.currentIndex+1)+'</b><span>10 English → German flashcards</span></div>';
-    h += '<button class="btn primary" data-start-flash-level="'+data.currentIndex+'">Continue</button>';
-  } else {
-    h += '<div><b>Flashcard journey complete</b><span>You finished every level and required test. You can still retake any stage review or checkpoint below.</span></div>';
-  }
-  h += '</div></div>';
-
+  var completedReviews = Object.keys(data.completedReviewTests||{}).filter(function(k){ return !!data.completedReviewTests[k] && Number(k)>0 && Number(k)%3===0; }).length;
+  var stageNow=data.currentIndex!==null?Math.floor(data.currentIndex/3)+1:Math.max(1,Math.ceil(data.completedCount/3));
+  var h='<div class="minimal-flash-head"><div><div class="minimal-title-with-help"><h1>Flashcards</h1>'+renderHelpButton('flashcardGame','How Flashcard Game works')+'</div><p>'+data.completedCount+' / '+data.levels.length+' levels · Stage '+stageNow+'</p></div>';
+  if (data.pendingReviewLevel!==null){ var cumulativePool=getFlashcardModeReviewTestPool(data.pendingReviewLevel); h+='<button class="btn primary" data-start-flash-review="'+data.pendingReviewLevel+'">Stage Review · '+cumulativePool.length+'</button>'; }
+  else if(data.pendingTestIndex!==null){ h+='<button class="btn primary" data-start-flash-test="'+data.pendingTestIndex+'">Start Checkpoint</button>'; }
+  else if(data.currentIndex!==null){ h+='<button class="btn primary" data-start-flash-level="'+data.currentIndex+'">Continue Level '+(data.currentIndex+1)+'</button>'; }
+  else { h+=renderCompactStatus('COMPLETE','active'); }
+  h+='</div>';
   h += '<div class="section"><h2>'+icon('layers',17,'icon-inline')+'Flashcard level path</h2><div class="flashgame-path">';
   var groups=Math.ceil(data.levels.length/3);
 
@@ -4897,6 +4919,60 @@ function renderFlashcardDashboardCard(){
 }
 
 
+/* ============================= MINIMAL UX / PROGRESSIVE DISCLOSURE ============================= */
+var HELP_TOPICS={
+  homeNext:{title:'Why this is next',content:'Lexicon uses the Vocabulary progress it already knows. As more skills are assessed, recommendations can become broader and more adaptive.'},
+  examReadiness:{title:'Exam Readiness',content:'Complete assessments across all exam skills to unlock an evidence-based readiness score. Until then, Lexicon shows only data it actually has.'},
+  vocabularyJourney:{title:'How Vocabulary Journey works',content:'Each level has three steps: Learn, Flashcards and Writing. Complete Writing to unlock the next level.'},
+  flashcardGame:{title:'How Flashcard Game works',content:'Tap once for the example, tap again for the answer. Only words you missed on the first pass continue. Every three levels, Stage Review and Checkpoint reinforce difficult words.'},
+  stageReview:{title:'Stage Review',content:'Reviews words that were difficult during the current three-level stage. Words marked “Don’t show again” stay out of future tests.'},
+  reading:{title:'Reading · what’s planned',content:'Exam-style reading tasks, main idea and inference practice, vocabulary in context and readiness tracking.'},
+  listening:{title:'Listening · what’s planned',content:'Exam-style listening tasks, detail and speaker attitude, inference, distractor handling and readiness tracking.'},
+  writing:{title:'Writing · what’s planned',content:'Exam-style tasks, structured feedback, rewrites and Writing readiness tracking.'},
+  speaking:{title:'Speaking · what’s planned',content:'Exam-style speaking practice, fluency, coherence, pronunciation and readiness tracking.'},
+  grammar:{title:'Grammar · what’s planned',content:'Recurring-error detection, C1 structures, accuracy practice and links to Writing and Speaking.'},
+  mocks:{title:'Mock Exams',content:'Realistic timed exam simulations with skill-level analysis and readiness progression are being built. No scores are invented before a real assessment exists.'},
+  adaptivePlan:{title:'Adaptive planning',content:'The future planner will combine your exam date, skill history, assessment results and mock performance. For now, Lexicon recommends the next real Vocabulary step.'},
+  sync:{title:'Cloud sync',content:'When you are signed in, Lexicon saves progress automatically and can restore it across devices. Use Sync now if you want to push the current state immediately.'},
+  journeySession:{title:'Journey lesson',content:'Move between Learn, Flashcards and Writing at any time. The level is completed only after Writing is finished.'},
+  guestMode:{title:'Guest mode',content:'Guest progress is temporary and is not saved. To keep your learning progress across visits and devices, sign in or create an account.'}
+};
+function renderHelpButton(topic,label){
+  return '<button type="button" class="minimal-help-btn" data-help="'+escapeHtml(topic)+'" aria-label="'+escapeHtml(label||'More information')+'">ⓘ</button>';
+}
+function openHelpPopover(topic,anchor){ UI.helpTopic=topic||null; UI.utilityPanel=null; UI.overlayAnchor=anchor||null; render(); }
+function closeHelpPopover(){ UI.helpTopic=null; UI.utilityPanel=null; UI.overlayAnchor=null; render(); }
+function renderCompactStatus(text,cls){ return '<span class="minimal-status '+(cls||'')+'">'+escapeHtml(text)+'</span>'; }
+function renderInfoSheet(){
+  if(!UI.helpTopic) return '';
+  var t=HELP_TOPICS[UI.helpTopic]; if(!t) return '';
+  var a=UI.overlayAnchor||null; var pos=a?(' style="--overlay-x:'+Math.round(a.x)+'px;--overlay-y:'+Math.round(a.y)+'px"'):'';
+  return '<div class="minimal-overlay" data-overlay-backdrop="help"'+pos+'><section class="minimal-sheet" role="dialog" aria-modal="true" aria-labelledby="minimal-sheet-title"><div class="minimal-sheet-handle"></div><button type="button" class="minimal-sheet-close" data-overlay-close aria-label="Close">×</button><span class="eyebrow">INFO</span><h2 id="minimal-sheet-title">'+escapeHtml(t.title)+'</h2><p>'+escapeHtml(t.content)+'</p><button type="button" class="btn primary minimal-got-it" data-overlay-close>Got it</button></section></div>';
+}
+function renderUtilityPanel(){
+  if(!UI.utilityPanel) return '';
+  var a=UI.overlayAnchor||null; var pos=a?(' style="--overlay-x:'+Math.round(a.x)+'px;--overlay-y:'+Math.round(a.y)+'px"'):'';
+  var h='<div class="minimal-overlay" data-overlay-backdrop="utility"'+pos+'><section class="minimal-sheet utility-sheet" role="dialog" aria-modal="true"><div class="minimal-sheet-handle"></div><button type="button" class="minimal-sheet-close" data-overlay-close aria-label="Close">×</button>';
+  if(UI.utilityPanel==='browserFilters'){
+    var f=UI.browserFilters; h+='<span class="eyebrow">BROWSE</span><h2>Filters</h2><div class="minimal-filter-group"><b>Tier</b><div class="minimal-filter-chips">';
+    TIER_ORDER.forEach(function(t){h+='<button class="chip '+(f.tier===t?'on':'')+'" data-filter="tier" data-val="'+t+'">Tier '+t+'</button>';});
+    h+='</div></div><div class="minimal-filter-group"><b>Status</b><div class="minimal-filter-chips">';
+    ['new','learning','difficult','familiar','known','mastered'].forEach(function(st){h+='<button class="chip '+(f.status===st?'on':'')+'" data-filter="status" data-val="'+st+'">'+st.charAt(0).toUpperCase()+st.slice(1)+'</button>';});
+    h+='</div></div><div class="minimal-sheet-actions">';
+    if(f.tier||f.status||f.type||f.tag) h+='<button class="btn ghost" id="clear-filters-btn">Clear filters</button>';
+    h+='<button class="btn primary" data-overlay-close>Done</button></div>';
+  } else if(UI.utilityPanel==='difficultSort'){
+    h+='<span class="eyebrow">DIFFICULT WORDS</span><h2>Sort words</h2><div class="minimal-filter-chips vertical">';
+    [['mistakes','Most mistakes'],['accuracy','Lowest accuracy'],['recent','Recently failed'],['spelling','Spelling mistakes'],['tier','Tier']].forEach(function(pair){h+='<button class="chip '+(UI.difficultSort===pair[0]?'on':'')+'" data-sort="'+pair[0]+'">'+pair[1]+'</button>';});
+    h+='</div><button class="btn primary minimal-got-it" data-overlay-close>Done</button>';
+  }
+  return h+'</section></div>';
+}
+function renderCollapsibleSection(key,title,summary,content){
+  var open=UI.settingsOpen===key;
+  return '<section class="minimal-settings-group '+(open?'open':'')+'"><button type="button" class="minimal-settings-trigger" data-settings-section="'+key+'" aria-expanded="'+(open?'true':'false')+'"><span><b>'+escapeHtml(title)+'</b><small>'+escapeHtml(summary||'')+'</small></span><i aria-hidden="true">›</i></button>'+(open?('<div class="minimal-settings-content">'+content+'</div>'):'')+'</section>';
+}
+
 /* ============================= PLATFORM RENDERING ============================= */
 function platformContext(){
   var journey=getJourneyProgressData();
@@ -4923,61 +4999,61 @@ function platformDateLabel(value){
   return d.toLocaleDateString(undefined,{day:'numeric',month:'short',year:'numeric'});
 }
 function renderDashboard(){
-  var c=platformContext(), goal=STATE.examGoal||DEFAULT_EXAM_GOAL, profile=EXAM_PROFILES[goal.examType]||EXAM_PROFILES['cambridge-c1'];
-  var nextLevel=c.current?c.current.index+1:null;
-  var h='<div class="platform-home">';
-  h+='<section class="platform-welcome"><div><span class="eyebrow">YOUR PREPARATION</span><h1>'+escapeHtml(platformGreeting())+'</h1><p>Let’s move you closer to your target.</p></div><div class="welcome-companion"><img src="'+DASHBOARD_READ_DOLPHIN_SRC+'" alt="Lexicon learning companion"></div></section>';
-  h+='<section class="goal-readiness-grid">';
-  h+='<div class="active-goal-panel"><div class="goal-panel-top"><div><span class="eyebrow light">ACTIVE GOAL</span><h2>'+escapeHtml(profile.name)+'</h2></div><span class="goal-status-pill">Active</span></div><div class="goal-facts"><div><span>Current estimate</span><b>Assessment not completed</b></div><div><span>Target</span><b>'+escapeHtml(goal.targetLevel||profile.targetLabel||'Not set')+'</b></div><div><span>Exam date</span><b>'+escapeHtml(goal.examDate?platformDateLabel(goal.examDate):'Set exam date')+'</b></div></div><button class="goal-link-btn" data-nav="plan">View preparation plan <span>→</span></button></div>';
-  h+='<div class="readiness-panel"><div class="readiness-orbit"><span></span><i></i></div><span class="eyebrow">EXAM READINESS</span><h2>Not enough data yet</h2><p>Complete assessments across your skills to unlock an evidence-based readiness score.</p><div class="readiness-data-note"><b>Vocabulary data available</b><span>5 skills still need assessment</span></div></div>';
-  h+='</section>';
-
-  h+='<section class="platform-section"><div class="platform-section-head"><div><span class="eyebrow">SKILL OVERVIEW</span><h2>Your preparation, skill by skill</h2></div><button class="text-action" data-nav="practice">Open Practice →</button></div><div class="skill-overview-list">';
-  h+='<button class="skill-overview-row active-skill" data-nav="vocabulary"><span class="skill-orb vocabulary">'+icon('book',20)+'</span><span class="skill-main"><b>Vocabulary</b><small>'+c.journey.completedCount+' of '+c.journey.levels.length+' levels completed · '+c.seen+' words seen</small></span><span class="skill-state"><b>'+c.pct+'%</b><i><em style="width:'+c.pct+'%"></em></i></span><span class="row-arrow">→</span></button>';
-  [['Reading','reading','eye','reading'],['Listening','listening','layers','listening'],['Writing','writing','pencil','writing'],['Speaking','speaking','cycle','speaking'],['Grammar','grammar','sliders','grammar']].forEach(function(s){ h+='<button class="skill-overview-row" data-nav="'+s[1]+'"><span class="skill-orb '+s[3]+'">'+icon(s[2],20)+'</span><span class="skill-main"><b>'+s[0]+'</b><small>Complete your first assessment to unlock this insight.</small></span><span class="not-assessed">Not assessed</span><span class="row-arrow">→</span></button>'; });
-  h+='</div></section>';
-
-  h+='<section class="next-action-band"><div class="next-action-icon">'+icon('target',24)+'</div><div><span class="eyebrow light">NEXT BEST ACTION</span><h2>'+(nextLevel?('Continue Vocabulary Journey · Level '+nextLevel):'Review your Vocabulary progress')+'</h2><p>'+(nextLevel?('Continue with words '+c.current.startWord+'–'+c.current.endWord+'. This recommendation uses your real Vocabulary progress only.'):'Your 90-level Vocabulary Journey is complete. Keep your active vocabulary strong through reviews.')+'</p></div>';
-  if(nextLevel) h+='<button class="next-action-btn" data-start-level="'+c.current.index+'">Continue <span>→</span></button>'; else h+='<button class="next-action-btn" data-nav="vocabulary">Open Vocabulary <span>→</span></button>';
-  h+='</section>';
-  h+='</div>';
+  var c=platformContext(), nextLevel=c.current?c.current.index+1:null;
+  var levelNumber=nextLevel||c.journey.levels.length;
+  var stage=Math.max(1,Math.floor((Math.max(1,levelNumber)-1)/3)+1);
+  var stageStart=(stage-1)*3, stageDone=Math.max(0,Math.min(3,c.journey.completedCount-stageStart));
+  var due=getDueItems().length, ds=STATE.dailyStats[todayKey()]||{studyTimeSec:0};
+  var h='<div class="minimal-home">';
+  h+='<section class="minimal-home-hero"><div class="minimal-home-copy"><span class="eyebrow light">'+escapeHtml(platformGreeting())+'</span><h1>'+(nextLevel?('Continue Level '+nextLevel):'Vocabulary Journey complete')+'</h1><p>'+(nextLevel?('Stage '+stage+' · '+stageDone+' / 3 complete'):'Keep your vocabulary active with reviews.')+'</p>';
+  if(nextLevel) h+='<button class="btn minimal-primary-cta" data-start-level="'+c.current.index+'">Continue</button>'; else h+='<button class="btn minimal-primary-cta" data-nav="vocabulary">Open Vocabulary</button>';
+  h+='</div><div class="minimal-home-mascot"><img src="'+DASHBOARD_READ_DOLPHIN_SRC+'" alt="Lexicon dolphin mascot"></div></section>';
+  h+='<section class="minimal-metrics" aria-label="Progress"><div><b>'+c.seen+'</b><span>Words</span></div><div><b>'+due+'</b><span>Reviews</span></div><div><b>'+c.counts.difficult+'</b><span>Difficult</span></div><div><b>'+Math.round((ds.studyTimeSec||0)/60)+'m</b><span>Today</span></div></section>';
+  h+='<section class="minimal-home-section"><div class="minimal-section-title"><h2>Skills</h2>'+renderHelpButton('homeNext','How recommendations work')+'</div><div class="minimal-skill-list">';
+  h+='<button data-nav="vocabulary"><span>Vocabulary</span><b>'+c.pct+'%</b>'+renderCompactStatus('ACTIVE','active')+'</button>';
+  [['Reading','reading'],['Listening','listening'],['Writing','writing'],['Speaking','speaking'],['Grammar','grammar']].forEach(function(x){h+='<button data-nav="'+x[1]+'"><span>'+x[0]+'</span><b>—</b>'+renderCompactStatus('NOT ASSESSED','muted')+'</button>';});
+  h+='</div></section></div>';
   return h;
 }
 function renderPracticeHub(){
   var c=platformContext();
-  var h='<div class="page-heading platform-heading"><div><span class="eyebrow">PRACTICE</span><h1>Build the skills that move you closer to your target.</h1><p>Vocabulary is fully active. The remaining skill engines are being built into the same preparation system.</p></div></div>';
-  h+='<div class="practice-skill-grid">';
-  h+='<button class="practice-skill vocabulary-feature" data-nav="vocabulary"><div class="practice-skill-top"><span class="skill-orb vocabulary large">'+icon('book',25)+'</span><span class="status-chip active">ACTIVE</span></div><div><h2>Vocabulary</h2><p>Your complete 90-level Vocabulary Journey, flashcards, writing, reviews, checkpoints and difficult-word system.</p></div><div class="practice-progress"><span><b>'+c.journey.completedCount+'</b> / '+c.journey.levels.length+' levels</span><i><em style="width:'+c.pct+'%"></em></i></div><span class="practice-cta">Continue →</span></button>';
-  var future=[
-    ['Reading','reading','eye','blue','Exam-style comprehension, inference and vocabulary in context.'],
-    ['Listening','listening','layers','cyan','Train detail, speaker attitude, inference and distractor handling.'],
-    ['Writing','writing','pencil','violet','Complete exam-style tasks and receive structured writing feedback.'],
-    ['Speaking','speaking','cycle','coral','Build fluency, pronunciation, coherence and task fulfilment.'],
-    ['Grammar','grammar','sliders','teal','Improve accuracy, structures and recurring grammar errors.']
-  ];
-  future.forEach(function(s){ h+='<button class="practice-skill '+s[3]+'" data-nav="'+s[1]+'"><div class="practice-skill-top"><span class="skill-orb '+s[1]+'">'+icon(s[2],21)+'</span><span class="status-chip">IN PROGRESS</span></div><div><h2>'+s[0]+'</h2><p>'+s[4]+'</p></div><span class="practice-cta muted">Explore →</span></button>'; });
-  h+='</div>';
-  return h;
+  var h='<div class="minimal-page-head"><span class="eyebrow">PRACTICE</span><h1>Practice</h1><p>Choose a skill.</p></div><div class="minimal-practice-grid">';
+  h+='<article class="minimal-practice-card primary"><div class="minimal-card-top"><span class="skill-orb vocabulary">'+icon('book',21)+'</span>'+renderCompactStatus('ACTIVE','active')+'</div><h2>Vocabulary</h2><strong>'+c.pct+'%</strong><button class="btn primary" data-nav="vocabulary">Continue</button></article>';
+  [['Reading','reading','eye'],['Listening','listening','layers'],['Writing','writing','pencil'],['Speaking','speaking','cycle'],['Grammar','grammar','sliders']].forEach(function(x){
+    h+='<article class="minimal-practice-card"><div class="minimal-card-top"><span class="skill-orb '+x[1]+'">'+icon(x[2],20)+'</span>'+renderHelpButton(x[1],'What is planned for '+x[0])+'</div><h2>'+x[0]+'</h2>'+renderCompactStatus('IN PROGRESS','muted')+'<button class="minimal-card-open" data-nav="'+x[1]+'" aria-label="Open '+x[0]+'">→</button></article>';
+  });
+  return h+'</div>';
 }
 function renderVocabularySubnav(active){
   function link(id,label){ return '<button class="vocab-subnav-item '+(active===id?'active':'')+'" data-nav="'+id+'">'+label+'</button>'; }
   return '<div class="vocab-context"><div class="vocab-context-head"><div><span class="eyebrow">PRACTICE · VOCABULARY</span><b>Cambridge C1 Vocabulary Collection</b></div><button class="vocab-back" data-nav="practice">All skills</button></div><div class="vocab-subnav">'+link('vocabulary','Overview')+link('levels','Journey')+link('flashcardMode','Flashcards')+link('browser','Browse')+link('difficult','Difficult')+'<button class="vocab-subnav-item" data-vocab-action="review">Reviews</button><button class="vocab-subnav-item" data-vocab-action="test">Tests</button></div></div>';
 }
 function renderVocabularyHub(){
-  var c=platformContext();
+  var c=platformContext(), practiced=getPracticedWordsForReview().length;
   var h=renderVocabularySubnav('vocabulary');
-  h+='<div class="vocab-module-intro"><div><span class="eyebrow">ACTIVE MODULE</span><h1>Vocabulary</h1><p>Your original Vocabulary app is fully preserved here — now as the first complete skill module inside Lexicon.</p></div><div class="vocab-module-stat"><b>'+c.pct+'%</b><span>Journey complete</span></div></div>';
-  h+='<div class="vocabulary-legacy-overview">'+renderVocabularyOverviewLegacy()+'</div>';
-  return h;
+  h+='<div class="minimal-vocab-head"><div><span class="eyebrow">VOCABULARY</span><h1>Vocabulary</h1><p>'+c.pct+'% complete · '+c.seen+' words seen</p></div><button class="btn primary" '+(c.current?'data-start-level="'+c.current.index+'"':'data-nav="levels"')+'>'+(c.current?'Continue Journey':'View Journey')+'</button></div>';
+  h+='<div class="minimal-vocab-nav">';
+  var rows=[
+    ['Journey','levels','flag',(c.current?'Level '+(c.current.index+1):'Complete')],
+    ['Flashcards','flashcardMode','layers',(c.flash.currentIndex!==null?'Level '+(c.flash.currentIndex+1):'Review')],
+    ['Reviews','review','cycle',practiced+' ready'],
+    ['Tests','test','clipboard','20 words'],
+    ['Browse','browser','search',STATE.items.length+' words'],
+    ['Difficult','difficult','alert',c.counts.difficult+' words']
+  ];
+  rows.forEach(function(r){
+    var attrs=r[1]==='review'?'data-vocab-action="review"':r[1]==='test'?'data-vocab-action="test"':'data-nav="'+r[1]+'"';
+    h+='<button '+attrs+'><span class="minimal-vocab-icon">'+icon(r[2],19)+'</span><span><b>'+r[0]+'</b><small>'+r[3]+'</small></span><i>→</i></button>';
+  });
+  return h+'</div>';
 }
 function renderPlan(){
   var c=platformContext(), goal=STATE.examGoal||DEFAULT_EXAM_GOAL, profile=EXAM_PROFILES[goal.examType]||EXAM_PROFILES['cambridge-c1'];
   var currentLevel=c.current?c.current.index+1:null;
-  var stage=currentLevel?Math.floor((currentLevel-1)/3)+1:Math.max(1,Math.ceil(c.journey.completedCount/3));
-  var h='<div class="page-heading platform-heading"><div><span class="eyebrow">PREPARATION</span><h1>Preparation Plan</h1><p>Your goal is already structured. The adaptive planning engine will build on this foundation without changing your existing Vocabulary progress.</p></div></div>';
-  h+='<section class="plan-goal-strip"><div><span>Active goal</span><b>'+escapeHtml(profile.name)+'</b></div><div><span>Target</span><b>'+escapeHtml(goal.targetLevel||'Not set')+'</b></div><label><span>Exam date</span><input id="exam-date-input" type="date" value="'+escapeHtml(goal.examDate||'')+'"></label></section>';
-  h+='<div class="plan-layout"><section class="plan-timeline"><div class="timeline-row current"><i></i><div><span>CURRENT PHASE</span><h2>Build your active Vocabulary foundation</h2><p>This is based on the skill data Lexicon already has. Other skills are not ranked until they are assessed.</p></div></div><div class="timeline-row"><i></i><div><span>THIS WEEK</span><h2>'+(currentLevel?('Continue Vocabulary Level '+currentLevel):'Maintain your Vocabulary mastery')+'</h2><p>'+(currentLevel?('Level '+currentLevel+' is your next real learning step.'):('Use reviews and difficult words to retain what you have learned.'))+'</p></div></div><div class="timeline-row"><i></i><div><span>UPCOMING MILESTONE</span><h2>'+(currentLevel?('Complete Vocabulary Stage '+stage):'Begin assessment across additional skills')+'</h2><p>Milestones will become adaptive once more skill and assessment data is available.</p></div></div></section>';
-  h+='<aside class="plan-engine-note"><span class="status-chip">IN PROGRESS</span><h2>Adaptive Study Plan</h2><p>Personalized study planning is in progress. Lexicon will eventually combine your exam date, competency graph, mock results and skill history to adapt your weekly plan.</p><button class="btn primary" data-nav="vocabulary">Continue Vocabulary</button></aside></div>';
+  var h='<div class="minimal-page-head"><span class="eyebrow">PREPARATION</span><h1>Plan</h1></div>';
+  h+='<section class="minimal-plan"><div class="minimal-plan-block"><span>Target</span><b>'+escapeHtml(profile.name)+'</b><small>'+escapeHtml(goal.targetLevel||'Not set')+(goal.examDate?' · '+platformDateLabel(goal.examDate):'')+'</small></div>';
+  h+='<div class="minimal-plan-block next"><span>Next</span><b>'+(currentLevel?('Vocabulary · Level '+currentLevel):'Vocabulary review')+'</b>'+(currentLevel?'<button class="btn primary" data-start-level="'+c.current.index+'">Continue</button>':'<button class="btn primary" data-nav="vocabulary">Open Vocabulary</button>')+'</div>';
+  h+='<div class="minimal-plan-block adaptive"><div><span>Adaptive planning</span>'+renderCompactStatus('IN PROGRESS','muted')+'</div>'+renderHelpButton('adaptivePlan','How adaptive planning will work')+'</div></section>';
   return h;
 }
 var IN_PROGRESS_SKILLS={
@@ -4988,24 +5064,19 @@ var IN_PROGRESS_SKILLS={
   grammar:{name:'Grammar',icon:'sliders',accent:'teal',description:'We’re building a Grammar engine that supports your exam performance across skills.',features:['identify recurring errors','practise key C1 structures','improve accuracy in active production','connect Grammar to Writing and Speaking']}
 };
 function renderInProgressScreen(key){
-  var s=IN_PROGRESS_SKILLS[key]||IN_PROGRESS_SKILLS.writing;
-  var h='<div class="inprogress-screen '+s.accent+'"><div class="inprogress-visual"><span class="inprogress-icon">'+icon(s.icon,31)+'</span><span class="status-chip">IN PROGRESS</span></div><div class="inprogress-copy"><span class="eyebrow">'+escapeHtml(s.name.toUpperCase())+'</span><h1>'+escapeHtml(s.name)+'</h1><p>'+escapeHtml(s.description)+'</p><div class="planned-features"><span>Soon you’ll be able to:</span><ul>';
-  s.features.forEach(function(f){ h+='<li>'+icon('check',15)+escapeHtml(f)+'</li>'; });
-  h+='</ul></div><div class="inprogress-actions"><button class="btn primary" data-nav="vocabulary">Explore Vocabulary</button><button class="btn ghost" data-nav="practice">Back to Practice</button></div></div></div>';
-  return h;
+  var x=IN_PROGRESS_SKILLS[key]||IN_PROGRESS_SKILLS.writing;
+  return '<div class="minimal-inprogress"><span class="skill-orb '+key+' large">'+icon(x.icon,27)+'</span><span class="eyebrow">'+escapeHtml(x.name.toUpperCase())+'</span><h1>'+escapeHtml(x.name)+'</h1>'+renderCompactStatus('IN PROGRESS','muted')+'<p>Adaptive '+escapeHtml(x.name)+' preparation is coming to Lexicon.</p><div class="minimal-inprogress-actions">'+renderHelpButton(key,'What is planned for '+x.name)+'<button class="btn ghost" data-nav="practice">Back to Practice</button></div></div>';
 }
 function renderMocks(){
-  return '<div class="page-heading platform-heading"><div><span class="eyebrow">ASSESSMENT</span><h1>Mock Exams</h1><p>Simulate your real exam and measure your readiness under realistic conditions.</p></div></div><div class="mock-inprogress"><div class="mock-art">'+icon('clipboard',36)+'</div><div><span class="status-chip">IN PROGRESS</span><h2>Full exam simulation is being built.</h2><p>Mock Exams will eventually connect realistic exam conditions with skill-level analytics and readiness tracking. No result is shown until you have completed a real assessment.</p><div class="mock-preview"><span>Timed exam sessions</span><span>Skill-by-skill analysis</span><span>Readiness progression</span></div><button class="btn primary" data-nav="vocabulary">Keep building Vocabulary</button></div></div>';
+  return '<div class="minimal-inprogress"><span class="skill-orb mocks large">'+icon('clipboard',27)+'</span><span class="eyebrow">ASSESSMENT</span><h1>Mock Exams</h1>'+renderCompactStatus('IN PROGRESS','muted')+'<p>Realistic exam simulations are coming soon.</p><div class="minimal-inprogress-actions">'+renderHelpButton('mocks','What is planned for Mock Exams')+'<button class="btn ghost" data-nav="practice">Back to Practice</button></div></div>';
 }
 function renderPlatformProgress(){
-  var c=platformContext(), ds=STATE.dailyStats[todayKey()]||{reviewed:0,newLearned:0,correct:0,total:0,studyTimeSec:0};
-  var h='<div class="page-heading platform-heading"><div><span class="eyebrow">INSIGHTS</span><h1>Progress</h1><p>Real activity where data exists. No invented readiness or skill scores.</p></div></div>';
-  h+='<section class="progress-readiness-empty"><div><span class="eyebrow light">OVERALL READINESS</span><h2>Not enough data yet</h2><p>Complete assessments across Reading, Listening, Writing, Speaking and Grammar to unlock your overall Exam Readiness.</p></div><div class="readiness-empty-mark">—</div></section>';
-  h+='<section class="platform-section"><div class="platform-section-head"><div><span class="eyebrow">VOCABULARY · REAL DATA</span><h2>Your first developed skill profile</h2></div><button class="text-action" data-nav="vocabulary">Open Vocabulary →</button></div><div class="progress-vocab-band"><div><b>'+c.journey.completedCount+'</b><span>Levels complete</span></div><div><b>'+c.seen+'</b><span>Words seen</span></div><div><b>'+c.counts.difficult+'</b><span>Difficult words</span></div><div><b>'+c.pct+'%</b><span>Journey progress</span></div><i><em style="width:'+c.pct+'%"></em></i></div></section>';
-  h+='<section class="platform-section"><div class="platform-section-head"><div><span class="eyebrow">SKILL DEVELOPMENT</span><h2>Assessment coverage</h2></div></div><div class="assessment-coverage"><div class="coverage-row available"><span>Vocabulary</span><b>Data available</b></div>';
-  ['Reading','Listening','Writing','Speaking','Grammar'].forEach(function(n){h+='<div class="coverage-row"><span>'+n+'</span><b>Not assessed</b></div>';});
-  h+='</div></section>';
-  h+='<section class="activity-strip"><div><span>TODAY</span><b>'+ds.reviewed+'</b><small>Reviewed</small></div><div><span>&nbsp;</span><b>'+ds.newLearned+'</b><small>New words</small></div><div><span>&nbsp;</span><b>'+(ds.total?Math.round(100*ds.correct/ds.total):0)+'%</b><small>Vocabulary accuracy</small></div><div><span>&nbsp;</span><b>'+Math.round((ds.studyTimeSec||0)/60)+'m</b><small>Study time</small></div></section>';
+  var c=platformContext();
+  var h='<div class="minimal-page-head"><span class="eyebrow">INSIGHTS</span><h1>Progress</h1></div>';
+  h+='<section class="minimal-progress-primary"><div><span>Vocabulary</span><b>'+c.pct+'%</b><i><em style="width:'+c.pct+'%"></em></i></div><div class="minimal-progress-facts"><span><b>'+c.seen+'</b> words seen</span><span><b>'+c.counts.difficult+'</b> difficult</span></div></section>';
+  h+='<section class="minimal-progress-section"><div class="minimal-section-title"><h2>Other skills</h2></div><div class="minimal-status-list">';
+  ['Reading','Listening','Writing','Speaking','Grammar'].forEach(function(n){h+='<div><span>'+n+'</span>'+renderCompactStatus('NOT ASSESSED','muted')+'</div>';});
+  h+='</div></section><section class="minimal-readiness-row"><div><span>Exam Readiness</span><b>—</b></div>'+renderHelpButton('examReadiness','How Exam Readiness works')+'</section>';
   return h;
 }
 function renderDashboardLevelCard(journey){
@@ -5504,17 +5575,14 @@ function renderSummary(){
 
 /* ============================= RENDER: DIFFICULT ============================= */
 function renderDifficult(){
-  var items=STATE.items.filter(function(it){var p=STATE.progress[it.id];return p&&p.timesSeen>0;}).filter(function(it){var p=STATE.progress[it.id];return (p.e2gWrong+p.g2eWrong)>0||computeStatus(p)==='difficult';});
   var sort=UI.difficultSort;
-  items.sort(function(a,b){var pa=STATE.progress[a.id],pb=STATE.progress[b.id]; if(sort==='mistakes')return(pb.e2gWrong+pb.g2eWrong)-(pa.e2gWrong+pa.g2eWrong); if(sort==='spelling')return pb.spellingMistakes-pa.spellingMistakes; if(sort==='accuracy'){var aa=(pa.e2gCorrect+pa.g2eCorrect)/Math.max(1,pa.e2gCorrect+pa.e2gWrong+pa.g2eCorrect+pa.g2eWrong),ab=(pb.e2gCorrect+pb.g2eCorrect)/Math.max(1,pb.e2gCorrect+pb.e2gWrong+pb.g2eCorrect+pb.g2eWrong);return aa-ab;} if(sort==='recent')return(pb.lastReviewAt||'').localeCompare(pa.lastReviewAt||''); if(sort==='tier')return tierRank(a.tier)-tierRank(b.tier); return 0;});
-  var h='<div class="difficult-hero"><div><span class="eyebrow">REVIEW FOCUS</span><h1>'+items.length+' words need attention</h1><p>Lexicon surfaces the vocabulary that costs you the most accuracy.</p></div>'+(items.length?'<button class="btn primary" id="practice-difficult-btn">Practice difficult words</button>':'')+'</div>';
-  h+='<div class="filter-scroll difficult-filters">'; [['mistakes','Most mistakes'],['accuracy','Lowest accuracy'],['recent','Recently failed'],['spelling','Spelling'],['tier','Tier']].forEach(function(pair){h+='<button class="chip '+(sort===pair[0]?'on':'')+'" data-sort="'+pair[0]+'">'+pair[1]+'</button>';}); h+='</div>';
-  if(!items.length){h+='<div class="empty-state premium-empty">'+icon('target',34)+'<div class="em-title">Nothing difficult yet</div><span>Your challenge list builds itself from real mistakes.</span></div>';return h;}
-  h+='<div class="difficult-focus-grid">'; items.slice(0,3).forEach(function(it){var p=STATE.progress[it.id];var mistakes=p.e2gWrong+p.g2eWrong;var attempts=p.e2gCorrect+p.g2eCorrect+mistakes;var acc=Math.round(100*(p.e2gCorrect+p.g2eCorrect)/Math.max(1,attempts));var severity=Math.min(100,Math.max(12,100-acc)); h+='<button class="difficult-focus-card" data-detail="'+it.id+'"><span class="focus-tier">Tier '+it.tier+'</span><h3>'+escapeHtml(it.english)+'</h3><p>'+escapeHtml((it.german||[]).join('; '))+'</p><div class="difficulty-meta"><span><b>'+mistakes+'</b> mistakes</span><span><b>'+acc+'%</b> accuracy</span></div><div class="difficulty-bar"><i style="width:'+severity+'%"></i></div></button>';}); h+='</div>';
-  h+='<div class="difficult-list">'; items.forEach(function(it){var p=STATE.progress[it.id],mistakes=p.e2gWrong+p.g2eWrong,attempts=p.e2gCorrect+p.g2eCorrect+mistakes,acc=Math.round(100*(p.e2gCorrect+p.g2eCorrect)/Math.max(1,attempts)),severity=Math.min(100,Math.max(8,100-acc)); h+='<button class="difficult-row" data-detail="'+it.id+'"><span class="difficult-word"><b>'+escapeHtml(it.english)+'</b><small>'+escapeHtml((it.german||[]).join('; '))+'</small></span><span class="difficulty-numbers"><b>'+mistakes+' mistakes</b><small>'+acc+'% accuracy</small></span><span class="difficulty-mini"><i style="width:'+severity+'%"></i></span></button>';}); h+='</div>';
-  UI.__difficultIds=items.map(function(it){return it.id;}); return h;
+  var items=STATE.items.filter(function(it){var p=STATE.progress[it.id]; return p && (p.e2gWrong+p.g2eWrong)>0;});
+  items.sort(function(a,b){var pa=STATE.progress[a.id],pb=STATE.progress[b.id];if(sort==='mistakes')return(pb.e2gWrong+pb.g2eWrong)-(pa.e2gWrong+pa.g2eWrong);if(sort==='spelling')return pb.spellingMistakes-pa.spellingMistakes;if(sort==='accuracy'){var aa=(pa.e2gCorrect+pa.g2eCorrect)/Math.max(1,pa.e2gCorrect+pa.e2gWrong+pa.g2eCorrect+pa.g2eWrong),ab=(pb.e2gCorrect+pb.g2eCorrect)/Math.max(1,pb.e2gCorrect+pb.e2gWrong+pb.g2eCorrect+pb.g2eWrong);return aa-ab;}if(sort==='recent')return(pb.lastReviewAt||'').localeCompare(pa.lastReviewAt||'');if(sort==='tier')return tierRank(a.tier)-tierRank(b.tier);return 0;});
+  var h='<div class="minimal-list-head"><div><span class="eyebrow">REVIEW</span><h1>Difficult Words</h1><p>'+items.length+' words</p></div><div class="minimal-head-actions">'+(items.length?'<button class="btn primary" id="practice-difficult-btn">Review</button>':'')+'<button class="minimal-filter-btn" data-utility-open="difficultSort">'+icon('sliders',16)+' Sort</button></div></div>';
+  if(!items.length){h+='<div class="empty-state premium-empty">'+icon('target',34)+'<div class="em-title">Nothing difficult yet</div><span>Your list builds itself from real mistakes.</span></div>';return h;}
+  h+='<div class="difficult-list minimal-difficult-list">';items.forEach(function(it){var p=STATE.progress[it.id],mistakes=p.e2gWrong+p.g2eWrong,attempts=p.e2gCorrect+p.g2eCorrect+mistakes,acc=Math.round(100*(p.e2gCorrect+p.g2eCorrect)/Math.max(1,attempts));h+='<button class="difficult-row" data-detail="'+it.id+'"><span class="difficult-word"><b>'+escapeHtml(it.english)+'</b><small>'+escapeHtml((it.german||[]).join('; '))+'</small></span><span class="difficulty-numbers"><b>'+mistakes+'</b><small>mistakes</small></span><span class="difficulty-accuracy">'+acc+'%</span></button>';});h+='</div>';
+  UI.__difficultIds=items.map(function(it){return it.id;});return h;
 }
-
 /* ============================= RENDER: BROWSER ============================= */
 function renderBrowser(){
   var q=normalizeAnswer(UI.browserQuery); var f=UI.browserFilters;
@@ -5533,14 +5601,12 @@ function renderBrowser(){
     UI.browserSelectedId=selected.id;
   }
 
-  var h='<div class="page-heading"><div><span class="eyebrow">VOCABULARY LIBRARY</span><h1>Browse</h1><p>'+STATE.items.length+' Cambridge C1 words, searchable in English and German.</p></div><div class="heading-count">'+items.length+'<small>shown</small></div></div>';
-  h+='<div class="browser-layout"><section class="browser-master"><div class="browser-sticky-tools">';
-  h+='<div class="premium-search">'+icon('search',19)+'<input type="text" id="browser-search" placeholder="Search English or German…" value="'+escapeHtml(UI.browserQuery)+'"></div>';
-  h+='<div class="filter-scroll">';
-  TIER_ORDER.forEach(function(t){h+='<button class="chip '+(f.tier===t?'on':'')+'" data-filter="tier" data-val="'+t+'">Tier '+t+'</button>';});
-  ['new','learning','difficult','familiar','known','mastered'].forEach(function(st){h+='<button class="chip '+(f.status===st?'on':'')+'" data-filter="status" data-val="'+st+'">'+st.charAt(0).toUpperCase()+st.slice(1)+'</button>';});
-  if(f.tier||f.status||f.type||f.tag||UI.browserQuery) h+='<button class="chip clear" id="clear-filters-btn">Clear</button>';
-  h+='</div></div>';
+  var activeFilterCount=[f.tier,f.status,f.type,f.tag].filter(Boolean).length; var h='<div class="minimal-list-head browser-minimal-head"><div><span class="eyebrow">VOCABULARY</span><h1>Browse</h1><p>'+items.length+' of '+STATE.items.length+' words</p></div></div>';
+  h+='<div class="browser-layout"><section class="browser-master"><div class="browser-sticky-tools minimal-browser-tools">';
+  h+='<div class="premium-search">'+icon('search',19)+'<input type="text" id="browser-search" placeholder="Search vocabulary…" value="'+escapeHtml(UI.browserQuery)+'"></div>';
+  h+='<button class="minimal-filter-btn" data-utility-open="browserFilters">'+icon('sliders',16)+' Filters'+(activeFilterCount?' <b>'+activeFilterCount+'</b>':'')+'</button>';
+  if(UI.browserQuery) h+='<button class="minimal-text-clear" id="clear-search-btn" aria-label="Clear search">×</button>';
+  h+='</div>';
 
   if(!items.length){
     UI.browserSelectedId=null;
@@ -5605,71 +5671,32 @@ function renderDetailModal(){
 
 /* ============================= RENDER: SETTINGS ============================= */
 function renderSettings(){
-  var s = STATE.settings;
-  var h = '<div class="page-heading settings-heading"><div><span class="eyebrow">PREFERENCES</span><h1>Settings</h1><p>Learning, study display, account and data — organised like a native app.</p></div></div>';
-
-  h += '<div class="settings-grid">';
-
-  h += '<section class="settings-group-card"><div class="settings-group-head"><span class="settings-group-icon">'+icon('book',18)+'</span><div><h2>Learning</h2><p>Control the pace and review load of each study session.</p></div></div>';
-  h += '<div class="field"><label>New words per session</label><div class="desc">How many new words appear in the Learn phase of a session.</div>';
-  h += '<select class="ctl" id="set-newPerSession">';
-  [5,10,15,20,25].forEach(function(n){ h += '<option value="'+n+'" '+(s.newPerSession===n?'selected':'')+'>'+n+'</option>'; });
-  h += '</select></div>';
-  h += '<div class="field"><label>Daily new word limit</label><div class="desc">Maximum new words introduced per day, across sessions.</div>';
-  h += '<select class="ctl" id="set-dailyNewLimit">';
-  [10,20,30,40,50].forEach(function(n){ h += '<option value="'+n+'" '+(s.dailyNewLimit===n?'selected':'')+'>'+n+'</option>'; });
-  h += '</select></div>';
-  h += '<div class="field"><label>Reviews per session</label><div class="desc">Unlimited works through everything due. Recommended caps a session at 30 reviews.</div>';
-  h += '<select class="ctl" id="set-reviewsMode">';
-  h += '<option value="unlimited" '+(s.reviewsMode==='unlimited'?'selected':'')+'>Unlimited</option>';
-  h += '<option value="recommended" '+(s.reviewsMode==='recommended'?'selected':'')+'>Recommended (max 30)</option>';
-  h += '</select></div>';
-  h += '<div class="toggle-row"><div><div class="t">Strict German → English spelling</div><div class="d">Off accepts a one-character typo as correct. On treats any typo as incorrect.</div></div>'+toggle('set-strictSpelling', s.strictSpelling)+'</div>';
-  h += '</section>';
-
-  h += '<section class="settings-group-card"><div class="settings-group-head"><span class="settings-group-icon alt">'+icon('eye',18)+'</span><div><h2>Study display</h2><p>Choose which learning cues appear while you practise.</p></div></div>';
-  h += '<div class="toggle-row"><div><div class="t">Show example sentences</div><div class="d">Display natural example sentences during learning.</div></div>'+toggle('set-showExamples', s.showExamples)+'</div>';
-  h += '<div class="toggle-row"><div><div class="t">Show tier</div><div class="d">Show the C1 relevance tier on study cards.</div></div>'+toggle('set-showTier', s.showTier)+'</div>';
-  h += '<div class="toggle-row"><div><div class="t">Show relevance score</div><div class="d">Display each word’s relevance score where available.</div></div>'+toggle('set-showScore', s.showScore)+'</div>';
-  h += '<div class="settings-note"><span>'+icon('sparkles',17)+'</span><div><b>Focus-first design</b><p>Your core learning logic stays unchanged; these options only affect what is shown.</p></div></div>';
-  h += '</section>';
-  h += '</div>';
-
-  h += '<div class="section settings-section"><div class="settings-section-title"><span>Account & cloud sync</span><small>Keep progress consistent across devices</small></div><div class="card account-card">';
-  h += '<div class="account-head"><div><div class="account-title">Progress on every device</div><div class="account-copy">Mit demselben Konto auf Computer, Handy or Tablet anmelden. Dein Lernstand wird automatisch abgeglichen – auch wenn du zwischen mehreren Geräten wechselst.</div></div></div>';
-  h += '<div id="cloud-sync-status" class="cloud-sync-status '+SYNC_UI.status+'">'+escapeHtml(SYNC_UI.message || syncStatusText())+'</div>';
-  if (AUTH_UI.session && AUTH_UI.user){
-    var accountEmail = AUTH_UI.user.email || 'Account';
-    h += '<div class="account-user"><div class="account-avatar">'+escapeHtml(accountEmail.charAt(0).toUpperCase())+'</div><div><div class="account-email">'+escapeHtml(accountEmail)+'</div><div class="account-note">Signed in · your progress belongs to this account.</div></div></div>';
-    h += '<div class="account-actions"><button class="btn ink sm" id="sync-now-btn">Sync now</button><button class="btn ghost sm" id="load-cloud-btn">Load cloud progress</button><button class="btn ghost sm signout-action" id="logout-btn">Sign out</button></div>';
-    h += '<div class="account-note">Changes are also saved automatically. On a new device, Lexicon loads the latest saved state.</div>';
+  var st=STATE.settings;
+  var accountEmail=AUTH_UI.user&&AUTH_UI.user.email?AUTH_UI.user.email:(ACCESS_UI.guest?'Guest':'Not signed in');
+  var syncText=ACCESS_UI.guest?'Not saved':(AUTH_UI.session?(SYNC_UI.status==='error'?'Sync issue':'Synced'):'Sign in');
+  var account='';
+  if(AUTH_UI.session&&AUTH_UI.user){
+    account+='<div class="minimal-account-line"><div><span>Email</span><b>'+escapeHtml(accountEmail)+'</b></div><div><span>Status</span>'+renderCompactStatus(syncText,SYNC_UI.status==='error'?'warning':'active')+'</div></div><div class="minimal-settings-actions"><button class="btn primary" id="sync-now-btn">Sync now</button><button class="btn ghost" id="load-cloud-btn">Load cloud</button><button class="btn ghost signout-action" id="logout-btn">Sign out</button>'+renderHelpButton('sync','How cloud sync works')+'</div>';
+  } else if(ACCESS_UI.guest){
+    account+='<div class="minimal-account-line"><div><span>Mode</span><b>Guest</b></div><div><span>Status</span>'+renderCompactStatus('NOT SAVED','warning')+'</div></div><div class="minimal-settings-actions">'+renderHelpButton('guestMode','How guest mode works')+'</div>';
   } else {
-    h += '<div class="account-form">';
-    h += '<div class="field"><label>Email</label><input class="ctl" id="account-email" type="email" autocomplete="email" placeholder="name@example.com"></div>';
-    h += '<div class="field"><label>Password</label><input class="ctl" id="account-password" type="password" autocomplete="current-password" placeholder="At least 6 characters"></div>';
-    h += '</div>';
-    h += '<div class="account-actions"><button class="btn ink sm" id="login-btn">Einloggen</button><button class="btn ghost sm" id="register-btn">Registrieren</button></div>';
-    h += '<div class="account-note">On first sign-in, existing progress can be associated with your account when no cloud progress exists yet.</div>';
+    account+='<div class="account-form"><div class="field"><label>Email</label><input class="ctl" id="account-email" type="email" autocomplete="email" placeholder="name@example.com"></div><div class="field"><label>Password</label><input class="ctl" id="account-password" type="password" autocomplete="current-password" placeholder="At least 6 characters"></div></div><div class="minimal-settings-actions"><button class="btn primary" id="login-btn">Sign in</button><button class="btn ghost" id="register-btn">Register</button></div>';
   }
-  h += '<div id="account-msg" class="msg-box account-msg '+(AUTH_UI.error?'err':'ok')+'" style="'+(AUTH_UI.message?'':'display:none;')+'">'+escapeHtml(AUTH_UI.message || '')+'</div>';
-  h += '</div></div>';
+  account+='<div id="account-msg" class="msg-box account-msg '+(AUTH_UI.error?'err':'ok')+'" style="'+(AUTH_UI.message?'':'display:none;')+'">'+escapeHtml(AUTH_UI.message||'')+'</div>';
 
-  h += '<div class="section settings-section"><div class="settings-section-title"><span>Data & maintenance</span><small>Import, export and reset tools</small></div><div class="card data-maintenance-card">';
-  h += '<div class="field"><label>Import vocabulary</label><div class="desc">Paste JSON (an array of items, or {"items":[…]}) or CSV with a header row. Existing progress is kept — matching is done by the English word.</div>';
-  h += '<textarea class="ctl" id="import-textarea" placeholder=\'[{"english":"allocate","german":["zuteilen"],"tier":"A","relevanceScore":88}]\'></textarea>';
-  h += '<div class="data-actions">';
-  h += '<button class="btn ink sm" id="import-text-btn">Import pasted text</button>';
-  h += '<label class="btn ghost sm" style="margin:0;">Import file<input type="file" id="import-file" accept=".json,.csv,application/json,text/csv" style="display:none;"></label>';
-  h += '<button class="btn ghost sm" id="export-json-btn">Export as JSON</button>';
-  h += '</div>';
-  if (UI.importMsg) h += '<div class="msg-box '+(UI.importMsg.ok?'ok':'err')+'">'+escapeHtml(UI.importMsg.text)+'</div>';
-  h += '</div>';
-  h += '<div class="danger-zone"><div><b>Reset</b><span>These actions cannot be undone.</span></div><div><button class="btn danger sm" id="reset-progress-btn">Reset all progress</button><button class="btn danger sm" id="reset-all-btn">Clear all data</button></div></div>';
-  h += '<div class="build-label">Build '+APP_BUILD+'</div>';
-  h += '</div></div>';
-  return h;
+  var learning='<div class="field"><label>New words per session</label><select class="ctl" id="set-newPerSession">';[5,10,15,20,25].forEach(function(n){learning+='<option value="'+n+'" '+(st.newPerSession===n?'selected':'')+'>'+n+'</option>';});learning+='</select></div><div class="field"><label>Daily new word limit</label><select class="ctl" id="set-dailyNewLimit">';[10,20,30,40,50].forEach(function(n){learning+='<option value="'+n+'" '+(st.dailyNewLimit===n?'selected':'')+'>'+n+'</option>';});learning+='</select></div><div class="field"><label>Reviews per session</label><select class="ctl" id="set-reviewsMode"><option value="unlimited" '+(st.reviewsMode==='unlimited'?'selected':'')+'>Unlimited</option><option value="recommended" '+(st.reviewsMode==='recommended'?'selected':'')+'>Recommended (max 30)</option></select></div>';
+  var vocab='<div class="toggle-row"><div><div class="t">Strict German → English spelling</div></div>'+toggle('set-strictSpelling',st.strictSpelling)+'</div><div class="toggle-row"><div><div class="t">Example sentences</div></div>'+toggle('set-showExamples',st.showExamples)+'</div><div class="toggle-row"><div><div class="t">Tier</div></div>'+toggle('set-showTier',st.showTier)+'</div><div class="toggle-row"><div><div class="t">Relevance score</div></div>'+toggle('set-showScore',st.showScore)+'</div>';
+  var appearance='<div class="minimal-account-line"><div><span>Interface</span><b>Lexicon default</b></div><div><span>Motion</span><b>System preference</b></div></div>';
+  var advanced='<div class="field"><label>Import vocabulary</label><textarea class="ctl" id="import-textarea" placeholder="Paste JSON or CSV"></textarea><div class="data-actions"><button class="btn primary sm" id="import-text-btn">Import text</button><label class="btn ghost sm" style="margin:0;">Import file<input type="file" id="import-file" accept=".json,.csv,application/json,text/csv" style="display:none;"></label><button class="btn ghost sm" id="export-json-btn">Export JSON</button></div></div>'+(UI.importMsg?'<div class="msg-box '+(UI.importMsg.ok?'ok':'err')+'">'+escapeHtml(UI.importMsg.text)+'</div>':'')+'<div class="minimal-danger"><span>Danger Zone</span><div><button class="btn danger sm" id="reset-progress-btn">Reset progress</button><button class="btn danger sm" id="reset-all-btn">Clear all data</button></div></div>';
+
+  var h='<div class="minimal-page-head"><span class="eyebrow">PREFERENCES</span><h1>Settings</h1></div><div class="minimal-settings-list">';
+  h+=renderCollapsibleSection('account','Account',accountEmail+' · '+syncText,account);
+  h+=renderCollapsibleSection('learning','Learning',st.newPerSession+' new words · '+(st.reviewsMode==='unlimited'?'Unlimited reviews':'Max 30 reviews'),learning);
+  h+=renderCollapsibleSection('vocabulary','Vocabulary',(st.showExamples?'Examples on':'Examples off')+' · '+(st.strictSpelling?'Strict spelling':'Flexible spelling'),vocab);
+  h+=renderCollapsibleSection('appearance','Appearance','Lexicon default',appearance);
+  h+=renderCollapsibleSection('advanced','Data & Advanced','Import, export, reset',advanced);
+  return h+'</div>';
 }
-
 function toggle(id, checked){
   return '<label class="switch"><input type="checkbox" id="'+id+'" '+(checked?'checked':'')+'><span class="slider"></span></label>';
 }
@@ -5677,6 +5704,13 @@ function toggle(id, checked){
 /* ============================= EVENTS ============================= */
 function bindEvents(){
   var root = document.getElementById('c1app');
+  function overlayAnchorFor(el){ var r=el.getBoundingClientRect(), w=420, pad=18; var x=Math.max(pad,Math.min(r.left,window.innerWidth-w-pad)); var y=Math.min(r.bottom+10,Math.max(pad,window.innerHeight-320)); return {x:x,y:y}; }
+  root.querySelectorAll('[data-help]').forEach(function(el){ el.addEventListener('click',function(ev){ev.stopPropagation();openHelpPopover(el.getAttribute('data-help'),overlayAnchorFor(el));}); });
+  root.querySelectorAll('[data-utility-open]').forEach(function(el){ el.addEventListener('click',function(){UI.utilityPanel=el.getAttribute('data-utility-open');UI.helpTopic=null;UI.overlayAnchor=overlayAnchorFor(el);render();}); });
+  root.querySelectorAll('[data-overlay-close]').forEach(function(el){ el.addEventListener('click',closeHelpPopover); });
+  root.querySelectorAll('[data-overlay-backdrop]').forEach(function(el){ el.addEventListener('click',function(ev){if(ev.target===el) closeHelpPopover();}); });
+  root.querySelectorAll('[data-settings-section]').forEach(function(el){el.addEventListener('click',function(){var k=el.getAttribute('data-settings-section');UI.settingsOpen=UI.settingsOpen===k?null:k;render();});});
+  if(!window.__lexiconMinimalEscBound){window.__lexiconMinimalEscBound=true;document.addEventListener('keydown',function(ev){if(ev.key==='Escape'&&(UI.helpTopic||UI.utilityPanel)){UI.helpTopic=null;UI.utilityPanel=null;UI.overlayAnchor=null;render();}});}
   root.querySelectorAll('[data-auth-mode]').forEach(function(el){
     el.addEventListener('click', function(){
       ACCESS_UI.authMode = el.getAttribute('data-auth-mode')==='register' ? 'register' : 'login';
@@ -5947,6 +5981,7 @@ function bindEvents(){
   if (clearFiltersBtn) clearFiltersBtn.addEventListener('click', function(){
     UI.browserFilters = {tier:null,status:null,type:null,tag:null}; UI.browserQuery=''; render();
   });
+  var clearSearchBtn=document.getElementById('clear-search-btn'); if(clearSearchBtn) clearSearchBtn.addEventListener('click',function(){UI.browserQuery='';render();});
 
   root.querySelectorAll('[data-browser-select]').forEach(function(el){
     el.addEventListener('click', function(){
